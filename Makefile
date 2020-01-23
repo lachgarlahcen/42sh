@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aihya <aihya@student.42.fr>                +#+  +:+       +#+         #
+#    By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/30 10:17:50 by aihya             #+#    #+#              #
-#    Updated: 2020/01/22 18:37:29 by aihya            ###   ########.fr        #
+#    Updated: 2020/01/23 23:56:03 by aihya            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,10 @@
 
 NAME = 42sh_bin
 
-SRC_NAME =	main.c
+SRC_NAME =	main.c \
+			hashtable.c \
+			alias.c \
+			binaries.c
 
 OBJ_NAME =	$(SRC_NAME:.c=.o)
 
