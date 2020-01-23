@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   alias.c                                            :+:      :+:    :+:   */
+/*   hashtable.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 18:37:49 by aihya             #+#    #+#             */
-/*   Updated: 2020/01/22 19:58:21 by aihya            ###   ########.fr       */
+/*   Updated: 2020/01/23 23:55:53 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ int			hash_function(char *str)
 		hash += str[i];
 		i++;
 	}
-	hash %= HASHING_LIMIT;
+	hash %= HT_LIMIT;
+	return (hash);
 }
 
 t_htnode	**init_hashtable()
@@ -32,52 +33,120 @@ t_htnode	**init_hashtable()
 	t_htnode	**hashtable;
 	int			i;
 
-	table = (t_htnode **)malloc(sizeof(t_htnode *) * HT_LIMIT);
-	if (table == NULL)
+	hashtable = (t_htnode **)malloc(sizeof(t_htnode *) * HT_LIMIT);
+	if (hashtable == NULL)
 		return (NULL);
 	i = 0;
-	while (i < 100)
+	while (i < HT_LIMIT)
 	{
-		table[i] = NULL;
+		hashtable[i] = NULL;
 		i++;
 	}
-	return (table);
+	return (hashtable);
 }
 
 t_htnode	*new_htnode(char *name, char *value)
 {
-	t_htnode	*htnode;
+	t_htnode	*node;
 
-	htnode = (t_htnode *)malloc(sizeof(t_htnode));
-	if (htnode == NULL)
+	if ((node = (t_htnode *)malloc(sizeof(t_htnode))) == NULL)
 		return (NULL);
-	htnode->name = ft_strdup(name);
-	if (name != NULL && htnode->name == NULL)
-		return (NULL);
-	htnode->value = ft_strdup(value);
-	if (name != NULL && htnode->value == NULL)
-		return (NULL);
-	htnode->next = NULL;
-	return (htnode);
+	node->name = ft_strdup(name);
+	node->value = ft_strdup(value);
+	node->next = NULL;
+	return (node);
 }
 
-void		push_htnode(t_htnode **hashtable, t_htnode *htnode)
+void		free_htnode(t_htnode **a_htnode)
+{
+	ft_strdel(&((*a_htnode)->name));
+	ft_strdel(&((*a_htnode)->value));
+	free(*a_htnode);
+	*a_htnode = NULL;
+}
+
+t_htnode	*find_htnode(t_htnode **hashtable, char *name)
+{
+	t_htnode	*node;
+
+	node = hashtable[hash_function(name)];
+	while (node != NULL)
+	{
+		if (ft_strequ(node->name, name))
+			return (node);
+		node = node->next;
+	}
+	return (NULL);
+}
+
+void		push_htnode(t_htnode **hashtable, t_htnode **new)
 {
 	t_htnode	*node;
 	int			index;
 
-	index = hash_function(htnode->name);
+	index = hash_function((*new)->name);
 	node = hashtable[index];
 	while (node)
 	{
+		if (ft_strequ(node->name, (*new)->name))
+		{
+			ft_strdel(&(node->value));
+			node->value = ft_strdup((*new)->value);
+			free_htnode(new);
+			return ;
+		}
 		if (node->next == NULL)
 			break ;
 		node = node->next;
 	}
 	if (node == NULL)
-		hashtable[index] = htnode;
+		hashtable[index] = *new;
 	else
-		node->next = htnode;
+		node->next = *new;
 }
 
+void		pop_htnode(t_htnode **hashtable, char *name)
+{
+	t_htnode	*prev;
+	t_htnode	*curr;
+	int			index;
 
+	if (name == NULL)
+		return ;
+	index = hash_function(name);
+	prev = NULL;
+	curr = hashtable[index];
+	while (curr)
+	{
+		if (ft_strequ(name, curr->name))
+		{
+			if (prev == NULL)
+				hashtable[index] = curr->next;
+			else
+				prev->next = curr->next;
+			free_htnode(&curr);
+			break ;
+		}
+		prev = curr;
+		curr = curr->next;
+	}
+}
+
+void		print_hashtable(t_htnode **hashtable)
+{
+	int			i;
+	t_htnode	*node;
+
+	i = 0;
+	while (i < HT_LIMIT)
+	{
+		printf("%d:\n", i);
+		node = hashtable[i];
+		while (node)
+		{
+			printf("\t%s=%s\n", node->name, node->value);
+			node = node->next;
+		}
+		i++;
+	}
+}
