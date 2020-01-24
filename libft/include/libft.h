@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aihya <aihya@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/05 23:15:26 by aihya             #+#    #+#             */
-/*   Updated: 2019/12/31 18:25:13 by aihya            ###   ########.fr       */
+/*   Updated: 2020/01/24 19:36:42 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ size_t			ft_char_count(char* str, char c);
 int				ft_strisempty(char *str);
 char			*ft_strappend(char **a_s1, char c, int overwrite);
 int				ft_isalphanumeric(char c);
-void			ft_print_chain(char ***a_chain, char *del);
+void			ft_print_chain(char **chain, char *del);
 char			**ft_strsplit_del(char *str, char *del);
 char			*ft_next_word(char *str, char *del, int reset_val);
 size_t			ft_count_words(const char *str, const char *del);

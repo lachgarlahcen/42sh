@@ -6,20 +6,18 @@
 /*   By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/03 20:19:42 by aihya             #+#    #+#             */
-/*   Updated: 2019/12/22 16:59:52 by aihya            ###   ########.fr       */
+/*   Updated: 2020/01/24 19:36:28 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_print_chain(char ***a_chain, char *del)
+void	ft_print_chain(char **chain, char *del)
 {
-	char	**chain;
 	size_t	i;
 
-	if (a_chain == NULL)
+	if (chain == NULL)
 		return ;
-	chain = *a_chain;
 	i = 0;
 	while (chain[i])
 	{
