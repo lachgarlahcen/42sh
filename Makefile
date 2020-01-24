@@ -6,7 +6,7 @@
 #    By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/30 10:17:50 by aihya             #+#    #+#              #
-#    Updated: 2020/01/23 23:56:03 by aihya            ###   ########.fr        #
+#    Updated: 2020/01/24 19:30:57 by aihya            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,8 @@ NAME = 42sh_bin
 SRC_NAME =	main.c \
 			hashtable.c \
 			alias.c \
-			binaries.c
+			binaries.c \
+			sort.c
 
 OBJ_NAME =	$(SRC_NAME:.c=.o)
 
