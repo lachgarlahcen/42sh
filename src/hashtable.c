@@ -6,7 +6,7 @@
 /*   By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 18:37:49 by aihya             #+#    #+#             */
-/*   Updated: 2020/01/23 23:55:53 by aihya            ###   ########.fr       */
+/*   Updated: 2020/01/24 20:19:53 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ t_htnode	*find_htnode(t_htnode **hashtable, char *name)
 	return (NULL);
 }
 
-void		push_htnode(t_htnode **hashtable, t_htnode **new)
+int			push_htnode(t_htnode **hashtable, t_htnode **new)
 {
 	t_htnode	*node;
 	int			index;
@@ -93,7 +93,7 @@ void		push_htnode(t_htnode **hashtable, t_htnode **new)
 			ft_strdel(&(node->value));
 			node->value = ft_strdup((*new)->value);
 			free_htnode(new);
-			return ;
+			return (0);
 		}
 		if (node->next == NULL)
 			break ;
@@ -103,6 +103,7 @@ void		push_htnode(t_htnode **hashtable, t_htnode **new)
 		hashtable[index] = *new;
 	else
 		node->next = *new;
+	return (1);
 }
 
 void		pop_htnode(t_htnode **hashtable, char *name)
@@ -132,21 +133,49 @@ void		pop_htnode(t_htnode **hashtable, char *name)
 	}
 }
 
-void		print_hashtable(t_htnode **hashtable)
+char		**get_names(t_htnode **hashtable, size_t size)
 {
-	int			i;
 	t_htnode	*node;
+	char		**table;
+	int			index;
+	int			ti;
 
-	i = 0;
-	while (i < HT_LIMIT)
+	table = (char **)malloc(sizeof(char *) * (size + 1));
+	if (table == NULL)
+		return (NULL);
+	index = 0;
+	ti = 0;
+	while (index < HT_LIMIT)
 	{
-		printf("%d:\n", i);
-		node = hashtable[i];
+		node = hashtable[index];
 		while (node)
 		{
-			printf("\t%s=%s\n", node->name, node->value);
+			table[ti] = ft_strdup(node->name);
+			ti++;
 			node = node->next;
 		}
-		i++;
+		index++;
+	}
+	table[ti] = NULL;
+	sort(table, size);
+	return (table);
+}
+
+void		print_hashtable(t_htnode **hashtable, char **names, char *prefix)
+{
+	t_htnode	*node;
+	int			index;
+
+	node = NULL;
+	index = 0;
+	while (names[index])
+	{
+		node = find_htnode(hashtable, names[index]);
+		if (prefix != NULL)
+			ft_putstr(prefix);
+		ft_putstr(node->name);
+		ft_putchar('=');
+		ft_putendl(node->value);
+		index++;
 	}
 }
