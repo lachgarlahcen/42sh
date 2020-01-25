@@ -6,7 +6,7 @@
 #    By: hastid <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/10/07 19:31:36 by hastid            #+#    #+#              #
-#    Updated: 2019/12/24 12:22:40 by hastid           ###   ########.fr        #
+#    Updated: 2020/01/23 22:46:53 by hastid           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ SRC = ft_isalpha.c \
 	  ft_strnstr.c \
 	  ft_strtrim.c \
 	  ft_isascii.c \
+	  ft_isblank.c \
 	  ft_lstaddend.c \
 	  ft_lstmap.c \
 	  ft_memcmp.c \
@@ -81,9 +82,6 @@ all: $(NAME)
 $(NAME):
 	@gcc -Wall -Wextra -Werror -c $(SRC)
 	@ar rc $(NAME) $(OBJ)
-
-%.o: %.c
-	@gcc $(FLAC) -o $@ -c $<
 
 clean:
 	@rm -f $(OBJ)
