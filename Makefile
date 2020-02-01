@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+         #
+#    By: aihya <aihya@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/30 10:17:50 by aihya             #+#    #+#              #
-#    Updated: 2020/01/24 19:30:57 by aihya            ###   ########.fr        #
+#    Updated: 2020/02/01 16:19:29 by aihya            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,8 @@ SRC_NAME =	main.c \
 			hashtable.c \
 			alias.c \
 			binaries.c \
-			sort.c
+			sort.c \
+			type.c
 
 OBJ_NAME =	$(SRC_NAME:.c=.o)
 

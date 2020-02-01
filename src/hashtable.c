@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hashtable.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+        */
+/*   By: aihya <aihya@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 18:37:49 by aihya             #+#    #+#             */
-/*   Updated: 2020/01/24 20:19:53 by aihya            ###   ########.fr       */
+/*   Updated: 2020/02/01 16:25:06 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ t_htnode	*new_htnode(char *name, char *value)
 		return (NULL);
 	node->name = ft_strdup(name);
 	node->value = ft_strdup(value);
+	node->hits = 1;
 	node->next = NULL;
 	return (node);
 }

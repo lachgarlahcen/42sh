@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sh.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+        */
+/*   By: aihya <aihya@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 18:23:41 by aihya             #+#    #+#             */
-/*   Updated: 2020/01/24 20:33:25 by aihya            ###   ########.fr       */
+/*   Updated: 2020/02/01 16:19:10 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include "libft.h"
+#include <sys/stat.h>
 
 # define HT_LIMIT	20
 # define TRUE		1
@@ -23,10 +24,18 @@
 # define INC		1
 # define DEC		-1
 
+# define DIR		0
+# define CHR		1
+# define BLK		2
+# define REG		3
+# define SOCK		4
+# define FIFO		5
+
 typedef struct	s_htnode
 {
 	char			*name;
 	char			*value;
+	unsigned int	hits;
 	struct s_htnode	*next;
 }				t_htnode;
 
@@ -47,23 +56,26 @@ int			hash_function(char *str);
 char		**get_names(t_htnode **hashtable, size_t size);
 
 // Aliases functions
-void		alias();
 t_htnode	**aliases(int init);
+char		**aliases_names(int reset);
 int			save_alias(char *name, char *value);
 char		*is_alias(char *name);
 void		unalias(char *name);
-char		**aliases_names(int reset);
 void		print_alias();
 
 // Binaries functions
 t_htnode	**binaries(int init);
+char		**binaries_names(int reset);
 int			save_binary(char *bin_name, char *bin_value);
 char		*is_binary(char *name);
 void		remove_binary(char *name);
-char		**binaries_names(int reset);
+void		remove_binaries();
 void		print_binaries();
 
 // Sort function
 void	sort(char **chain, size_t size);
+
+// Type functions
+void	type(char **args);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   binaries.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+        */
+/*   By: aihya <aihya@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 23:04:02 by aihya             #+#    #+#             */
-/*   Updated: 2020/01/24 20:36:30 by aihya            ###   ########.fr       */
+/*   Updated: 2020/02/01 16:31:22 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ char	*is_binary(char *name)
 
 	if ((path = find_htnode(binaries(FALSE), name)) == NULL)
 		return (NULL);
+	path->hits++;
 	return (path->value);
 }
 
@@ -63,6 +64,20 @@ void	remove_binary(char *name)
 	pop_htnode(binaries(FALSE), name);
 	if (binaries_counter(0) > 0)
 		binaries_counter(DEC);
+}
+
+void	remove_binaries()
+{
+	char	**names;
+	int		i;
+
+	names = binaries_names(FALSE);
+	i = 0;
+	while (names[i])
+	{
+		remove_binary(names[i]);
+		i++;
+	}
 }
 
 char			**binaries_names(int reset)
@@ -80,5 +95,19 @@ char			**binaries_names(int reset)
 
 void			print_binaries()
 {
-	print_hashtable(binaries(FALSE), binaries_names(FALSE), NULL);
+	t_htnode	*node;
+	char		**names;
+	int			index;
+
+	names = binaries_names(FALSE);
+	index = 0;
+	ft_putendl("hits\tcommand");
+	while (names[index])
+	{
+		node = find_htnode(binaries(FALSE), names[index]);
+		ft_putnbr(node->hits);
+		ft_putstr("\t");
+		ft_putendl(node->value);
+		index++;
+	}
 }
