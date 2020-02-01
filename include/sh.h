@@ -6,7 +6,7 @@
 /*   By: aihya <aihya@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 18:23:41 by aihya             #+#    #+#             */
-/*   Updated: 2020/02/01 16:19:10 by aihya            ###   ########.fr       */
+/*   Updated: 2020/02/01 20:23:21 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,6 @@
 # define FALSE		0
 # define INC		1
 # define DEC		-1
-
-# define DIR		0
-# define CHR		1
-# define BLK		2
-# define REG		3
-# define SOCK		4
-# define FIFO		5
 
 typedef struct	s_htnode
 {
