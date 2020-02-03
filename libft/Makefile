@@ -12,7 +12,7 @@
 
 NAME = libft.a
 
-SRC = ft_isalpha.c \
+SRC_NAME = ft_isalpha.c \
 	  ft_lstadd.c \
 	  ft_lstlen.c \
 	  ft_memchr.c \
@@ -75,18 +75,37 @@ SRC = ft_isalpha.c \
 	  ft_strnew.c \
 	  ft_strsub.c
 
-OBJ = $(SRC:.c=.o)
+OBJ_NAME =	$(SRC_NAME:.c=.o)
 
-all: $(NAME)
+SRC_PATH =	src
+OBJ_PATH =	obj
 
-$(NAME):
-	@gcc -Wall -Wextra -Werror -c $(SRC)
-	@ar rc $(NAME) $(OBJ)
+SRC = $(addprefix $(SRC_PATH)/, $(SRC_NAME))
+OBJ = $(addprefix $(OBJ_PATH)/, $(OBJ_NAME))
+
+CFLAGS = -Wall -Werror -Wextra
+
+DEPS = include/libft.h
+
+all : $(NAME)
+
+$(OBJ_PATH)/%.o : $(SRC_PATH)/%.c $(DEPS)
+	@mkdir $(OBJ_PATH) 2>/dev/null || true
+	@clear
+	@echo "Compiling \033[1;33m[$<]\033[0m to \033[1;32m[$@]\033[0m"
+	@gcc $(CFLAGS) -I include -o $@ -c $<
+
+$(NAME) : $(OBJ)
+	@echo "\033[1;34mCreating $(NAME)\033[0m"
+	@ar rc $@ $^
+	@ranlib $@
 
 clean:
-	@rm -f $(OBJ)
+	@echo "\033[1;34mRemoving libft's objects directory\033[0m"
+	@/bin/rm -rf $(OBJ_PATH) 2> /dev/null
 
 fclean: clean
-	@rm -f $(NAME)
+	@echo "\033[1;34mRemovimg $(NAME)\033[0m"
+	@/bin/rm -f $(NAME)
 
 re: fclean all

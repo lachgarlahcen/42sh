@@ -1,22 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   my_shell.h                                         :+:      :+:    :+:   */
+/*   shell.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/30 23:08:36 by hastid            #+#    #+#             */
-/*   Updated: 2020/01/24 03:08:05 by hastid           ###   ########.fr       */
+/*   Created: 2020/02/03 04:13:05 by hastid            #+#    #+#             */
+/*   Updated: 2020/02/03 04:31:32 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MY_SHELL_H
-# define MY_SHELL_H
+#ifndef SHELL_H
+# define SHELL_H
 
-# include "../libft/libft.h"
-# include "intern_variable/intern_variable.h"
-# include "lexical_analyser/lexical_analyser.h"
-
-# define READ_SIZE 1000000
+# include "libft.h"
+# include <stdio.h>
+# include "line_editing.h"
+# include <readline/readline.h>
+# include <readline/history.h>
 
 #endif

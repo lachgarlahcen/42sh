@@ -12,43 +12,68 @@
 
 NAME = 42sh
 
-FLAG = -Wall -Wextra -Werror
+SRC_NAME = main.c
 
-SRC = source/main.c \
+OBJ_NAME =	$(SRC_NAME:.c=.o)
 
-LIB = libft/libft.a \
-	  source/intern_variable/intern_variable.a \
-	  source/lexical_analyser/lexical_analyser.a \
+SRC_PATH =	source
+OBJ_PATH =	objet
 
-OBJ = $(SRC:.c=.o)
+SRC = $(addprefix $(SRC_PATH)/, $(SRC_NAME))
+OBJ = $(addprefix $(OBJ_PATH)/, $(OBJ_NAME))
+
+
+
+CFLAGS = -Wall -Wextra -Werror
+
+INCLUDE =	-Iinclude \
+			-Ilibft/include \
+			-Isource/line_editing/include
+
+LIBS =	libft/libft.a \
+		source/line_editing/line_editing.a
+
+DEPS = include/shell.h
 
 all: $(NAME)
 
-$(NAME): $(OBJ) libft_c  intern_variable_c lexical_analyser_c
-	@gcc $(FLAG) $(LIB) -lreadline -ltermcap $(OBJ) -o $(NAME)
+$(NAME): $(OBJ) libft_c line_editing_c
+	@clear;
+	@echo "	\033[1;34mCreating ...									";
+	@echo "         					              	         	";
+	@echo "    ██╗       ██████╗  ██████╗  ██╗  ██╗                 ";
+	@echo "    ██║  ██╗  ╚═══██║  ██════╝  ██║  ██║ 				";
+	@echo "    ██║  ██║  ██████║  ██████╗  ███████║ 				";
+	@echo "    ███████║  ██╔═══╝  ╚═══██║  ██╔══██║				    ";
+	@echo "    ╚═══ ██║  ██████╗  ██████║  ██║  ██║         		";
+	@echo "         ╚═╝  ╚═════╝  ╚═════╝  ╚═╝  ╚═╝                 ";
+	@echo "				                                            ";
+	@echo "\033[1;33m $(NAME)\033[0m                        ";
+	@echo "		         Made by : \033[1;91m mizonaise\033[m       ";
+	@gcc $(OBJ) $(LIBS) -ltermcap -lreadline  -o $@
 
 libft_c:
 	@make -C libft
 
-intern_variable_c:
-	@make -C source/intern_variable
+line_editing_c:
+	@make -C source/line_editing
 
-lexical_analyser_c:
-	@make -C source/lexical_analyser
-
-%.o: %.c
-	@gcc $(FLAC) -o $@ -c $<
+$(OBJ_PATH)/%.o : $(SRC_PATH)/%.c $(DEPS)
+	@mkdir $(OBJ_PATH) 2> /dev/null || true
+	@clear;
+	@echo "Compiling \033[1;36m[$<]\033[0m to \033[1;32m[$@]\033[0m"
+	@gcc $(CFLAGS) -g $(INCLUDE) -o $@ -c $<
 
 clean:
 	@make clean -C libft
-	@make clean -C source/intern_variable
-	@make clean -C source/lexical_analyser
-	@rm -rf $(OBJ)
+	@make clean -C source/line_editing
+	@echo "\033[1;33mRemoving $(NAME)'s objects directory\033[0m"
+	@rm -rf $(OBJ_PATH) 2> /dev/null
 
 fclean: clean
 	@make fclean -C libft
-	@make fclean -C source/intern_variable
-	@make fclean -C source/lexical_analyser
-	@rm -f $(NAME)
+	@make fclean -C source/line_editing
+	@echo "\033[1;33mRemoving $(NAME)\033[0m"
+	@/bin/rm -f $(NAME)
 
 re: fclean all
