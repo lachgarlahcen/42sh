@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 02:48:48 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/03 22:59:19 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/03 23:36:01 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,10 @@ int			line_editing(char **line, int lexical)
 		if (lexical)
 			line_lexical(line, &alias);
 		if (!(stat = line_syntax(alias)) && !history_expa_synatx(alias))
+		{
 			puts(*line);
+			puts(alias);
+		}
 		else
 			ft_perror(0, 0, "syntax error !!", 1);
 		add_history(*line);

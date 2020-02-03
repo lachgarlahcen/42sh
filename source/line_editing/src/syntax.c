@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 00:10:12 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/03 22:54:25 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/03 23:39:08 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int		check_value(char *str, int be, int end, int stat)
 			return (free_return(tmp, 1));
 		if (stat == 2 && ret == 2)
 			return (free_return(tmp, 1));
-		return (ret);
+		return (free_return(tmp, ret));
 	}
 	else
 		return (free_return(tmp, 1));
