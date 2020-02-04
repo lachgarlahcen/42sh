@@ -6,19 +6,14 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 02:44:32 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/04 03:52:45 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/05 00:51:21 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LINE_EDITING_H
 # define LINE_EDITING_H
 
-# include <stdio.h>
-# include <string.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include "libft.h"
-# include "tokens_parser.h"
+# include "shell.h"
 
 int		is_inhibitors(char c);
 int		used_variable(char c);

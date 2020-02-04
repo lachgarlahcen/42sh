@@ -6,15 +6,14 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 01:21:58 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/04 01:37:50 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/05 00:51:58 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TOKENS_PARSER_H
 # define TOKENS_PARSER_H
 
-# include "libft.h"
-# include "line_editing.h"
+# include "shell.h"
 
 typedef struct	s_tok
 {
