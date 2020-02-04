@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 02:48:48 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/04 02:16:08 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/04 03:54:58 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ int	execute_cmdline(char *line)
 
 int			line_editing(char **line, int lexical)
 {
-	int		stat;
 	char	*alias;
 
 	if (!tab_space(*line) && !check_history_expa(line))
@@ -52,11 +51,8 @@ int			line_editing(char **line, int lexical)
 		alias = check_alias(*line);
 		if (lexical)
 			line_lexical(line, &alias);
-		if (!(stat = line_syntax(alias)) && !history_expa_synatx(alias))
-		{
-			execute_cmdline(*line);
-			puts(alias);
-		}
+		if (!(syntax(alias)))
+			execute_cmdline(alias);
 		else
 			ft_perror(0, 0, "syntax error !!", 1);
 		add_history(*line);

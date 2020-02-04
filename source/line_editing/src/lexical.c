@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 00:10:08 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/03 22:47:51 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/04 03:54:42 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,10 @@
 int		line_lexical(char **str, char **alias)
 {
 	int		stat;
-	int		expa;
 	char	*temp;
 
-	stat = line_syntax(*alias);
-	expa = history_expa_synatx(*alias);
-	while (stat && stat != 1 && !expa)
+	stat = syntax(*alias);
+	while (stat && stat != 1)
 	{
 		if (!(temp = readline("$> ")))
 			break ;
@@ -31,8 +29,7 @@ int		line_lexical(char **str, char **alias)
 		*str = strjoin_free(*str, temp, 1, 1);
 		ft_memdel((void **)&(*alias));
 		*alias = check_alias(*str);
-		stat = line_syntax(*alias);
-		expa = history_expa_synatx(*alias);
+		stat = syntax(*alias);
 	}
 	return (0);
 }

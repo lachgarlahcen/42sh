@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 00:10:12 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/03 23:39:08 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/04 03:58:34 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ int		line_syntax(char *str)
 	return (stat);
 }
 
-int		history_expa_synatx(char *str)
+int		history_expa_syntax(char *str)
 {
 	int i;
 	int	check;
@@ -151,4 +151,33 @@ int		history_expa_synatx(char *str)
 			i++;
 	}
 	return (0);
+}
+
+int		expansion_dollar(char *str)
+{
+	int	i;
+	int	count;
+
+	i = 0;
+	count = 0;
+	while (str[i])
+	{
+		if (str[i] == '{' && i && str[i - 1] == '$')
+			count++;
+		if (count > 0 && (used_variable(str[i]) ||  is_inhibitors(str[i])))
+			return (1);
+		if (str[i] == '}' && count > 0)
+			count--;
+		i++;
+	}
+	if (count)
+		return (1);
+	return (0);
+}
+
+int		syntax(char *str)
+{
+	if (expansion_dollar(str) || history_expa_syntax(str))
+		return (1);
+	return (line_syntax(str));
 }
