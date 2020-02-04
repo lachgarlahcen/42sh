@@ -44,7 +44,7 @@ $(OBJ_PATH)/%.o : $(SRC_PATH)/%.c $(DEPS)
 	@gcc  $(CFLAGS) -g $(Include) -o $@ -c $<
 
 clean:
-	@echo "\033[1;34mRemoving tokens_parser's objects directory\033[0m"
+	@echo "\033[1;34mRemoving line_editing's objects directory\033[0m"
 	@rm -rf $(OBJ_PATH) 2> /dev/null
 
 fclean: clean
