@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 02:48:48 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/03 23:36:01 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/04 02:16:08 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,25 @@ static int	tab_space(char *str)
 	return (1);
 }
 
+void	aff_tokens(t_tok *t)
+{
+	while (t)
+	{
+		printf("%d |%s|\n", t->id, t->token);
+		t = t->next;
+	}
+}
+
+int	execute_cmdline(char *line)
+{
+	t_tok *t;
+
+	t = parse_tokens(line);
+	aff_tokens(t);
+	free_toks(t);
+	return (0);
+}
+
 int			line_editing(char **line, int lexical)
 {
 	int		stat;
@@ -35,7 +54,7 @@ int			line_editing(char **line, int lexical)
 			line_lexical(line, &alias);
 		if (!(stat = line_syntax(alias)) && !history_expa_synatx(alias))
 		{
-			puts(*line);
+			execute_cmdline(*line);
 			puts(alias);
 		}
 		else

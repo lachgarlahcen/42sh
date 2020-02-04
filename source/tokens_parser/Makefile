@@ -5,19 +5,15 @@
 #                                                     +:+ +:+         +:+      #
 #    By: hastid <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2020/02/03 03:07:16 by hastid            #+#    #+#              #
-#    Updated: 2020/02/04 02:09:53 by hastid           ###   ########.fr        #
+#    Created: 2020/02/04 01:33:35 by hastid            #+#    #+#              #
+#    Updated: 2020/02/04 02:09:37 by hastid           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = line_editing.a
+NAME = tokens_parser.a
 
-SRC_NAME =	alias.c \
-			utils.c \
-			syntax.c \
-			lexical.c \
-			history.c \
-			line_editing.c
+SRC_NAME = parser.c \
+		   tokens_list.c
 
 OBJ_NAME =	$(SRC_NAME:.c=.o)
 
@@ -30,9 +26,9 @@ OBJ = $(addprefix $(OBJ_PATH)/, $(OBJ_NAME))
 CFLAGS = -Wall -Werror -Wextra
 
 Include = -I../../include \
-		  -I../../libft/include
+		  -I../../libft/include \
 
-DEPS = ../../include/line_editing.h
+DEPS = ../../include/tokens_parser.h
 
 all: $(NAME)
 
@@ -48,11 +44,11 @@ $(OBJ_PATH)/%.o : $(SRC_PATH)/%.c $(DEPS)
 	@gcc  $(CFLAGS) -g $(Include) -o $@ -c $<
 
 clean:
-	@echo "\033[1;34mRemoving line_editing's objects directory\033[0m"
-	@/bin/rm -rf $(OBJ_PATH) 2> /dev/null
+	@echo "\033[1;34mRemoving tokens_parser's objects directory\033[0m"
+	@rm -rf $(OBJ_PATH) 2> /dev/null
 
 fclean: clean
 	@echo "\033[1;34mRemovimg $(NAME)\033[0m"
-	@/bin/rm -f $(NAME)
+	@rm -f $(NAME)
 
 re: fclean all

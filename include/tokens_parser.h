@@ -1,30 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   tokens_parser.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/01 20:14:50 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/04 02:04:26 by hastid           ###   ########.fr       */
+/*   Created: 2020/02/04 01:21:58 by hastid            #+#    #+#             */
+/*   Updated: 2020/02/04 01:37:50 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell.h"
+#ifndef TOKENS_PARSER_H
+# define TOKENS_PARSER_H
 
+# include "libft.h"
+# include "line_editing.h"
 
-
-int		main(void)
+typedef struct	s_tok
 {
-	int		stat;
-	char	*line;
+	int				id;
+	char			*token;
+	struct	s_tok	*next;
+}				t_tok;
 
-	stat = 0;
-	while ((line = readline("42sh $> ")))
-	{
-		line_editing(&line, 1);
-		ft_memdel((void **)&line);
-	}
-	putchar('\n');
-	return (stat);
-}
+int				save_tokens(t_tok **tok, char *token, int id);
+
+t_tok			*parse_tokens(char *line);
+
+void			free_toks(t_tok *lst);
+
+#endif

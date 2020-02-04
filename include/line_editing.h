@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 02:44:32 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/03 02:47:39 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/04 02:13:19 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "libft.h"
+# include "tokens_parser.h"
 
 int		is_inhibitors(char c);
 int		used_variable(char c);
