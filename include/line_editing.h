@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 02:44:32 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/04 02:13:19 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/04 03:52:45 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,8 @@ int		end_of_inhibitors(char *str, char c, int be);
 int		ft_perror(char *str, char c, char *err, int f);
 char	*strjoin_free(char *s1, char *s2, int f1, int f2);
 
-int		line_syntax(char *str);
+int		syntax(char *str);
 char	*check_alias(char *line);
-int		history_expa_synatx(char *str);
 int		check_history_expa(char **line);
 int		line_lexical(char **str, char **alias);
 
