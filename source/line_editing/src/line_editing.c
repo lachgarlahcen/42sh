@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 04:57:19 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/05 04:57:56 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/05 05:52:09 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void		aff_tokens(t_tok *t)
 {
 	while (t)
 	{
-		printf("%d |%s|\n", t->id, t->token);
+		ft_printf("%d |%s|\n", t->id, t->token);
 		t = t->next;
 	}
 }

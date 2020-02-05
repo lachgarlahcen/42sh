@@ -16,6 +16,30 @@
 # include <unistd.h>
 # include <string.h>
 # include <stdlib.h>
+# include <stdarg.h>
+
+typedef struct	s_form
+{
+	int		fie;
+	int		pre;
+	int		poi;
+	char	*flag;
+	char	*leng;
+}				t_form;
+
+typedef struct	s_rep
+{
+	__uint64_t	man:63;
+	unsigned	in_p:1;
+	unsigned	exp:15;
+	unsigned	sign:1;
+}				t_rep;
+
+union			u_rep
+{
+	t_rep		rep;
+	long double	f;
+};
 
 typedef struct	s_list
 {
@@ -87,5 +111,31 @@ t_list			*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
 int				ft_nbrlen(int n);
 size_t			ft_lstlen(t_list *lst);
 void			ft_lstaddend(t_list **alst, t_list *new);
+
+int				ft_putchar_ret(char c);
+int				ft_putstr_ret(const char *str);
+
+int				ft_printf(char *fmt, ...);
+int				ft_putchar_pr(char c, t_form *frm);
+int				ft_putstr_pr(char *str, t_form *frm);
+int				ft_putnbr_adr(uint64_t n, t_form *frm);
+void			ft_putnbr_base(uint64_t n, unsigned int base, int check);
+int				ft_putwithleng(va_list ap, t_form *frm);
+int				ft_putuwithleng(va_list ap, t_form *frm);
+int				ft_putowithleng(va_list ap, t_form *frm);
+int				ft_putxwithleng(va_list ap, t_form *frm);
+int				ft_putcxwithleng(va_list ap, t_form *frm);
+int				ft_putnbr_pr(int64_t nbr, t_form *frm);
+int				ft_putunbr_pr(uint64_t nbr, t_form *frm);
+int				ft_putonbr_pr(int64_t nbr, t_form *frm);
+int				ft_putxnbr_pr(int64_t nbr, t_form *frm);
+int				ft_putcxnbr_pr(int64_t nbr, t_form *frm);
+int				ft_putall(t_form *frm, uint64_t n, int base, int max);
+int				ft_unbrleng(uint64_t n, int base);
+int				check_f(char *str, char c);
+int				nbr_cnvrt(char **str);
+char			*ft_strjoin_free(char *str, char c);
+
+void			ft_free_st(t_form *frm);
 
 #endif
