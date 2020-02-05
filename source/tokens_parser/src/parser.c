@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 00:46:23 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/04 03:29:08 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/05 05:03:53 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,11 @@ int		token_analyzer(char *str, int check)
 	return (0);
 }
 
-int		parser(char *str, int be, int end, t_tok **t, int check)
+int		parser(char *token, t_tok **t, int check)
 {
 	int		id;
-	char	*token;
 
-	if(!(token = ft_strsub(str, be, end - be)))
+	if (!token)
 		return (0);
 	id = token_analyzer(token, check);
 	save_tokens(t, token, id);
@@ -76,10 +75,11 @@ int		parse_token(t_tok **t, char *line)
 				i++;
 		else
 			while (line[i] && !used_variable(line[i]) && !ft_isblank(line[i]))
-				i = is_inhibitors(line[i]) ? end_of_inhibitors(line, line[i], i + 1) : i + 1;
+				i = is_inhibitors(line[i]) ?
+					end_of_inhibitors(line, line[i], i + 1) : i + 1;
 		check = used_variable(line[i]) ? 1 : 0;
 		if (i > be)
-			parser(line, be, i, t, check);
+			parser(ft_strsub(line, be, i - be), t, check);
 		else
 			i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 01:21:58 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/05 00:51:58 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/05 04:53:10 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ typedef struct	s_tok
 {
 	int				id;
 	char			*token;
-	struct	s_tok	*next;
+	struct s_tok	*next;
 }				t_tok;
 
 int				save_tokens(t_tok **tok, char *token, int id);

@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   history.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/03 00:10:03 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/05 04:04:30 by llachgar         ###   ########.fr       */
+/*   Created: 2020/02/05 04:55:08 by hastid            #+#    #+#             */
+/*   Updated: 2020/02/05 04:55:23 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "line_editing.h"
 
-int check_history(char **str, int p, int be)
+int		check_history(char **str, int p, int be)
 {
-	char *tp;
-	char *tmp;
+	char	*tp;
+	char	*tmp;
 
 	if (!(tp = ft_strsub(*str, be, p - be)))
 		return (0);
@@ -31,7 +31,7 @@ int check_history(char **str, int p, int be)
 	return (0);
 }
 
-int is_value(char c, char qo)
+int		is_value(char c, char qo)
 {
 	if (c == ' ' || c == '&' || c == '|' || c == '>' || c == '<' || c == ';')
 		return (0);
@@ -42,12 +42,12 @@ int is_value(char c, char qo)
 	return (1);
 }
 
-int check_history_expa(char **line)
+int		check_history_expa(char **line)
 {
-	int i;
-	int be;
-	int qo;
-	char *str;
+	int		i;
+	int		be;
+	int		qo;
+	char	*str;
 
 	i = 0;
 	str = *line;

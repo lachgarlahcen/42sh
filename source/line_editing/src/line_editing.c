@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   line_editing.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/03 02:48:48 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/05 04:15:30 by llachgar         ###   ########.fr       */
+/*   Created: 2020/02/05 04:57:19 by hastid            #+#    #+#             */
+/*   Updated: 2020/02/05 04:57:56 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "line_editing.h"
 
-static int tab_space(char *str)
+static int	tab_space(char *str)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	while (str[++i])
@@ -23,7 +23,7 @@ static int tab_space(char *str)
 	return (1);
 }
 
-void aff_tokens(t_tok *t)
+void		aff_tokens(t_tok *t)
 {
 	while (t)
 	{
@@ -32,7 +32,7 @@ void aff_tokens(t_tok *t)
 	}
 }
 
-int execute_cmdline(char *line)
+int			execute_cmdline(char *line)
 {
 	t_tok *t;
 
@@ -42,7 +42,7 @@ int execute_cmdline(char *line)
 	return (0);
 }
 
-int line_editing(char **line, int lexical)
+int			line_editing(char **line, int lexical)
 {
 	char *alias;
 

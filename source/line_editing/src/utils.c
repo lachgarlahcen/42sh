@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 02:52:37 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/03 22:58:05 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/05 05:10:11 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ int		free_return(char *str, int ret)
 
 int		ft_perror(char *str, char c, char *err, int f)
 {
-	ft_putstr("42sh: ");
+	ft_putstr_fd("42sh: ", 2);
 	if (c)
-		ft_putchar(c);
+		ft_putchar_fd(c, 2);
 	if (str)
-		ft_putstr(str);
-	ft_putendl(err);
+		ft_putstr_fd(str, 2);
+	ft_putendl_fd(err, 2);
 	if (f)
 		ft_memdel((void **)&str);
 	return (1);
