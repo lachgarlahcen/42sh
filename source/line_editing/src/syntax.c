@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 00:10:12 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/05 04:59:37 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/05 06:24:00 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,8 @@ int		expansion_dollar(char *str)
 	{
 		if (str[i] == '{' && i && str[i - 1] == '$')
 			count++;
-		if (count > 0 && (used_variable(str[i]) || is_inhibitors(str[i])))
+		if (count > 0 && (used_variable(str[i])	|| ft_isblank(str[i]) ||
+					is_inhibitors(str[i]) || str[i] == '\n'))
 			return (1);
 		if (str[i] == '}' && count > 0)
 			count--;
