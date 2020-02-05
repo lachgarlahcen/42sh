@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   line_editing.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 02:48:48 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/04 03:54:58 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/05 04:15:30 by llachgar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "line_editing.h"
 
-static int	tab_space(char *str)
+static int tab_space(char *str)
 {
-	int	i;
+	int i;
 
 	i = -1;
 	while (str[++i])
@@ -23,7 +23,7 @@ static int	tab_space(char *str)
 	return (1);
 }
 
-void	aff_tokens(t_tok *t)
+void aff_tokens(t_tok *t)
 {
 	while (t)
 	{
@@ -32,7 +32,7 @@ void	aff_tokens(t_tok *t)
 	}
 }
 
-int	execute_cmdline(char *line)
+int execute_cmdline(char *line)
 {
 	t_tok *t;
 
@@ -42,9 +42,9 @@ int	execute_cmdline(char *line)
 	return (0);
 }
 
-int			line_editing(char **line, int lexical)
+int line_editing(char **line, int lexical)
 {
-	char	*alias;
+	char *alias;
 
 	if (!tab_space(*line) && !check_history_expa(line))
 	{
@@ -55,7 +55,8 @@ int			line_editing(char **line, int lexical)
 			execute_cmdline(alias);
 		else
 			ft_perror(0, 0, "syntax error !!", 1);
-		add_history(*line);
+		ft_putendl(*line);
+		add_to_hist(ft_strdup(*line), 0);
 		ft_memdel((void **)&alias);
 	}
 	return (0);
