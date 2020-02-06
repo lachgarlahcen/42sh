@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 05:14:50 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/06 05:40:04 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/06 06:21:37 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,23 +22,64 @@ void		check_save_tokens(t_pipe *p, char *token, int id)
 		save_tokens(&(p->red), token, id);
 }
 
-int			launch_process(t_tok *args, int bg)
+char		**get_args(t_tok *as)
 {
-	ft_printf("%d -- background\n", bg);
-	while (args)
+	int		l;
+	t_tok	*tmp;
+	char	**args;
+
+	l = 0;
+	tmp = as;
+	while (tmp)
 	{
-		ft_putendl(args->token);
-		args = args->next;
+		l++;
+		tmp =  tmp->next;
 	}
-//	exit(0);
-	return (1);
+	if (!(args = (char **)malloc(sizeof(char *) * (l + 1))))
+		return (0);
+	l = 0;
+	tmp = as;
+	while (tmp)
+	{
+		args[l++] = ft_strdup(tmp->token);
+		tmp = tmp->next;
+	}
+	args[l] = 0;
+	return (args);
+}
+
+char		*search_executable(char *cmdl)
+{
+	char	*excu;
+
+	excu = ft_strjoin("/bin/", cmdl);
+	if (!access(excu, F_OK))
+		return (excu);
+	ft_memdel((void **)&excu);
+	ft_putendl_fd("command not found", 2);
+	return (0);
+}
+
+int			launch_process(t_tok *as, int bg)
+{
+	char	*exec;
+	char	**args;
+
+	if (!as)
+		return (0);
+	bg = 0;
+	if (!(exec = search_executable(as->token)))
+		return (1);
+	args =  get_args(as);
+	execvp(args[0], args);
+	return (0);
 }
 
 int			execute_pipes_line(t_pipe *p, int bg)
 {
 	int		in;
 	int		out;
-//	int		pid;
+	int		pid;
 //	int		pi[2];
 
 	in = 0;
@@ -48,10 +89,13 @@ int			execute_pipes_line(t_pipe *p, int bg)
 /*		if (p->next)
 			if (pipe(pi) == -1)
 				return (1); //				ft_putendl("pipe failed !!");
-*///		if ((pid = fork()) == -1)
-//			return (1); //				ft_putendl("fork failed !!");
-//		if (pid == 0)
+*/		if ((pid = fork()) == -1)
+			return (1); //				ft_putendl("fork failed !!");
+		if (pid == 0)
+		{
 			launch_process(p->as, bg);
+			exit(1);
+		}
 /*		out = pi[1];
 		if (in != 0)
 			close (in);
