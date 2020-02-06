@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 05:14:50 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/06 04:43:33 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/06 05:40:04 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,35 +22,45 @@ void		check_save_tokens(t_pipe *p, char *token, int id)
 		save_tokens(&(p->red), token, id);
 }
 
-void		execute_pipes_line(t_pipe *p, int bg)
+int			launch_process(t_tok *args, int bg)
 {
-	t_tok	*tp;
+	ft_printf("%d -- background\n", bg);
+	while (args)
+	{
+		ft_putendl(args->token);
+		args = args->next;
+	}
+//	exit(0);
+	return (1);
+}
 
-	ft_printf(" ---- %d\n", bg);
+int			execute_pipes_line(t_pipe *p, int bg)
+{
+	int		in;
+	int		out;
+//	int		pid;
+//	int		pi[2];
+
+	in = 0;
+	out = 1;
 	while (p)
 	{
-		if (p->as)
-		{
-			tp = p->as;
-			ft_printf("args    -----\n");
-			while (tp)
-			{
-				ft_printf("|%d|  |%s|\n", tp->id, tp->token);
-				tp = tp->next;
-			}
-		}
-		if (p->red)
-		{
-			tp = p->red;
-			ft_printf("redirection    -----\n");
-			while (tp)
-			{
-				ft_printf("|%d|  |%s|\n", tp->id, tp->token);
-				tp = tp->next;
-			}
-		}
-		p = p->next;
+/*		if (p->next)
+			if (pipe(pi) == -1)
+				return (1); //				ft_putendl("pipe failed !!");
+*///		if ((pid = fork()) == -1)
+//			return (1); //				ft_putendl("fork failed !!");
+//		if (pid == 0)
+			launch_process(p->as, bg);
+/*		out = pi[1];
+		if (in != 0)
+			close (in);
+		if (out != 1)
+			close (in);
+		in = pi[0];
+*/		p = p->next;
 	}
+	return (0);
 }
 
 void		separat_cmdl(t_tok *t)
