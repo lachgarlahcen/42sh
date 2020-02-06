@@ -6,14 +6,15 @@
 #    By: hastid <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/05 05:16:42 by hastid            #+#    #+#              #
-#    Updated: 2020/02/05 05:19:56 by hastid           ###   ########.fr        #
+#    Updated: 2020/02/06 03:11:29 by hastid           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
 NAME = execute_cmdl.a
 
-SRC_NAME =	execute_cmdl.c
+SRC_NAME =	pipes_list.c \
+			execute_cmdl.c
 
 OBJ_NAME =	$(SRC_NAME:.c=.o)
 

@@ -6,7 +6,7 @@
 #    By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/13 18:30:14 by hastid            #+#    #+#              #
-#    Updated: 2020/02/05 04:08:07 by llachgar         ###   ########.fr        #
+#    Updated: 2020/02/05 23:15:17 by hastid           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,7 @@ INCLUDE =	-Iinclude \
 LIBS =	libft/libft.a \
 		source/read_line/read_line.a \
 		source/line_editing/line_editing.a \
+		source/execute_cmdl/execute_cmdl.a \
 		source/tokens_parser/tokens_parser.a \
 		source/intern_variables/intern_variables.a
 
@@ -39,7 +40,7 @@ DEPS = include/shell.h
 
 all: $(NAME)
 
-$(NAME): $(OBJ) libft_c read_line_c line_editing_c tokens_parser_c intern_variables_c
+$(NAME): $(OBJ) libft_c read_line_c line_editing_c execute_cmdl_c tokens_parser_c intern_variables_c
 	@clear;
 	@echo "	\033[1;34mCreating ...									";
 	@echo "         					              	         	";
@@ -63,6 +64,9 @@ read_line_c:
 line_editing_c:
 	@make -C source/line_editing
 
+execute_cmdl_c:
+	@make -C source/execute_cmdl
+
 tokens_parser_c:
 	@make -C source/tokens_parser
 
@@ -79,6 +83,7 @@ clean:
 	@make clean -C libft
 	@make clean -C source/read_line
 	@make clean -C source/line_editing
+	@make clean -C source/execute_cmdl
 	@make clean -C source/tokens_parser
 	@make clean -C source/intern_variables
 	@echo "\033[1;33mRemoving $(NAME)'s objects directory\033[0m"
@@ -88,6 +93,7 @@ fclean: clean
 	@make fclean -C libft
 	@make fclean -C source/read_line
 	@make fclean -C source/line_editing
+	@make fclean -C source/execute_cmdl
 	@make fclean -C source/tokens_parser
 	@make fclean -C source/intern_variables
 	@echo "\033[1;33mRemoving $(NAME)\033[0m"

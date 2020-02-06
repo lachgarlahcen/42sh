@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 01:22:06 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/05 04:50:53 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/06 00:37:21 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,7 @@
 # define INTERN_VARIABLES_H
 
 # include "shell.h"
-
-typedef struct	s_var
-{
-	char			*name;
-	char			*value;
-	struct s_var	*next;
-}				t_var;
+# include  "struct_shell.h"
 
 int				del_elem(t_var **var, char *name);
 int				add_elem(t_var **var, char *name, char *value);

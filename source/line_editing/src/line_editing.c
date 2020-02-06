@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 04:57:19 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/05 05:52:09 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/05 23:12:32 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,25 +21,6 @@ static int	tab_space(char *str)
 		if (str[i] != ' ' && str[i] != '\t')
 			return (0);
 	return (1);
-}
-
-void		aff_tokens(t_tok *t)
-{
-	while (t)
-	{
-		ft_printf("%d |%s|\n", t->id, t->token);
-		t = t->next;
-	}
-}
-
-int			execute_cmdline(char *line)
-{
-	t_tok *t;
-
-	t = parse_tokens(line);
-	aff_tokens(t);
-	free_toks(t);
-	return (0);
 }
 
 int			line_editing(char **line, int lexical)
