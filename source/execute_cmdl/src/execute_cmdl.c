@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 05:14:50 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/06 06:21:37 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/06 22:32:23 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,10 +92,8 @@ int			execute_pipes_line(t_pipe *p, int bg)
 */		if ((pid = fork()) == -1)
 			return (1); //				ft_putendl("fork failed !!");
 		if (pid == 0)
-		{
 			launch_process(p->as, bg);
-			exit(1);
-		}
+		wait(0);
 /*		out = pi[1];
 		if (in != 0)
 			close (in);
