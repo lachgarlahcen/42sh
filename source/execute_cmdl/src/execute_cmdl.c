@@ -5,14 +5,26 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/07 04:23:06 by hastid            #+#    #+#             */
+/*   Updated: 2020/02/07 04:33:31 by hastid           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execute_cmdl.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 05:14:50 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/06 06:21:37 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/07 04:22:41 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute_cmdl.h"
 
-void		check_save_tokens(t_pipe *p, char *token, int id)
+void		check_save_tokens(t_proc *p, char *token, int id)
 {
 	while (p && p->next)
 		p = p->next;
@@ -60,57 +72,88 @@ char		*search_executable(char *cmdl)
 	return (0);
 }
 
-int			launch_process(t_tok *as, int bg)
+int			launch_process(t_tok *as, int bg, int in, int out)
 {
 	char	*exec;
+	char	**env;
 	char	**args;
 
 	if (!as)
-		return (0);
+		exit (0);
 	bg = 0;
 	if (!(exec = search_executable(as->token)))
-		return (1);
+		exit (EXIT_FAILURE);
 	args =  get_args(as);
-	execvp(args[0], args);
-	return (0);
+	if (in != 0)
+	{
+		if (dup2(in, 0) == -1)
+			exit (1);
+		close (in);
+	}
+	if (out != 1)
+	{
+		if (dup2 (out, 1) == -1)
+			exit (1);
+		close (out);
+	}
+	execve(exec, args, env);
+	exit (0);
 }
 
-int			execute_pipes_line(t_pipe *p, int bg)
+void		wait_for_process(t_proc *p)
+{
+	int	status;
+
+	while (p)
+	{
+		waitpid(p->pid, &status, WUNTRACED | WCONTINUED);
+		p->stat = status;
+		p = p->next;
+	}
+}
+
+int			execute_pipes_line(t_proc *p, int bg)
 {
 	int		in;
 	int		out;
-	int		pid;
-//	int		pi[2];
+	int		pi[2];
+	t_proc	*tp;
 
 	in = 0;
-	out = 1;
-	while (p)
+	tp = p;
+	while (tp)
 	{
-/*		if (p->next)
+		if (tp->next)
+		{
 			if (pipe(pi) == -1)
 				return (1); //				ft_putendl("pipe failed !!");
-*/		if ((pid = fork()) == -1)
-			return (1); //				ft_putendl("fork failed !!");
-		if (pid == 0)
-		{
-			launch_process(p->as, bg);
-			exit(1);
+			out = pi[1];
 		}
-/*		out = pi[1];
+		else
+			out = 1;
+		if ((tp->pid = fork()) == -1)
+			return (1); //				ft_putendl("fork failed !!");
+		if (tp->pid == 0)
+		{
+			if (tp->next)
+				close(pi[0]);
+			launch_process(tp->as, bg, in, out);
+		}
 		if (in != 0)
 			close (in);
 		if (out != 1)
-			close (in);
+			close (out);
 		in = pi[0];
-*/		p = p->next;
+		tp = tp->next;
 	}
+	wait_for_process(p);
 	return (0);
 }
 
 void		separat_cmdl(t_tok *t)
 {
 	int		check;
-	t_pipe	*p;
+	t_proc	*p;
 
 	check = 0;
 	while (t)
@@ -118,7 +161,7 @@ void		separat_cmdl(t_tok *t)
 		p = 0;
 		while (t && t->id < 5)
 		{
-			add_pipes(&p);
+			add_process(&p);
 			while (t && t->id < 4)
 			{
 				check_save_tokens(p, t->token, t->id);
@@ -128,7 +171,20 @@ void		separat_cmdl(t_tok *t)
 				t = t->next;
 		}
 		(t && t->id == 5) ? execute_pipes_line(p, 1) : execute_pipes_line(p, 0);
-		free_pipes(p);
+		while (p)
+		{
+			if (WIFEXITED(p->stat)) {
+				printf("exited, status = %d\n", WEXITSTATUS(p->stat));
+			} else if (WIFSIGNALED(p->stat)) {
+				printf("killed by signal %d\n", WTERMSIG(p->stat));
+			} else if (WIFSTOPPED(p->stat)) {
+				printf("stopped by signal %d\n", WSTOPSIG(p->stat));
+			} else if (WIFCONTINUED(p->stat)) {
+				printf("continued\n");
+			}
+			p = p->next;
+		}
+		free_process(p);
 		if (t)
 			t = t->next;
 	}

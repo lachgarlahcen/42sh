@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 00:32:50 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/06 02:28:44 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/07 03:20:55 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,19 @@ typedef struct	s_tok
 
 typedef struct	s_var
 {
+	int				id;
 	char			*name;
 	char			*value;
 	struct s_var	*next;
 }				t_var;
 
-typedef struct	s_pipe
+typedef struct	s_proc
 {
+	pid_t			pid;
+	int				stat;
 	t_tok			*as;
 	t_tok			*red;
-	struct s_pipe	*next;
-}				t_pipe;
+	struct s_proc	*next;
+}				t_proc;
 
 #endif

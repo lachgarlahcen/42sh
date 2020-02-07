@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 05:18:12 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/06 03:09:50 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/07 02:03:37 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,9 @@
 # include "shell.h"
 # include "struct_shell.h"
 
-int		add_pipes(t_pipe **pipes);
-void	free_pipes(t_pipe *pipes);
+int		add_process(t_proc **pipes);
+
+void	free_process(t_proc *pipes);
 
 int		execute_cmdline(char *line);
 

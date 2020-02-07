@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 01:02:55 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/05 03:12:34 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/06 22:46:33 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int		unset_variables(char **args)
 	return (0);
 }
 
-int		set_variable(char *arg)
+int		set_variable(char *arg, int id)
 {
 	int		i;
 	int		co;
@@ -55,7 +55,7 @@ int		set_variable(char *arg)
 			co++;
 		if (!(name = ft_strsub(arg, 0, co)))
 			return (0);
-		if (add_elem(&var, name, arg + co + 1))
+		if (add_elem(&var, name, arg + co + 1, id))
 			return (0);
 		ft_memdel((void **)&name);
 		get_intern_variables(&var, 1);
@@ -109,7 +109,7 @@ t_var	*creat_variables(char **var)
 			co++;
 		if (!(name = ft_strsub(tmp, 0, co)))
 			return (0);
-		if (add_to_var(&my_var, name, tmp + co + 1))
+		if (add_to_var(&my_var, name, tmp + co + 1, 1))
 			return (0);
 		ft_memdel((void **)&name);
 		i++;

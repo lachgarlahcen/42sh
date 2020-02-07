@@ -6,18 +6,19 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 01:00:49 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/05 02:28:18 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/06 22:49:10 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "intern_variables.h"
 
-static t_var	*elem_var(char *name, char *value)
+static t_var	*elem_var(char *name, char *value, int id)
 {
 	t_var	*elem;
 
 	if (!(elem = (t_var *)malloc(sizeof(t_var))))
 		return (0);
+	elem->id = id;
 	if (!(elem->name = ft_strdup(name)))
 		return (0);
 	if (value)
@@ -42,7 +43,7 @@ static int		del_head(t_var **var)
 	return (0);
 }
 
-int				add_to_var(t_var **var, char *name, char *value)
+int				add_to_var(t_var **var, char *name, char *value, int id)
 {
 	t_var	*tmp;
 
@@ -51,15 +52,15 @@ int				add_to_var(t_var **var, char *name, char *value)
 		tmp = *var;
 		while (tmp->next)
 			tmp = tmp->next;
-		if (!(tmp->next = elem_var(name, value)))
+		if (!(tmp->next = elem_var(name, value, id)))
 			return (1);
 	}
-	else if (!(*var = elem_var(name, value)))
+	else if (!(*var = elem_var(name, value, id)))
 		return (1);
 	return (0);
 }
 
-int				add_elem(t_var **var, char *name, char *value)
+int				add_elem(t_var **var, char *name, char *value, int id)
 {
 	t_var	*tmp;
 
@@ -79,7 +80,7 @@ int				add_elem(t_var **var, char *name, char *value)
 			else if (!(tmp->value = ft_strdup("\0")))
 				return (1);
 		}
-		else if (add_to_var(var, name, value))
+		else if (add_to_var(var, name, value, id))
 			return (1);
 	}
 	return (0);
