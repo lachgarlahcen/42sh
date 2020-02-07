@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/07 04:23:06 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/07 04:33:31 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/07 05:40:19 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,7 @@ int			execute_pipes_line(t_proc *p, int bg)
 			return (1); //				ft_putendl("fork failed !!");
 		if (tp->pid == 0)
 		{
+			signals(0);
 			if (tp->next)
 				close(pi[0]);
 			launch_process(tp->as, bg, in, out);
@@ -173,6 +174,7 @@ void		separat_cmdl(t_tok *t)
 		(t && t->id == 5) ? execute_pipes_line(p, 1) : execute_pipes_line(p, 0);
 		while (p)
 		{
+			printf("pid == %i\n", p->pid);
 			if (WIFEXITED(p->stat)) {
 				printf("exited, status = %d\n", WEXITSTATUS(p->stat));
 			} else if (WIFSIGNALED(p->stat)) {

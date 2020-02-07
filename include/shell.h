@@ -6,7 +6,7 @@
 /*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 04:13:05 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/06 00:35:02 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/07 05:35:01 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include "line_editing.h"
 # include "execute_cmdl.h"
 # include "tokens_parser.h"
+# include "shell_signals.h"
 # include "intern_variables.h"
 # include "struct_shell.h"
 

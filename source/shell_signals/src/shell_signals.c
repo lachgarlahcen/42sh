@@ -1,19 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   shell_signals.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/07 04:56:06 by llachgar          #+#    #+#             */
-/*   Updated: 2020/02/07 05:16:58 by llachgar         ###   ########.fr       */
+/*   Created: 2020/02/07 05:32:23 by hastid            #+#    #+#             */
+/*   Updated: 2020/02/07 05:43:17 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <sys/types.h>
-#include <termios.h>
-#include <unistd.h>
-#include <signal.h>
+#include "shell_signals.h"
 
 static void	kill_seg(int seg)
 {
@@ -44,7 +41,6 @@ void    signals(int c)
         signal (SIGTSTP, SIG_IGN);
         signal (SIGTTIN, SIG_IGN);
         signal (SIGTTOU, SIG_IGN);
-        signal (SIGCHLD, SIG_IGN);
         return ;
     }
     signal (SIGINT, SIG_DFL);
@@ -52,5 +48,4 @@ void    signals(int c)
     signal (SIGTSTP, SIG_DFL);
     signal (SIGTTIN, SIG_DFL);
     signal (SIGTTOU, SIG_DFL);
-    signal (SIGCHLD, SIG_DFL);
 }
