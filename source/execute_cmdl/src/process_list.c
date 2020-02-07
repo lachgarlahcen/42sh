@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 03:08:29 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/07 02:29:02 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/07 03:15:07 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ static t_proc	*add_proc(void)
 		return (0);
 	pi->as = 0;
 	pi->red = 0;
+	pi->pid = 0;
 	pi->stat = 0;
 	pi->next = 0;
 	return (pi);

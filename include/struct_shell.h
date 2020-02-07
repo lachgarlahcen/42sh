@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 00:32:50 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/07 02:28:22 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/07 03:20:55 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef struct	s_var
 
 typedef struct	s_proc
 {
+	pid_t			pid;
 	int				stat;
 	t_tok			*as;
 	t_tok			*red;
