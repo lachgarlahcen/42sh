@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 03:08:29 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/07 03:15:07 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/08 01:36:49 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ static t_proc	*add_proc(void)
 
 	if (!(pi = (t_proc *)malloc(sizeof(t_proc))))
 		return (0);
+	pi->s = 0;
+	pi->c = 0;
 	pi->as = 0;
 	pi->red = 0;
 	pi->pid = 0;

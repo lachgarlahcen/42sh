@@ -6,7 +6,7 @@
 #    By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/13 18:30:14 by hastid            #+#    #+#              #
-#    Updated: 2020/02/07 05:33:03 by hastid           ###   ########.fr        #
+#    Updated: 2020/02/08 02:07:51 by hastid           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,7 @@ INCLUDE =	-Iinclude \
 
 LIBS =	libft/libft.a \
 		source/read_line/read_line.a \
+		source/job_control/job_control.a \
 		source/line_editing/line_editing.a \
 		source/execute_cmdl/execute_cmdl.a \
 		source/tokens_parser/tokens_parser.a \
@@ -39,9 +40,19 @@ LIBS =	libft/libft.a \
 
 DEPS = include/shell.h
 
+LIB_C = libft_c \
+		read_line_c \
+		job_control_c \
+		line_editing_c \
+		execute_cmdl_c \
+		tokens_parser_c \
+		shell_signals_c \
+		intern_variables_c
+
+
 all: $(NAME)
 
-$(NAME): $(OBJ) libft_c read_line_c line_editing_c execute_cmdl_c tokens_parser_c shell_signals_c intern_variables_c
+$(NAME): $(OBJ) $(LIB_C) 
 	@clear;
 	@echo "	\033[1;34mCreating ...									";
 	@echo "         					              	         	";
@@ -56,11 +67,15 @@ $(NAME): $(OBJ) libft_c read_line_c line_editing_c execute_cmdl_c tokens_parser_
 	@echo "		         Made by : \033[1;91m mizonaise\033[m       ";
 	@gcc $(OBJ) $(LIBS) -ltermcap -lreadline  -o $@
 
+
 libft_c:
 	@make -C libft
 
 read_line_c:
 	@make -C source/read_line
+
+job_control_c:
+	@make -C source/job_control
 
 line_editing_c:
 	@make -C source/line_editing
@@ -86,6 +101,7 @@ $(OBJ_PATH)/%.o : $(SRC_PATH)/%.c $(DEPS)
 clean:
 	@make clean -C libft
 	@make clean -C source/read_line
+	@make clean -C source/job_control
 	@make clean -C source/line_editing
 	@make clean -C source/execute_cmdl
 	@make clean -C source/tokens_parser
@@ -97,6 +113,7 @@ clean:
 fclean: clean
 	@make fclean -C libft
 	@make fclean -C source/read_line
+	@make fclean -C source/job_control
 	@make fclean -C source/line_editing
 	@make fclean -C source/execute_cmdl
 	@make fclean -C source/tokens_parser

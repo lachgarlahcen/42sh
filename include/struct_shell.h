@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 00:32:50 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/07 03:20:55 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/08 01:57:11 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,16 @@ typedef struct	s_proc
 	int				stat;
 	t_tok			*as;
 	t_tok			*red;
+	char			s;
+	char			c;
 	struct s_proc	*next;
 }				t_proc;
+
+typedef struct	s_job
+{
+	t_proc			*p;
+	pid_t			pgid;
+	struct s_job	*next;
+}				t_job;
 
 #endif
