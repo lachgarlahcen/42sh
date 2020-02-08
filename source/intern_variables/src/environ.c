@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 22:39:18 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/06 23:40:14 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/08 03:46:25 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static char	*get_env_variable(char *name, char *value)
 	var = 0;
 	if (name)
 	{
-		var = ft_strjoin(name, '=');
+		var = ft_strjoin(name, "=");
 		if (value)
 			var = strjoin_free(var, value, 1, 0);
 	}

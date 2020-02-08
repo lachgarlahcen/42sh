@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 04:57:19 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/05 23:12:32 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/08 03:34:53 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ int			line_editing(char **line, int lexical)
 			execute_cmdline(alias);
 		else
 			ft_perror(0, 0, "syntax error !!", 1);
-		ft_putendl(*line);
 		add_to_hist(ft_strdup(*line), 0);
 		ft_memdel((void **)&alias);
 	}

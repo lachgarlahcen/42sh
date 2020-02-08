@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 05:14:50 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/08 01:39:55 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/08 04:03:24 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,10 @@ char		*search_executable(char *cmdl)
 	if (!access(excu, F_OK))
 		return (excu);
 	ft_memdel((void **)&excu);
+	excu = ft_strjoin("/usr/bin/", cmdl);
+	if (!access(excu, F_OK))
+		return (excu);
+	ft_memdel((void **)&excu);
 	ft_putendl_fd("command not found", 2);
 	return (0);
 }
@@ -68,10 +72,6 @@ int			launch_process(t_tok *as, int bg, int in, int out)
 
 	if (!as)
 		exit (0);
-	bg = 0;
-	if (!(exec = search_executable(as->token)))
-		exit (EXIT_FAILURE);
-	args =  get_args(as);
 	if (in != 0)
 	{
 		if (dup2(in, 0) == -1)
@@ -84,6 +84,11 @@ int			launch_process(t_tok *as, int bg, int in, int out)
 			exit (1);
 		close (out);
 	}
+	bg = 0;
+	if (!(exec = search_executable(as->token)))
+		exit (EXIT_FAILURE);
+	args =  get_args(as);
+	env = get_env_variables();
 	execve(exec, args, env);
 	exit (0);
 }
@@ -108,11 +113,13 @@ int			execute_pipes_line(t_proc *p, int bg)
 {
 	int		in;
 	int		out;
+	int		pgid;
 	int		pi[2];
 	t_proc	*tp;
 
 	in = 0;
 	tp = p;
+	pgid = 0;
 	while (tp)
 	{
 		if (tp->next)
@@ -132,6 +139,9 @@ int			execute_pipes_line(t_proc *p, int bg)
 				close(pi[0]);
 			launch_process(tp->as, bg, in, out);
 		}
+//		if (!pgid)
+//			pgid = tp->pid;
+//		setpgid(tp->pid, pgid);
 		if (in != 0)
 			close (in);
 		if (out != 1)
@@ -139,7 +149,16 @@ int			execute_pipes_line(t_proc *p, int bg)
 		in = pi[0];
 		tp = tp->next;
 	}
-	wait_for_process(p);
+	if (bg)
+	{
+		add_jobs(p, pgid);
+	}
+	else
+	{
+//		tcsetpgrp (1, pgid);
+		wait_for_process(p);
+//		tcsetpgrp (0, getpid());
+	}
 	return (0);
 }
 
@@ -164,7 +183,7 @@ void		separat_cmdl(t_tok *t)
 				t = t->next;
 		}
 		(t && t->id == 5) ? execute_pipes_line(p, 1) : execute_pipes_line(p, 0);
-		while (p)
+/*		while (p)
 		{
 			printf("pid == %i\n", p->pid);
 			if (WIFEXITED(p->stat)) {
@@ -178,7 +197,7 @@ void		separat_cmdl(t_tok *t)
 			}
 			p = p->next;
 		}
-		free_process(p);
+*/		free_process(p);
 		if (t)
 			t = t->next;
 	}
