@@ -6,7 +6,7 @@
 #    By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/13 18:30:14 by hastid            #+#    #+#              #
-#    Updated: 2020/02/08 02:07:51 by hastid           ###   ########.fr        #
+#    Updated: 2020/02/08 05:15:53 by hastid           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -65,7 +65,7 @@ $(NAME): $(OBJ) $(LIB_C)
 	@echo "				                                            ";
 	@echo "\033[1;33m $(NAME)\033[0m                        ";
 	@echo "		         Made by : \033[1;91m mizonaise\033[m       ";
-	@gcc $(OBJ) $(LIBS) -ltermcap -lreadline  -o $@
+	@gcc $(OBJ) $(LIBS) -ltermcap -o $@
 
 
 libft_c:
