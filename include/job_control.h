@@ -6,7 +6,7 @@
 /*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 22:18:48 by llachgar          #+#    #+#             */
-/*   Updated: 2020/02/06 22:27:24 by llachgar         ###   ########.fr       */
+/*   Updated: 2020/02/08 00:22:33 by llachgar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <sys/types.h>
 #include <termios.h>
 #include <unistd.h>
-
+#include "shell.h"
 typedef struct s_process
 {
   struct process *next;       /* next process in pipeline */
