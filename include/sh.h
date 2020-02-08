@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sh.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aihya <aihya@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 18:23:41 by aihya             #+#    #+#             */
-/*   Updated: 2020/02/01 20:23:21 by aihya            ###   ########.fr       */
+/*   Updated: 2020/02/08 22:21:04 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,12 @@
 # include "libft.h"
 #include <sys/stat.h>
 
-# define HT_LIMIT	20
-# define TRUE		1
-# define FALSE		0
-# define INC		1
-# define DEC		-1
+# define HT_LIMIT			20
+# define TRUE				1
+# define FALSE				0
+# define INC				1
+# define DEC				-1
+# define BAD_SUBSTITUTION	1
 
 typedef struct	s_htnode
 {
