@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 04:36:08 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/08 05:43:21 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/10 21:02:55 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int		execute_builtin(char **args)
 		execute_alias();
 	else if (!ft_strcmp("unalias", *args))
 		execute_unalias();
-	else
-*/	return (0);
+*/	else
+		return (1);
+	return (0);
 }

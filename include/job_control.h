@@ -6,7 +6,7 @@
 /*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 22:18:48 by llachgar          #+#    #+#             */
-/*   Updated: 2020/02/08 03:38:05 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/10 20:47:29 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <unistd.h>
 # include <termios.h>
 # include <sys/types.h>
+# include "struct_shell.h"
 
 t_job		*g_first_job;
 

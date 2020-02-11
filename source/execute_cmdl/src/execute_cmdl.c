@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 05:14:50 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/08 04:03:24 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/11 00:15:17 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,9 +85,11 @@ int			launch_process(t_tok *as, int bg, int in, int out)
 		close (out);
 	}
 	bg = 0;
+	args =  get_args(as);
+	if (!execute_builtin(args))
+		exit (0);
 	if (!(exec = search_executable(as->token)))
 		exit (EXIT_FAILURE);
-	args =  get_args(as);
 	env = get_env_variables();
 	execve(exec, args, env);
 	exit (0);
