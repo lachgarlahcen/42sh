@@ -3,10 +3,14 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+         #
+#    By: iel-bouh <iel-bouh@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/13 18:30:14 by hastid            #+#    #+#              #
+<<<<<<< HEAD
 #    Updated: 2020/02/10 20:54:02 by hastid           ###   ########.fr        #
+=======
+#    Updated: 2020/02/08 16:16:15 by iel-bouh         ###   ########.fr        #
+>>>>>>> 273dbcbe77c93f7bbdb03a7cf2688457af44b463
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,7 +72,7 @@ $(NAME): $(OBJ) $(LIB_C)
 	@echo "         ╚═╝  ╚═════╝  ╚═════╝  ╚═╝  ╚═╝                 ";
 	@echo "				                                            ";
 	@echo "\033[1;33m $(NAME)\033[0m                        ";
-	@echo "		         Made by : \033[1;91m mizonaise\033[m       ";
+	@echo "		         Made by : \033[1;91m mmizonaise\033[m       ";
 	@gcc $(OBJ) $(LIBS) -ltermcap -o $@
 
 
