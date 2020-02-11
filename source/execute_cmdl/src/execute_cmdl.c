@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 05:14:50 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/11 02:40:26 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/11 21:07:21 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,69 @@ char	*change_tilda(char *str)
 	return (tmp);
 }
 
+char	*change_string(char *str, int be)
+{
+	int		i;
+	char	*tp;
+	char	*tmp;
+
+	i = be;
+	tp = 0;
+	if (str[be] == '{')
+	{
+		while (str[i] && str[i] != '}')
+			i++;
+		be++;
+	}
+	else
+		while (str[i] && ft_isalnum(str[i]) && str[i] != '_')
+			i++;
+	tp = ft_strsub(str, be, i - be);
+	tmp = get_variable(tp);
+	ft_memdel((void **)&tp);
+	tp = ft_strsub(str, 0, (str[be - 1] == '{') ? be - 2 : be - 1);
+	if (tmp)
+		tp = strjoin_free(tp, tmp, 1, 1);
+	if (str[i] == '}')
+		i++;
+	tmp = ft_strsub(str, i, ft_strlen(str) - i);
+	tp = strjoin_free(tp, tmp, 1, 1);
+	if (!*tp)
+		ft_memdel((void **)&tp);
+	return (tp);
+}
+
+char	*change_dollar(char *str, int id)
+{
+	int		i;
+	int		be;
+	//	char	*tp;
+	char	*tmp;
+
+	i = 0;
+	tmp = 0;
+	while (str[i])
+	{
+		if (str[i] == '\"' || str[i] == '\'')
+		{
+			be = i++;
+			while (str[i] && str[i] != str[be])
+			{
+				if (str[i] == '$' && str[be] == '\"')
+					return (0);
+				i++;
+			}
+		}
+		if (str[i] == '$')
+			tmp = change_string(str, i + 1);
+		i++;
+	}
+	if (!tmp && id != 0)
+		return (str);
+	ft_memdel((void **)&str);
+	return (tmp);
+}
+
 int		change_expansion(t_tok *t)
 {
 	while (t)
@@ -99,7 +162,8 @@ char		**get_args(t_tok *as)
 	tmp = as;
 	while (tmp)
 	{
-		l++;
+		if (tmp->token)
+			l++;
 		tmp =  tmp->next;
 	}
 	if (!(args = (char **)malloc(sizeof(char *) * (l + 1))))
@@ -108,7 +172,8 @@ char		**get_args(t_tok *as)
 	tmp = as;
 	while (tmp)
 	{
-		args[l++] = ft_strdup(tmp->token);
+		if (tmp->token)
+			args[l++] = ft_strdup(tmp->token);
 		tmp = tmp->next;
 	}
 	args[l] = 0;
