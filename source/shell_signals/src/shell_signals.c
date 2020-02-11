@@ -12,6 +12,12 @@
 
 #include "shell_signals.h"
 
+/*static void child_seg(int seg)
+{
+	(void)seg;
+	do_job_notification();
+}*/
+
 static void	kill_seg(int seg)
 {
 	t_cmd	*l;
@@ -36,6 +42,7 @@ void    signals(int c)
 {   
     if (c)
     {
+		//signal (SIGCHLD, child_seg);
         signal(SIGINT, kill_seg);
         signal (SIGQUIT, SIG_IGN);
         signal (SIGTSTP, SIG_IGN);
@@ -48,4 +55,5 @@ void    signals(int c)
     signal (SIGTSTP, SIG_DFL);
     signal (SIGTTIN, SIG_DFL);
     signal (SIGTTOU, SIG_DFL);
+//	signal (SIGCHLD, SIG_DFL);
 }

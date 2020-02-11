@@ -18,12 +18,12 @@
 */
 void  mark_job_as_running (t_job *j)
 {
-  t_process *p;
+  t_proc *p;
 
-  p = j->first_process;
+  p = j->p;
   while (p)
   {
-    p->stopped = 0;
+    p->s = 0;
     p = p->next;
   }
   j->notified = 0;
@@ -63,12 +63,12 @@ t_job       *find_job(pid_t pgid)
 */
 int     job_is_stopped (t_job *j)
 {
-  t_process *p;
+  t_proc *p;
 
-  p = j->first_process;
+  p = j->p;
   while (p)
   {
-      if (!p->completed && !p->stopped)
+      if (!p->c && !p->s)
       return (0);
       p = p->next;
   }
@@ -78,13 +78,13 @@ int     job_is_stopped (t_job *j)
 /* Return true if all processes in the job have completed.  */
 int     job_is_completed (t_job *j)
 {
-  t_process *p;
+  t_proc *p;
 
-  p = j->first_process;
+  p = j->p;
 
   while (p)
   {
-      if (!p->completed)
+      if (!p->c)
         return (0);
     p = p->next;
   }

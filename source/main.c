@@ -14,8 +14,17 @@
 
 int	init_shell(void)
 {
-	if (isatty(0) && isatty(1))
-		return (1);
+	
+
+	if (!isatty(0) || !isatty(1))
+		return (0);
+	g_shell_pgid = getpid();
+	/*
+	**Grab control of the terminal.
+	*/
+	setpgid(g_shell_pgid, g_shell_pgid);
+	tcsetpgrp(STDIN_FILENO, g_shell_pgid);
+	tcgetattr(STDIN_FILENO, &g_shell_tmodes);
 	return (0);
 }
 
@@ -24,7 +33,7 @@ int main(int ac, char **av, char **env)
 	int stat;
 	char *line;
 
-	if (!init_shell())
+	if (init_shell())
 		return (0);
 	(void)ac;
 	(void)av;

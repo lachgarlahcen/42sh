@@ -15,7 +15,7 @@
 void  put_job_in_foreground (t_job *j, int cont)
 {
   /* Put the job into the foreground.  */
-  //tcsetpgrp (shell_terminal, j->pgid);
+  tcsetpgrp (STDIN_FILENO, j->pgid);
 
   /* Send the job a continue signal, if necessary.  */
   if (cont)
@@ -29,7 +29,8 @@ void  put_job_in_foreground (t_job *j, int cont)
   wait_for_job (j);
 
   /* Put the shell back in the foreground.  */
-  //tcsetpgrp (shell_terminal, shell_pgid);
+  tcsetpgrp (STDIN_FILENO, g_shell_pgid);
+  tcsetattr (STDIN_FILENO, TCSADRAIN, &g_shell_tmodes);
 }
 
 /*
@@ -41,5 +42,5 @@ void  put_job_in_background (t_job *j, int cont)
 {
   /* Send the job a continue signal, if necessary.  */
   if (cont)
-    kill (j->pgid, SIGCONT);
+    kill (- j->pgid, SIGCONT);
 }

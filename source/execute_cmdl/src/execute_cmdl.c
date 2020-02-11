@@ -84,6 +84,7 @@ int			launch_process(t_tok *as, int bg, int in, int out)
 			exit (1);
 		close (out);
 	}
+	signals(0);
 	bg = 0;
 	if (!(exec = search_executable(as->token)))
 		exit (EXIT_FAILURE);
@@ -116,6 +117,7 @@ int			execute_pipes_line(t_proc *p, int bg)
 	int		pgid;
 	int		pi[2];
 	t_proc	*tp;
+	t_job	*j;
 
 	in = 0;
 	tp = p;
@@ -134,14 +136,13 @@ int			execute_pipes_line(t_proc *p, int bg)
 			return (1); //				ft_putendl("fork failed !!");
 		if (tp->pid == 0)
 		{
-			signals(0);
 			if (tp->next)
 				close(pi[0]);
 			launch_process(tp->as, bg, in, out);
 		}
-//		if (!pgid)
-//			pgid = tp->pid;
-//		setpgid(tp->pid, pgid);
+		if (!pgid)
+			pgid = tp->pid;
+		setpgid(tp->pid, pgid);	
 		if (in != 0)
 			close (in);
 		if (out != 1)
@@ -149,16 +150,23 @@ int			execute_pipes_line(t_proc *p, int bg)
 		in = pi[0];
 		tp = tp->next;
 	}
+	j = add_jobs(p, pgid);
 	if (bg)
 	{
-		add_jobs(p, pgid);
+		put_job_in_background(j, 0);
+		ft_printf("[1] %ld\n", j->pgid);
+		job_is_completed(j);
 	}
 	else
 	{
-//		tcsetpgrp (1, pgid);
-		wait_for_process(p);
-//		tcsetpgrp (0, getpid());
+		put_job_in_foreground(j, 0);
+		if (job_is_completed(j))
+			delete_job(j->pgid);
+		// tcsetpgrp (STDIN_FILENO, pgid);
+		// wait_for_process(p);
+		// tcsetpgrp (STDIN_FILENO, g_shell_pgid);
 	}
+	do_job_notification();
 	return (0);
 }
 
@@ -197,7 +205,7 @@ void		separat_cmdl(t_tok *t)
 			}
 			p = p->next;
 		}
-*/		free_process(p);
+*/		//free_process(p);
 		if (t)
 			t = t->next;
 	}

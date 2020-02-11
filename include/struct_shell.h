@@ -43,6 +43,7 @@ typedef struct	s_job
 {
 	t_proc			*p;
 	pid_t			pgid;
+	char			notified; 
 	struct s_job	*next;
 }				t_job;
 

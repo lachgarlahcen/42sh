@@ -23,8 +23,33 @@ static t_job	*add_job(t_proc *p, pid_t pgid)
 	j->next = 0;
 	return (j);
 }
+void delete_job(pid_t pgid)
+{
+	t_job *j;
+	t_job *prev;
 
-int				add_jobs(t_proc *p, pid_t pgid)
+	j = g_first_job;
+	prev = NULL;
+	while (j->pgid != pgid && j->next != NULL)
+	{
+		prev = j;
+		j = j->next;
+	}
+	if (j->pgid == pgid)
+	{
+		if (prev)
+		{
+			prev->next = j->next;
+		}
+		else
+		{
+			g_first_job = j->next;
+		}
+		free_job(j);
+	}
+}
+
+t_job			*add_jobs(t_proc *p, pid_t pgid)
 {
 	t_job	*temp;
 
@@ -33,12 +58,15 @@ int				add_jobs(t_proc *p, pid_t pgid)
 		temp = g_first_job;
 		while (temp->next)
 			temp = temp->next;
-		if (!(temp->next = add_job(p, pgid)))
-			return (1);
+		return ((temp->next = add_job(p, pgid)));
 	}
-	else if (!(g_first_job = add_job(p, pgid)))
-		return (1);
-	return (0);
+	return ((g_first_job = add_job(p, pgid)));
+}
+
+void			free_job(t_job *j)
+{
+	free_process(j->p);
+	ft_memdel((void**)&j);
 }
 
 void			free_jobs(void)

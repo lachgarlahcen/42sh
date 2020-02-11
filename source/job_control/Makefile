@@ -12,7 +12,11 @@
 
 NAME = job_control.a
 
-SRC_NAME = job_list.c
+SRC_NAME = job_list.c \
+			job_control.c \
+			job_notification.c \
+			utilit.c \
+
 
 OBJ_NAME =	$(SRC_NAME:.c=.o)
 
