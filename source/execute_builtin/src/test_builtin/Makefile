@@ -5,35 +5,17 @@
 #                                                     +:+ +:+         +:+      #
 #    By: hastid <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2020/02/08 05:13:41 by hastid            #+#    #+#              #
-#    Updated: 2020/02/08 05:13:42 by hastid           ###   ########.fr        #
+#    Created: 2020/02/08 05:06:04 by hastid            #+#    #+#              #
+#    Updated: 2020/02/08 05:54:09 by hastid           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = read_line.a
+NAME = test_builtin.a
 
-FLAG = -Wall -Wextra -Werror
-
-SRC_NAME = read_line.c \
-		   init.c \
-		   save.c \
-		   signals.c \
-		   keys2.c \
-		   keys.c \
-		   select_manage.c \
-		   completion.c \
-		   path_completion.c \
-		   binary_compelation.c \
-		   ft_selectmatch.c \
-		   history_keys.c \
-		   history.c \
-		   ft_history_search.c \
-		   ft_history_show.c \
+SRC_NAME = test_builtin.c \
 		   tools.c \
-		   ft_free.c \
-		   bonus.c \
-		   get_next_line.c \
-		   ft_data.c 
+		   arg_cmp.c \
+		   options.c
 
 OBJ_NAME =	$(SRC_NAME:.c=.o)
 
@@ -45,10 +27,10 @@ OBJ = $(addprefix $(OBJ_PATH)/, $(OBJ_NAME))
 
 CFLAGS = -Wall -Werror -Wextra
 
-Include = -I../../include \
-		  -I../../libft/include
+Include = -Iinclude \
+		  -I../../../../libft/include
 
-DEPS = ../../include/read_line.h
+DEPS = include/test_builtin.h
 
 all: $(NAME)
 
@@ -64,7 +46,7 @@ $(OBJ_PATH)/%.o : $(SRC_PATH)/%.c $(DEPS)
 	@gcc  $(CFLAGS) -g $(Include) -o $@ -c $<
 
 clean:
-	@echo "\033[1;34mRemoving intern_variables's objects directory\033[0m"
+	@echo "\033[1;34mRemoving test_builtin's objects directory\033[0m"
 	@/bin/rm -rf $(OBJ_PATH) 2> /dev/null
 
 fclean: clean

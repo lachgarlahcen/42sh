@@ -5,35 +5,14 @@
 #                                                     +:+ +:+         +:+      #
 #    By: hastid <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2020/02/08 05:13:41 by hastid            #+#    #+#              #
-#    Updated: 2020/02/08 05:13:42 by hastid           ###   ########.fr        #
+#    Created: 2020/02/08 01:54:05 by hastid            #+#    #+#              #
+#    Updated: 2020/02/08 05:57:31 by hastid           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = read_line.a
+NAME = execute_builtin.a
 
-FLAG = -Wall -Wextra -Werror
-
-SRC_NAME = read_line.c \
-		   init.c \
-		   save.c \
-		   signals.c \
-		   keys2.c \
-		   keys.c \
-		   select_manage.c \
-		   completion.c \
-		   path_completion.c \
-		   binary_compelation.c \
-		   ft_selectmatch.c \
-		   history_keys.c \
-		   history.c \
-		   ft_history_search.c \
-		   ft_history_show.c \
-		   tools.c \
-		   ft_free.c \
-		   bonus.c \
-		   get_next_line.c \
-		   ft_data.c 
+SRC_NAME = execute_builtin.c
 
 OBJ_NAME =	$(SRC_NAME:.c=.o)
 
@@ -46,16 +25,20 @@ OBJ = $(addprefix $(OBJ_PATH)/, $(OBJ_NAME))
 CFLAGS = -Wall -Werror -Wextra
 
 Include = -I../../include \
-		  -I../../libft/include
+		  -I../../libft/include \
+		  -Isrc/test_builtin/include
 
-DEPS = ../../include/read_line.h
+DEPS = ../../include/execute_builtin.h
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
+$(NAME): $(OBJ) test_c
 	@clear
 	@echo "\033[1;34mCreating $(NAME)\033[0m"
-	@ar rc $@ $^
+	@ar rc $@ $(OBJ)
+
+test_c:
+	@make -C src/test_builtin
 
 $(OBJ_PATH)/%.o : $(SRC_PATH)/%.c $(DEPS)
 	@mkdir $(OBJ_PATH) 2>/dev/null || true
@@ -64,10 +47,12 @@ $(OBJ_PATH)/%.o : $(SRC_PATH)/%.c $(DEPS)
 	@gcc  $(CFLAGS) -g $(Include) -o $@ -c $<
 
 clean:
-	@echo "\033[1;34mRemoving intern_variables's objects directory\033[0m"
+	@make clean -C src/test_builtin
+	@echo "\033[1;34mRemoving execute_builtin's objects directory\033[0m"
 	@/bin/rm -rf $(OBJ_PATH) 2> /dev/null
 
 fclean: clean
+	@make fclean -C src/test_builtin
 	@echo "\033[1;34mRemovimg $(NAME)\033[0m"
 	@/bin/rm -f $(NAME)
 
