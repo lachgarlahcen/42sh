@@ -6,7 +6,7 @@
 #    By: hastid <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/08 05:06:04 by hastid            #+#    #+#              #
-#    Updated: 2020/02/08 05:54:09 by hastid           ###   ########.fr        #
+#    Updated: 2020/02/10 20:51:41 by hastid           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,10 +27,10 @@ OBJ = $(addprefix $(OBJ_PATH)/, $(OBJ_NAME))
 
 CFLAGS = -Wall -Werror -Wextra
 
-Include = -Iinclude \
-		  -I../../../../libft/include
+Include = -I../../include \
+		  -I../../libft/include 
 
-DEPS = include/test_builtin.h
+DEPS = ../../include/test_builtin.h
 
 all: $(NAME)
 

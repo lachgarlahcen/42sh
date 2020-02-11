@@ -6,7 +6,11 @@
 #    By: iel-bouh <iel-bouh@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/13 18:30:14 by hastid            #+#    #+#              #
+<<<<<<< HEAD
+#    Updated: 2020/02/10 20:54:02 by hastid           ###   ########.fr        #
+=======
 #    Updated: 2020/02/08 16:16:15 by iel-bouh         ###   ########.fr        #
+>>>>>>> 273dbcbe77c93f7bbdb03a7cf2688457af44b463
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,8 +38,10 @@ LIBS =	libft/libft.a \
 		source/job_control/job_control.a \
 		source/line_editing/line_editing.a \
 		source/execute_cmdl/execute_cmdl.a \
+		source/test_builtin/test_builtin.a \
 		source/tokens_parser/tokens_parser.a \
 		source/shell_signals/shell_signals.a \
+		source/execute_builtin/execute_builtin.a \
 		source/intern_variables/intern_variables.a
 
 DEPS = include/shell.h
@@ -45,8 +51,10 @@ LIB_C = libft_c \
 		job_control_c \
 		line_editing_c \
 		execute_cmdl_c \
+		test_builtin_c \
 		tokens_parser_c \
 		shell_signals_c \
+		execute_builtin_c \
 		intern_variables_c
 
 
@@ -64,7 +72,7 @@ $(NAME): $(OBJ) $(LIB_C)
 	@echo "         ╚═╝  ╚═════╝  ╚═════╝  ╚═╝  ╚═╝                 ";
 	@echo "				                                            ";
 	@echo "\033[1;33m $(NAME)\033[0m                        ";
-	@echo "		         Made by : \033[1;91m iel-bouh\033[m       ";
+	@echo "		         Made by : \033[1;91m mmizonaise\033[m       ";
 	@gcc $(OBJ) $(LIBS) -ltermcap -o $@
 
 
@@ -83,11 +91,17 @@ line_editing_c:
 execute_cmdl_c:
 	@make -C source/execute_cmdl
 
+test_builtin_c:
+	@make -C source/test_builtin
+
 tokens_parser_c:
 	@make -C source/tokens_parser
 
 shell_signals_c:
 	@make -C source/shell_signals
+
+execute_builtin_c:
+	@make -C source/execute_builtin
 
 intern_variables_c:
 	@make -C source/intern_variables
@@ -104,8 +118,10 @@ clean:
 	@make clean -C source/job_control
 	@make clean -C source/line_editing
 	@make clean -C source/execute_cmdl
+	@make clean -C source/test_builtin
 	@make clean -C source/tokens_parser
 	@make clean -C source/shell_signals
+	@make clean -C source/execute_builtin
 	@make clean -C source/intern_variables
 	@echo "\033[1;33mRemoving $(NAME)'s objects directory\033[0m"
 	@rm -rf $(OBJ_PATH) 2> /dev/null
@@ -116,8 +132,10 @@ fclean: clean
 	@make fclean -C source/job_control
 	@make fclean -C source/line_editing
 	@make fclean -C source/execute_cmdl
+	@make fclean -C source/test_builtin
 	@make fclean -C source/tokens_parser
 	@make fclean -C source/shell_signals
+	@make fclean -C source/execute_builtin
 	@make fclean -C source/intern_variables
 	@echo "\033[1;33mRemoving $(NAME)\033[0m"
 	@/bin/rm -f $(NAME)

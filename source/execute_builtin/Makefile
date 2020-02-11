@@ -6,7 +6,7 @@
 #    By: hastid <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/08 01:54:05 by hastid            #+#    #+#              #
-#    Updated: 2020/02/08 05:57:31 by hastid           ###   ########.fr        #
+#    Updated: 2020/02/10 20:50:51 by hastid           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,20 +25,16 @@ OBJ = $(addprefix $(OBJ_PATH)/, $(OBJ_NAME))
 CFLAGS = -Wall -Werror -Wextra
 
 Include = -I../../include \
-		  -I../../libft/include \
-		  -Isrc/test_builtin/include
+		  -I../../libft/include
 
 DEPS = ../../include/execute_builtin.h
 
 all: $(NAME)
 
-$(NAME): $(OBJ) test_c
+$(NAME): $(OBJ)
 	@clear
 	@echo "\033[1;34mCreating $(NAME)\033[0m"
 	@ar rc $@ $(OBJ)
-
-test_c:
-	@make -C src/test_builtin
 
 $(OBJ_PATH)/%.o : $(SRC_PATH)/%.c $(DEPS)
 	@mkdir $(OBJ_PATH) 2>/dev/null || true
@@ -47,12 +43,10 @@ $(OBJ_PATH)/%.o : $(SRC_PATH)/%.c $(DEPS)
 	@gcc  $(CFLAGS) -g $(Include) -o $@ -c $<
 
 clean:
-	@make clean -C src/test_builtin
 	@echo "\033[1;34mRemoving execute_builtin's objects directory\033[0m"
 	@/bin/rm -rf $(OBJ_PATH) 2> /dev/null
 
 fclean: clean
-	@make fclean -C src/test_builtin
 	@echo "\033[1;34mRemovimg $(NAME)\033[0m"
 	@/bin/rm -f $(NAME)
 
