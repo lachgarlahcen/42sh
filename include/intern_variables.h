@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 01:22:06 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/06 23:36:08 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/12 21:50:57 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ int				set_variable(char *arg, int id);
 char			*get_variable(char *name);
 int				unset_variables(char **args);
 t_var			*creat_variables(char **env);
+
+int				execute_export(char **args);
 
 void			free_variables(void);
 void			init_variables(char **env);

@@ -6,7 +6,7 @@
 /*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 04:13:05 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/10 20:46:17 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/12 23:45:49 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,7 @@
 # include "struct_shell.h"
 
 # define READ_SIZE 1000000
+
+int		exit_status(int status, int check);
 
 #endif

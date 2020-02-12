@@ -6,7 +6,7 @@
 /*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/01 20:14:50 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/08 03:44:58 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/12 23:45:11 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,15 @@ int	init_shell(void)
 	tcsetpgrp(STDIN_FILENO, g_shell_pgid);
 	tcgetattr(STDIN_FILENO, &g_shell_tmodes);
 	return (0);
+}
+
+int	exit_status(int status, int check)
+{
+	static int	e_status;
+
+	if (check)
+		e_status = status;
+	return (e_status);
 }
 
 int main(int ac, char **av, char **env)

@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 04:36:08 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/12 20:46:38 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/12 21:53:43 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,9 @@ int		execute_builtin(char **args)
 		unset_variables(args);
 /*	else if (!ft_strcmp("alias", *args))
 		execute_alias();
-	else if (!ft_strcmp("unalias", *args))
+*/	else if (!ft_strcmp("export", *args))
+		execute_export(args);
+/*	else if (!ft_strcmp("unalias", *args))
 		execute_unalias();
 */	else
 		return (1);

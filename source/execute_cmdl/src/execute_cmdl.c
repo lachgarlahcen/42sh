@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 05:14:50 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/11 21:07:21 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/13 00:11:28 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,10 @@ char	*change_string(char *str, int be)
 		while (str[i] && ft_isalnum(str[i]) && str[i] != '_')
 			i++;
 	tp = ft_strsub(str, be, i - be);
-	tmp = get_variable(tp);
+	if (!ft_strcmp("?", tp))
+		tmp = ft_itoa(exit_status(0, 0));
+	else
+		tmp = get_variable(tp);
 	ft_memdel((void **)&tp);
 	tp = ft_strsub(str, 0, (str[be - 1] == '{') ? be - 2 : be - 1);
 	if (tmp)
@@ -240,6 +243,13 @@ void		wait_for_process(t_proc *p)
 			p->s = 1;
 		else
 			p->c = 1;
+		printf("pid == %i\n", p->pid);
+		if (WIFEXITED(p->stat))
+			exit_status(WEXITSTATUS(p->stat), 1);
+		else if (WIFSIGNALED(p->stat))
+			exit_status(WTERMSIG(p->stat) + 128, 1);
+		else if (WIFSTOPPED(p->stat))
+			exit_status(WSTOPSIG(p->stat) + 128, 1);
 		p = p->next;
 	}
 }
@@ -286,6 +296,7 @@ int			execute_pipes_line(t_proc *p, int bg)
 		in = pi[0];
 		tp = tp->next;
 	}
+//	wait_for_process(p);
 	j = add_jobs(p, pgid);
 	if (bg)
 	{
@@ -327,21 +338,7 @@ void		separat_cmdl(t_tok *t)
 				t = t->next;
 		}
 		(t && t->id == 5) ? execute_pipes_line(p, 1) : execute_pipes_line(p, 0);
-		/*		while (p)
-				{
-				printf("pid == %i\n", p->pid);
-				if (WIFEXITED(p->stat)) {
-				printf("exited, status = %d\n", WEXITSTATUS(p->stat));
-				} else if (WIFSIGNALED(p->stat)) {
-				printf("killed by signal %d\n", WTERMSIG(p->stat));
-				} else if (WIFSTOPPED(p->stat)) {
-				printf("stopped by signal %d\n", WSTOPSIG(p->stat));
-				} else if (WIFCONTINUED(p->stat)) {
-				printf("continued\n");
-				}
-				p = p->next;
-				}
-				*/		//free_process(p);
+		//free_process(p);
 		if (t)
 			t = t->next;
 	}

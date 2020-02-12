@@ -6,13 +6,14 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 05:10:31 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/08 05:31:29 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/12 23:46:37 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TEST_BUILTIN_H
 # define TEST_BUILTIN_H
 
+#include "shell.h"
 #include "libft.h"
 #include <stdio.h>
 #include <stdlib.h>
