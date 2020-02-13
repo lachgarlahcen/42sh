@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 05:18:24 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/12 23:43:11 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/13 03:43:57 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,5 +78,5 @@ int execute_test(char **argv)
     arraylen = ft_arraylen(argv);
     ret = builtin_test(arraylen - 1, argv); // we send "test" in argv , and the exact number 
 	exit_status(ret, 1); 
-    return(0);
+    return(ret);
 }

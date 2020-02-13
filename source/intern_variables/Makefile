@@ -6,7 +6,7 @@
 #    By: hastid <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/05 03:14:51 by hastid            #+#    #+#              #
-#    Updated: 2020/02/08 03:46:04 by hastid           ###   ########.fr        #
+#    Updated: 2020/02/13 04:15:34 by hastid           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,8 @@ NAME = intern_variables.a
 SRC_NAME =	environ.c \
 			variables_cmdl.c \
 			variables_list.c \
-			intern_variables.c
+			intern_variables.c \
+			utils.c
 
 OBJ_NAME =	$(SRC_NAME:.c=.o)
 

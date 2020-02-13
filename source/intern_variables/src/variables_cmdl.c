@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 01:02:55 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/12 23:09:41 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/13 04:15:08 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,28 +15,31 @@
 int		unset_variables(char **args)
 {
 	int		i;
+	int		ret;
+	int		check;
 	t_var	*var;
 
+	ret = 0;
 	if (args[1])
 	{
-		var = get_intern_variables(0, 0);
-		if (!ft_isalpha(args[1][0]) && args[1][0] != '_')
-			return (1);
 		i = 0;
-		while (args[1][++i])
-			if (!ft_isalnum(args[1][i]) && args[1][i] != '_')
-				return (1);
-		i = 1;
-		while (args[i])
-			del_elem(&var, args[i++]);
+		check = 0;
+		var = get_intern_variables(0, 0);
+		while (args[++i])
+		{
+			if ((check = check_name_variables(args[i], 0)))
+				ret = 1;
+			if (check)
+				continue ;
+			del_elem(&var, args[i]);
+		}
 		get_intern_variables(&var, 1);
 	}
-	return (0);
+	return (ret);
 }
 
 int		set_variable(char *arg, int id)
 {
-	int		i;
 	int		co;
 	char	*name;
 	t_var	*var;
@@ -44,12 +47,8 @@ int		set_variable(char *arg, int id)
 	if (arg)
 	{
 		var = get_intern_variables(0, 0);
-		if (!ft_isalpha(arg[0]) && arg[0] != '_')
+		if (check_name_variables(arg, 1))
 			return (1);
-		i = 0;
-		while (arg[++i] && arg[i] != '=')
-			if (!ft_isalnum(arg[i]) && arg[i] != '_')
-				return (1);
 		co = 0;
 		while (arg[co] != '=')
 			co++;

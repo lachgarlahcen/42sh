@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 01:22:06 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/12 21:50:57 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/13 04:14:47 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 int				del_elem(t_var **var, char *name);
 int				add_elem(t_var **var, char *name, char *value, int id);
 int				add_to_var(t_var **var, char *name, char *value, int id);
+
+int				check_name_variables(char *name, int check);
 
 void			put_variables(void);
 int				set_variable(char *arg, int id);
