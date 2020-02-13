@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 04:57:19 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/08 03:34:53 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/13 23:33:28 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,21 +23,26 @@ static int	tab_space(char *str)
 	return (1);
 }
 
-int			line_editing(char **line, int lexical)
+int			line_editing(char *line, int lexical)
 {
-	char *alias;
+	char	*l;
+	char	*alias;
 
-	if (!tab_space(*line) && !check_history_expa(line))
+	l = ft_strdup(line);
+	if (!tab_space(l) && !check_history_expa(&l))
 	{
-		alias = check_alias(*line);
+		if (ft_strcmp(l, line))
+			ft_putendl(l);
+		alias = check_alias(l);
 		if (lexical)
-			line_lexical(line, &alias);
+			line_lexical(&l, &alias);
 		if (!(syntax(alias)))
 			execute_cmdline(alias);
 		else
 			ft_perror(0, 0, "syntax error !!", 1);
-		add_to_hist(ft_strdup(*line), 0);
+		add_to_hist(ft_strdup(l), 0);
 		ft_memdel((void **)&alias);
 	}
+	ft_memdel((void **)&l);
 	return (0);
 }

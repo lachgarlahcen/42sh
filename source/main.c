@@ -6,7 +6,7 @@
 /*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/01 20:14:50 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/13 06:05:45 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/13 23:24:30 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,16 @@ int	init_fd(void)
 
 	if ((fd = open("/dev/tty", O_RDWR) == -1))
 		return (1);
-	if (dup2(222, fd) == -1)
+	if (dup2(fd, 127) == -1)
 		return (1);
 	close(fd);
-	if (dup2(0, 222) == -1)
+	if (dup2(127, 0) == -1)
 		return (1);
-	if (dup2(1, 222) == -1)
+	if (dup2(127, 1) == -1)
 		return (1);
-	if (dup2(2, 222) == -1)
+	if (dup2(127, 2) == -1)
 		return (1);
+	return (0);
 }
 
 int main(int ac, char **av, char **env)
@@ -64,18 +65,18 @@ int main(int ac, char **av, char **env)
 	(void)ac;
 	(void)av;
 	stat = 0;
-	if (init_fd())
-		return (1);
+//	if (init_fd())
+//		return (1);
 	signals(1);
 	init_history();
 	g_first_job = 0;
 	init_variables(env);
-	while (!stat && (line = read_line("42sh $> ")))
+	while ((line = read_line("42sh $> ")))
 	{
-		line_editing(&line, 1);
+		line_editing(line, 1);
 		ft_memdel((void **)&line);
-		if (init_fd())
-			stat = 1;
+//		if (init_fd())
+//			stat = 1;
 	}
 	free_variables();
 	free_history();

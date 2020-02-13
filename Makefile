@@ -6,7 +6,7 @@
 #    By: hastid <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/11 02:10:20 by hastid            #+#    #+#              #
-#    Updated: 2020/02/11 02:10:22 by hastid           ###   ########.fr        #
+#    Updated: 2020/02/13 20:58:35 by hastid           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,7 +68,7 @@ $(NAME): $(OBJ) $(LIB_C)
 	@echo "         ╚═╝  ╚═════╝  ╚═════╝  ╚═╝  ╚═╝                 ";
 	@echo "				                                            ";
 	@echo "\033[1;33m $(NAME)\033[0m                        ";
-	@echo "		         Made by : \033[1;91m mmizonaise\033[m       ";
+	@echo "		         Made by : \033[1;91m mizonaise\033[m       ";
 	@gcc $(OBJ) $(LIBS) -ltermcap -o $@
 
 

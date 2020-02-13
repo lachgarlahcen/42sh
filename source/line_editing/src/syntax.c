@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 00:10:12 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/10 19:13:36 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/14 00:28:19 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,6 @@ int		line_syntax(char *str)
 	int	stat;
 
 	i = 0;
-	if (begin_syntax(str))
-		return (1);
 	while (i >= 0 && str[i])
 	{
 		stat = 0;
@@ -115,9 +113,7 @@ int		line_syntax(char *str)
 			i++;
 	}
 	if (i < 0)
-		return ((i == -2) ? 5 : 6);
-	if (stat == 2 || stat == 3)
-		return ((stat == 2) ? 1 : 0);
+		return (i);
 	return (stat);
 }
 
@@ -136,15 +132,10 @@ int		history_expa_syntax(char *str)
 			check = 1;
 		if (str[i] == '!' && !check)
 		{
-			i++;
-			while (str[i] && str[i] != '!')
-			{
-				if (str[i] != ' ' && str[i] != '&' && str[i] != '|' && str[i] != ';')
+			while (!check && str[++i] && str[i] != '!')
+				if (str[i] != ' ' && str[i] != '&' &&
+						str[i] != '|' && str[i] != ';')
 					check = 1;
-				if (check)
-					break ;
-				i++;
-			}
 			if (!check)
 				return (1);
 		}
@@ -165,8 +156,9 @@ int		expansion_dollar(char *str)
 	{
 		if (str[i] == '{' && i && str[i - 1] == '$')
 			count++;
-		if (count > 0 && (used_variable(str[i])	|| ft_isblank(str[i]) ||
-					is_inhibitors(str[i]) || str[i] == '\n' || str[i] == '$' || str[i] == '~'))
+		if (count > 0 && (used_variable(str[i]) || ft_isblank(str[i]) ||
+					is_inhibitors(str[i]) || str[i] == '\n' ||
+					str[i] == '$' || str[i] == '~'))
 			return (1);
 		if (str[i] == '}' && count > 0)
 			count--;
@@ -179,7 +171,16 @@ int		expansion_dollar(char *str)
 
 int		syntax(char *str)
 {
+	int	stat;
+
+	if (begin_syntax(str))
+		return (1);
 	if (expansion_dollar(str) || history_expa_syntax(str))
 		return (1);
-	return (line_syntax(str));
+	stat = line_syntax(str);
+	if (stat < 0)
+		return ((stat == -2) ? 5 : 6);
+	if (stat == 2 || stat == 3)
+		return ((stat == 2) ? 1 : 0);
+	return (stat);
 }
