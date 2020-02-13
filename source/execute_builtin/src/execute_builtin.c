@@ -6,11 +6,21 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 04:36:08 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/13 04:24:46 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/13 05:04:14 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute_builtin.h"
+
+void	execute_exit(char **args)
+{
+	int	ex;
+
+	ex = 0;
+	if (args[1])
+		ex = ft_atoi(args[1]);
+	exit(ex);
+}
 
 int		is_builtin(char *exec)
 {
@@ -27,9 +37,10 @@ int		is_builtin(char *exec)
 		return (1);
 	/*	else if (!ft_strcmp("echo", *args))
 		execute_echo();
-		else if (!ft_strcmp("exit", *args))
-		execute_exit();
-		else if (!ft_strcmp("type", *args))
+		*/
+	else if (!ft_strcmp("exit", exec))
+		return (1);
+	/*	else if (!ft_strcmp("type", *args))
 		execute_type();
 		*/
 	else if (!ft_strcmp("test", exec))
@@ -68,9 +79,10 @@ int		execute_builtin(char **args)
 		put_variables();
 	/*	else if (!ft_strcmp("echo", *args))
 		execute_echo();
-		else if (!ft_strcmp("exit", *args))
-		execute_exit();
-		else if (!ft_strcmp("type", *args))
+	*/
+	else if (!ft_strcmp("exit", *args))
+		execute_exit(args);
+	/*	else if (!ft_strcmp("type", *args))
 		execute_type();
 		*/
 	else if (!ft_strcmp("test", *args))

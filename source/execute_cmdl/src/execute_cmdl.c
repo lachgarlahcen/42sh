@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 05:14:50 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/13 04:29:52 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/13 05:05:04 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,6 +201,7 @@ char		*search_executable(char *cmdl)
 
 int			launch_process(t_tok *as, int bg, int in, int out)
 {
+	int		ret;
 	char	*exec;
 	char	**env;
 	char	**args;
@@ -224,9 +225,8 @@ int			launch_process(t_tok *as, int bg, int in, int out)
 	args =  get_args(as);
 	if (is_builtin(args[0]))
 	{
-		if (execute_builtin(args))
-			exit (EXIT_FAILURE);
-		exit (0);
+		ret = execute_builtin(args);
+		exit (ret);
 	}
 	if (!(exec = search_executable(as->token)))
 		exit (EXIT_FAILURE);
