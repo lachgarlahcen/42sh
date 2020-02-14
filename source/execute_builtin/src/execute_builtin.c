@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_builtin.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 04:36:08 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/13 05:04:14 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/14 23:41:28 by nsaber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,9 @@ void	execute_exit(char **args)
 
 int		is_builtin(char *exec)
 {
-	/*	if (!ft_strcmp("cd", *args))
-		execute_cd();
+		if (!ft_strcmp("cd", exec))
+		return (1);
+		/*
 		else if (!ft_strcmp("fg", *args))
 		execute_fg();
 		else if (!ft_strcmp("bg", *args))
@@ -33,7 +34,7 @@ int		is_builtin(char *exec)
 		else if (!ft_strcmp("fc", *args))
 		execute_fd();
 		*/
-	if (!ft_strcmp("set", exec))
+	else if (!ft_strcmp("set", exec))
 		return (1);
 	/*	else if (!ft_strcmp("echo", *args))
 		execute_echo();
@@ -66,8 +67,9 @@ int		is_builtin(char *exec)
 
 int		execute_builtin(char **args)
 {
-	/*	if (!ft_strcmp("cd", *args))
-		execute_cd();
+		if (!ft_strcmp("cd", *args))
+		built_cd(args);
+		/*
 		else if (!ft_strcmp("fg", *args))
 		execute_fg();
 		else if (!ft_strcmp("bg", *args))
@@ -75,7 +77,7 @@ int		execute_builtin(char **args)
 		else if (!ft_strcmp("fc", *args))
 		execute_fd();
 		*/
-	if (!ft_strcmp("set", *args))
+	else if (!ft_strcmp("set", *args))
 		put_variables();
 	/*	else if (!ft_strcmp("echo", *args))
 		execute_echo();
