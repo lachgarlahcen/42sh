@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_builtin.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 04:36:08 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/10 21:02:55 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/15 13:15:05 by llachgar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,6 @@ int		execute_builtin(char **args)
 {
 /*	if (!ft_strcmp("cd", *args))
 		execute_cd();
-	else if (!ft_strcmp("fg", *args))
-		execute_fg();
-	else if (!ft_strcmp("bg", *args))
-		execute_bg();
 	else if (!ft_strcmp("fc", *args))
 		execute_fd();
 	else if (!ft_strcmp("set", *args))
@@ -32,9 +28,13 @@ int		execute_builtin(char **args)
 		execute_type();
 */	if (!ft_strcmp("test", *args))
 		execute_test(args);
-/*	else if (!ft_strcmp("jobs", *args))
-		execute_jobs();
-	else if (!ft_strcmp("hash", *args))
+	else if (!ft_strcmp("jobs", *args))
+		execute_jobs(args);
+	else if (!ft_strcmp("fg", *args))
+		execute_fg(args);
+	else if (!ft_strcmp("bg", *args))
+		execute_bg(args);
+	/*else if (!ft_strcmp("hash", *args))
 		execute_hash();
 	else if (!ft_strcmp("unset", *args))
 		execute_unset();

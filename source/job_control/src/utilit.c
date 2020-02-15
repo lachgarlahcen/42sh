@@ -6,7 +6,7 @@
 /*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 22:25:32 by llachgar          #+#    #+#             */
-/*   Updated: 2020/02/08 00:36:20 by llachgar         ###   ########.fr       */
+/*   Updated: 2020/02/15 11:25:40 by llachgar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ t_job       *find_job(pid_t pgid)
 {
     t_job *j;
 
-    j = g_first_job;
+    j = g_jobs.f_job;
     while (j)
     {
         if (j->pgid == pgid)

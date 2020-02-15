@@ -36,6 +36,7 @@ int			line_editing(char **line, int lexical)
 			execute_cmdline(alias);
 		else
 			ft_perror(0, 0, "syntax error !!", 1);
+		do_job_notification();
 		add_to_hist(ft_strdup(*line), 0);
 		ft_memdel((void **)&alias);
 	}

@@ -3,14 +3,81 @@
 /*                                                        :::      ::::::::   */
 /*   execute_cmdl.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 05:14:50 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/11 00:15:17 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/15 13:10:35 by llachgar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute_cmdl.h"
+
+int		check_dollar(char *str)
+{
+	int	i;
+	int	be;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '\"' || str[i] == '\'')
+		{
+			be = i++;
+			while (str[i] && str[i] != str[be])
+			{
+				if (str[i] == '$' && str[be] == '\"')
+					return (1);
+				i++;
+			}
+		}
+		if (str[i] == '$')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+char	*change_tilda(char *str)
+{
+	char	*tp;
+	char	*tmp;
+
+	tmp = 0;
+	if (str[1] == '\0' || str[1] == '/')
+	{
+		if (!(tp = get_variable("HOME")))
+			return (0); // err  HOME not set
+		tmp = ft_strjoin(tp, str + 1);
+		ft_memdel((void **)&tp);
+		ft_memdel((void **)&str);
+	}
+	else
+	{
+		tmp = ft_strjoin("/Users/", str + 1);
+		if (access(tmp, F_OK))
+		{
+			ft_memdel((void **)&tmp);
+			tmp = str;
+		}
+		else
+			ft_memdel((void **)&str);
+	}
+	return (tmp);
+}
+
+int		change_expansion(t_tok *t)
+{
+	while (t)
+	{
+		if (t->token && t->token[0] == '~')
+			if (!(t->token = change_tilda(t->token)))
+				return (1);
+		/*if (check_dollar(t->token))
+			t->token = change_dollar(t->token, t->id);*/
+		t = t->next;
+	}
+	return (0);
+}
 
 void		check_save_tokens(t_proc *p, char *token, int id)
 {
@@ -140,7 +207,9 @@ int			execute_pipes_line(t_proc *p, int bg)
 		{
 			if (tp->next)
 				close(pi[0]);
-			launch_process(tp->as, bg, in, out);
+			if (!change_expansion(tp->as))
+				launch_process(tp->as, bg, in, out);
+			exit(1);
 		}
 		if (!pgid)
 			pgid = tp->pid;
@@ -152,23 +221,11 @@ int			execute_pipes_line(t_proc *p, int bg)
 		in = pi[0];
 		tp = tp->next;
 	}
-	j = add_jobs(p, pgid);
+	j = add_jobs(p, pgid, bg);
 	if (bg)
-	{
 		put_job_in_background(j, 0);
-		ft_printf("[1] %ld\n", j->pgid);
-		job_is_completed(j);
-	}
 	else
-	{
 		put_job_in_foreground(j, 0);
-		if (job_is_completed(j))
-			delete_job(j->pgid);
-		// tcsetpgrp (STDIN_FILENO, pgid);
-		// wait_for_process(p);
-		// tcsetpgrp (STDIN_FILENO, g_shell_pgid);
-	}
-	do_job_notification();
 	return (0);
 }
 
@@ -187,27 +244,29 @@ void		separat_cmdl(t_tok *t)
 			while (t && t->id < 4)
 			{
 				check_save_tokens(p, t->token, t->id);
+				p->c = 0;
+				p->s = 0;
 				t = t->next;
 			}
 			if (t && t->id == 4)
 				t = t->next;
 		}
 		(t && t->id == 5) ? execute_pipes_line(p, 1) : execute_pipes_line(p, 0);
-/*		while (p)
-		{
-			printf("pid == %i\n", p->pid);
-			if (WIFEXITED(p->stat)) {
+		/*		while (p)
+				{
+				printf("pid == %i\n", p->pid);
+				if (WIFEXITED(p->stat)) {
 				printf("exited, status = %d\n", WEXITSTATUS(p->stat));
-			} else if (WIFSIGNALED(p->stat)) {
+				} else if (WIFSIGNALED(p->stat)) {
 				printf("killed by signal %d\n", WTERMSIG(p->stat));
-			} else if (WIFSTOPPED(p->stat)) {
+				} else if (WIFSTOPPED(p->stat)) {
 				printf("stopped by signal %d\n", WSTOPSIG(p->stat));
-			} else if (WIFCONTINUED(p->stat)) {
+				} else if (WIFCONTINUED(p->stat)) {
 				printf("continued\n");
-			}
-			p = p->next;
-		}
-*/		//free_process(p);
+				}
+				p = p->next;
+				}
+				*/		//free_process(p);
 		if (t)
 			t = t->next;
 	}

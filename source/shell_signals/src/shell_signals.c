@@ -15,13 +15,13 @@
 /*static void child_seg(int seg)
 {
 	(void)seg;
-	do_job_notification();
+	update_status();
 }*/
 
 static void	kill_seg(int seg)
 {
 	t_cmd	*l;
-	char	buf[2];
+	char	buf[1];
 
 	(void)seg;
 	l = NULL;
@@ -30,8 +30,7 @@ static void	kill_seg(int seg)
 	{
 		l->res = 0;
 		l->ctl_c = 1;
-		buf[0] = -62;
-		buf[1] = 0;
+		buf[0] = 0;
 		ioctl(0, TIOCSTI, buf);
 	}
 	else
@@ -55,5 +54,5 @@ void    signals(int c)
     signal (SIGTSTP, SIG_DFL);
     signal (SIGTTIN, SIG_DFL);
     signal (SIGTTOU, SIG_DFL);
-//	signal (SIGCHLD, SIG_DFL);
+	 //signal (SIGCHLD, SIG_DFL);//
 }
