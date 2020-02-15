@@ -6,7 +6,7 @@
 /*   By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 17:29:09 by aihya             #+#    #+#             */
-/*   Updated: 2019/12/22 17:00:19 by aihya            ###   ########.fr       */
+/*   Updated: 2020/02/09 19:28:47 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*ft_strappend(char **a_s1, char c, int overwrite)
 	new[++i] = '\0';
 	if (overwrite == 1)
 	{
-		free(*a_s1);
+		ft_strdel(a_s1);
 		*a_s1 = new;
 		return (NULL);
 	}

@@ -6,82 +6,69 @@
 /*   By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 16:47:46 by aihya             #+#    #+#             */
-/*   Updated: 2020/02/08 22:20:39 by aihya            ###   ########.fr       */
+/*   Updated: 2020/02/13 10:08:34 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh.h"
 
-char	*expand(char *exp, int *status)
+typedef struct	s_expansion
 {
-	char	**args;
-	char	*p;
-	char	*clean_exp;
-	size_t	counter;
+	char	*front;		// ?, #
+	char	*parameter;
+	char	*middle;	// :, +, -, ?, =
+	char	*rest;		
+}				t_expansion;
 
-	*status = 0;
-	if (exp[0] != '{')
-		return (get_variable(exp));
-	clean_exp = uncover_exp(exp);
-	if (clean_exp[0] == '#')
-		return (length_expansion(clean_exp + 1, status));
-	if (clean_exp != NULL)
-	{
-		counter = ft_char_count(clean_exp, ':');
-		if (counter == 0)
-			return (unary_expansion(clean_exp, status));
-		else if (counter == 1)
-			return (binary_expansion(clean_exp, status));
-	}
-	*status = 1;
-	return (NULL);
-}
-
-char	*uncover_exp(char *exp)
+char		*read_front(char *exp, int *index)
 {
-	char	*uncovered;
-	char	**array;
+	char	*front;
 
-	uncovered = NULL;
-	array = ft_strsplit_del(exp, "{}");
-	if (ft_chain_size(array) == 0)
+	front = NULL;
+	while (exp[*index])
 	{
-		ft_chain_free(&array);
-		return (NULL);
-	}
-	uncovered = ft_strdup(array[0]);
-	ft_chain_free(&array);
-	return (uncovered);
-}
-
-char	*lenght_expansion(char *exp, int *status)
-{
-	int		i;
-	char	*value;
-	char	*expansion;
-
-	*status = 0;
-	if (exp[0] == '#')
-		return (ft_strdup("0"));
-	i = 0;
-	while (exp[i])
-	{
-		if ((i == 0 && ft_isdigit(exp[i]))
-		|| (!ft_isalphanumeric(exp[i]) && (exp[i] != '_')))
+		if (ft_strchr('?#', exp[*index]))
 		{
-			*status = BAD_SUBSTITUTION;
-			return (NULL);
+			ft_strappend(&front, exp[*index], TRUE);
+			(*index)++;
 		}
-		i++;
+		break ;
 	}
-	value = get_variable(exp);
-	expansion = ft_itoa_base(ft_strlen(value), 10);
+	return (front);
+}
+
+char		*read_parameter(char *exp, int *index)
+{
+	char	*parameter;
+
+	parameter = NULL;
+	while (exp[*index])
+	{
+		if (ft_isalphanumeric(exp[*index]) || (exp[*index] == '_'))
+		{
+			ft_strappend(&parameter, exp[*index], TRUE);
+			(*index)++;
+		}
+		break ;
+	}
+	return (parameter);
+}
+
+
+
+t_expansion	*parse_expansion_format(char *exp)
+{
+	int		index;
+	t_expansion	*expansion;
+
+	expansion = (t_expansion *)malloc(sizeof(t_expansion));
+	if (expansion == NULL)
+		return (NULL);
+	index = 0;
+	expansion->front = read_front(exp, &index);
+	expansion->parameter = read_parameter(exp, &index);
+	expansion->middle = read_middle(exp, &index);
+	expansion->rest = read_rest(exp, &index);
 	return (expansion);
 }
 
-char	*unary_expansion(char *exp, int *status)
-{
-	if (exp[0] == '#' && exp[1] && exp[1] != '#')
-		return (lenght_expansion(exp + 1, status));
-	
-}

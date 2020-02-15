@@ -6,7 +6,7 @@
 /*   By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 18:23:41 by aihya             #+#    #+#             */
-/*   Updated: 2020/02/08 22:21:04 by aihya            ###   ########.fr       */
+/*   Updated: 2020/02/13 19:51:13 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # define INC				1
 # define DEC				-1
 # define BAD_SUBSTITUTION	1
+# define RESET				1
 
 typedef struct	s_htnode
 {
@@ -50,6 +51,7 @@ int			hash_function(char *str);
 char		**get_names(t_htnode **hashtable, size_t size);
 
 // Aliases functions
+int			alias(char **args);
 t_htnode	**aliases(int init);
 char		**aliases_names(int reset);
 int			save_alias(char *name, char *value);
@@ -65,6 +67,7 @@ char		*is_binary(char *name);
 void		remove_binary(char *name);
 void		remove_binaries();
 void		print_binaries();
+char		*get_base_name(char *path);
 
 // Sort function
 void	sort(char **chain, size_t size);

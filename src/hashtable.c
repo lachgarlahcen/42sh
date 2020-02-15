@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hashtable.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aihya <aihya@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 18:37:49 by aihya             #+#    #+#             */
-/*   Updated: 2020/02/01 16:25:06 by aihya            ###   ########.fr       */
+/*   Updated: 2020/02/15 19:07:37 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,12 +137,12 @@ void		pop_htnode(t_htnode **hashtable, char *name)
 char		**get_names(t_htnode **hashtable, size_t size)
 {
 	t_htnode	*node;
-	char		**table;
+	char		**names;
 	int			index;
 	int			ti;
 
-	table = (char **)malloc(sizeof(char *) * (size + 1));
-	if (table == NULL)
+	names = (char **)malloc(sizeof(char *) * (size + 1));
+	if (names == NULL)
 		return (NULL);
 	index = 0;
 	ti = 0;
@@ -151,32 +151,13 @@ char		**get_names(t_htnode **hashtable, size_t size)
 		node = hashtable[index];
 		while (node)
 		{
-			table[ti] = ft_strdup(node->name);
+			names[ti] = ft_strdup(node->name);
 			ti++;
 			node = node->next;
 		}
 		index++;
 	}
-	table[ti] = NULL;
-	sort(table, size);
-	return (table);
-}
-
-void		print_hashtable(t_htnode **hashtable, char **names, char *prefix)
-{
-	t_htnode	*node;
-	int			index;
-
-	node = NULL;
-	index = 0;
-	while (names[index])
-	{
-		node = find_htnode(hashtable, names[index]);
-		if (prefix != NULL)
-			ft_putstr(prefix);
-		ft_putstr(node->name);
-		ft_putchar('=');
-		ft_putendl(node->value);
-		index++;
-	}
+	names[ti] = NULL;
+	sort(names, size);
+	return (names);
 }

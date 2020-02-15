@@ -6,7 +6,7 @@
 /*   By: aihya <aihya@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 16:23:31 by aihya             #+#    #+#             */
-/*   Updated: 2020/02/01 16:06:36 by aihya            ###   ########.fr       */
+/*   Updated: 2020/02/14 21:19:09 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,52 @@ char			**aliases_names(int reset)
 	return (names);
 }
 
-void			print_alias()
+void			set_name_value(char *arg, char **name, char **value)
 {
-	print_hashtable(aliases(FALSE), aliases_names(FALSE), "alias ");
+	int		index;
+
+	index = 0;
+	while (arg[index] && arg[index] != '=')
+	{
+		ft_strappend(name, arg[index], TRUE);
+		index++;
+	}
+	if (arg[index] == '=')
+	{
+		index++;
+		while (arg[index])
+		{
+			ft_strappend(value, arg[index], TRUE);
+			index++;
+		}
+	}
+}
+
+int				alias(char **args)
+{
+	int		index;
+	char	*name;
+	char	*value;
+	int		status;
+
+	index = 1;
+	status = 0;
+	name = NULL;
+	value = NULL;
+	while (args[index])
+	{
+		if (ft_strchr(args[index], '='))
+		{
+			set_name_value(args[index], &name, &value);
+			status = save_alias(name, value) == 0 ? 1 : status;
+			ft_strdel(&name);
+			ft_strdel(&value);
+		}
+		else if ((value = is_alias(args[index])) != NULL)
+			printf("alias %s='%s'\n", args[index], value);
+		else if ((status = 1))
+			dprintf(2, "alias: %s: not found\n", args[index]);
+		index++;
+	}
+	return (status);
 }
