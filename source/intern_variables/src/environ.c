@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 22:39:18 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/13 04:19:54 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/17 03:28:20 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ int			execute_export(char **args)
 			{
 				if (ft_strchr(args[i], '='))
 				{
-					if (set_variable(args[i], 1))
+					if (set_variable(args[i], 1, 0))
 						ret = 1;
 				}
 				else if (export_variables(args[i]))

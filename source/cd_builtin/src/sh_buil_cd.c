@@ -6,7 +6,7 @@
 /*   By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 16:29:59 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/14 23:26:42 by nsaber           ###   ########.fr       */
+/*   Updated: 2020/02/17 03:31:53 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ static int	change_dir_b(char *dir)
 	if ((pwd = getcwd(0, 0)))
 	{
 		pwd = strjoin_free("OLDPWD=",pwd,0,1);
-		set_variable(pwd,1);
+		set_variable(pwd, 1, 0);
 		pwd = strjoin_free("PWD=",pwd,0,1);
-		set_variable(pwd,1);
+		set_variable(pwd, 1, 0);
 		ft_memdel((void **)&pwd);
 	}
 	return (0);
@@ -55,9 +55,9 @@ static int	change_dir_a(char *dir)
 	{
 		chdir(tp);
 		pwd = strjoin_free("OLDPWD=",pwd,0,1);
-		set_variable(pwd,1);
+		set_variable(pwd, 1, 0);
 		tp = strjoin_free("PWD=",tp,0,1);
-		set_variable(tp,1);
+		set_variable(tp, 1, 0);
 		ft_memdel((void **)&tp);
 	}
 	else

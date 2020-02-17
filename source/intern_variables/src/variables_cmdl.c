@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 01:02:55 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/13 04:15:08 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/17 03:26:53 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int		unset_variables(char **args)
 	return (ret);
 }
 
-int		set_variable(char *arg, int id)
+int		set_variable(char *arg, int id, int temp)
 {
 	int		co;
 	char	*name;
@@ -46,7 +46,7 @@ int		set_variable(char *arg, int id)
 
 	if (arg)
 	{
-		var = get_intern_variables(0, 0);
+		var = temp ? get_temp_variables(0, 0) : get_intern_variables(0, 0);
 		if (check_name_variables(arg, 1))
 			return (1);
 		co = 0;
@@ -57,7 +57,10 @@ int		set_variable(char *arg, int id)
 		if (add_elem(&var, name, arg + co + 1, id))
 			return (0);
 		ft_memdel((void **)&name);
-		get_intern_variables(&var, 1);
+		if (temp)
+			get_temp_variables(&var, 1);
+		else
+			get_intern_variables(&var, 1);
 	}
 	return (0);
 }
@@ -80,6 +83,13 @@ char	*get_variable(char *name)
 {
 	t_var	*var;
 
+	var = get_temp_variables(0, 0);
+	while (var)
+	{
+		if (!ft_strcmp(name, var->name))
+			return (ft_strdup(var->value));
+		var = var->next;
+	}
 	var = get_intern_variables(0, 0);
 	while (var)
 	{
