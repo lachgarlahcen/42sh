@@ -6,7 +6,7 @@
 /*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 04:36:08 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/17 15:30:24 by llachgar         ###   ########.fr       */
+/*   Updated: 2020/02/17 16:05:16 by llachgar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,38 +26,35 @@ int		is_builtin(char *exec)
 {
 		if (!ft_strcmp("cd", exec))
 		return (1);
-		/*
-		else if (!ft_strcmp("fg", *args))
-		execute_fg();
-		else if (!ft_strcmp("bg", *args))
-		execute_bg();
-		else if (!ft_strcmp("fc", *args))
-		execute_fd();
-		*/
-	else if (!ft_strcmp("set", exec))
+		else if (!ft_strcmp("fg", exec))
+		return (1);
+		else if (!ft_strcmp("bg", exec))
+		return (1);
+		else if (!ft_strcmp("fc", exec))
+		return (0);
+		else if (!ft_strcmp("set", exec))
+		return (1);
+		else if (!ft_strcmp("test", exec))
+		return (1);
+		else if (!ft_strcmp("jobs", exec))
+		return (1);
+		else if (!ft_strcmp("hash", exec))
+		return (0);
+		else if (!ft_strcmp("unset", exec))
+		return (1);
+		else if (!ft_strcmp("exit", exec))
+		return (1);
+		else if (!ft_strcmp("export", exec))
 		return (1);
 	/*	else if (!ft_strcmp("echo", *args))
 		execute_echo();
 		*/
-	else if (!ft_strcmp("exit", exec))
-		return (1);
 	/*	else if (!ft_strcmp("type", *args))
 		execute_type();
 		*/
-	else if (!ft_strcmp("test", exec))
-		return (1);
-	/*	else if (!ft_strcmp("jobs", *args))
-		execute_jobs();
-		else if (!ft_strcmp("hash", *args))
-		execute_hash();
-		*/
-	else if (!ft_strcmp("unset", exec))
-		return (1);
 	/*	else if (!ft_strcmp("alias", *args))
 		execute_alias();
 		*/
-	else if (!ft_strcmp("export", exec))
-		return (1);
 	/*	else if (!ft_strcmp("unalias", *args))
 		execute_unalias();
 		*/
@@ -67,21 +64,31 @@ int		is_builtin(char *exec)
 
 int		execute_builtin(char **args)
 {
-/*	if (!ft_strcmp("cd", *args))
-		execute_cd();
+		/*
 	else if (!ft_strcmp("fc", *args))
 		execute_fd();
 		*/
-	if (!ft_strcmp("set", *args))
-		put_variables();
 	/*	else if (!ft_strcmp("echo", *args))
 		execute_echo();
 	*/
-	if (!ft_strcmp("exit", *args))
-		execute_exit(args);
 	/*	else if (!ft_strcmp("type", *args))
-		execute_type();
-*/	if (!ft_strcmp("test", *args))
+		execute_type();*/	
+	/*else if (!ft_strcmp("hash", *args))
+		execute_hash();
+		*/
+	/*	else if (!ft_strcmp("alias", *args))
+		execute_alias();
+		*/
+	/*	else if (!ft_strcmp("unalias", *args))
+		execute_unalias();
+		*/
+	if (!ft_strcmp("cd", *args))
+		built_cd(args);
+	else if (!ft_strcmp("set", *args))
+		put_variables();
+	else if (!ft_strcmp("exit", *args))
+	execute_exit(args);
+	else if (!ft_strcmp("test", *args))
 		execute_test(args);
 	else if (!ft_strcmp("jobs", *args))
 		execute_jobs(args);
@@ -89,18 +96,9 @@ int		execute_builtin(char **args)
 		execute_fg(args);
 	else if (!ft_strcmp("bg", *args))
 		execute_bg(args);
-	/*else if (!ft_strcmp("hash", *args))
-		execute_hash();
-		*/
 	else if (!ft_strcmp("unset", *args))
 		return (unset_variables(args));
-	/*	else if (!ft_strcmp("alias", *args))
-		execute_alias();
-		*/
 	else if (!ft_strcmp("export", *args))
 		return (execute_export(args));
-	/*	else if (!ft_strcmp("unalias", *args))
-		execute_unalias();
-		*/
 	return (0);
 }
