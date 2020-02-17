@@ -6,7 +6,7 @@
 /*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 00:42:10 by llachgar          #+#    #+#             */
-/*   Updated: 2020/02/08 00:52:44 by llachgar         ###   ########.fr       */
+/*   Updated: 2020/02/15 16:53:30 by llachgar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int mark_process_status (pid_t pid, int status)
 {
   t_job *j;
   t_proc *p;
-  j = g_first_job;
+  j = g_jobs.f_job;
 
   if (pid > 0)
     {
@@ -41,8 +41,10 @@ int mark_process_status (pid_t pid, int status)
             else
             {
                   p->c = 1;
-                  if (WIFSIGNALED (status))
-                    fprintf (stderr, "%d: Terminated by signal %d.\n",(int)pid, WTERMSIG (p->s));
+                  j->notified = 0;
+                  j->status = status;
+                  /*if (WIFSIGNALED (status))
+                    fprintf (stderr, "%d: Terminated by signal %d.\n",(int)pid, WTERMSIG (p->stat));*/
             }
               return 0;
             }
@@ -60,7 +62,7 @@ void  update_status (void)
   pid_t pid;
   //t_job *j;
 
-  // j = g_first_job;
+  // j = g_jobs.f_job;
   // while (j)
   // {
   //   ft_printf("pgid%d\n", j->pgid);
@@ -85,7 +87,44 @@ void  wait_for_job (t_job *j)
 }
 void  format_job_info (t_job *j, const char *status)
 {
-  fprintf (stderr, "%ld: (%s): somting\n", (long)j->pgid, status);
+  char *g_sinalmsg[] =
+{
+"Done",
+"Hangup",                                                                                                                                                                                                                                         
+"Interrupt",                                                                                                                                                                                                                                      
+"Quit",                                                                                                                                                                                                  
+"Illegal instruction",                                                                                                                                                                                                                            
+"Trace/breakpoint trap",                                                                                                                                                                                                                          
+"Aborted",                                                                                                                                                                                                                                       
+"Bus error",                                                                                                                                                                                                                                      
+"Floating point exception",                                                                                                                                                                                                                       
+"Killed",                                                                                                                                                                                                                                         
+"User defined signal 1",                                                                                                                                                                                                                          
+"Segmentation fault",                                                                                                                                                                                                                             
+"User defined signal 2",                                                                                                                                                                                                                          
+"Broken pipe",                                                                                                                                                                                                                                    
+"Alarm clock",                                                                                                                                                                                                                                    
+"Terminated",                                                                                                                                                                                                                                     
+"Stack fault",                                                                                                                                                                                                                                    
+"Child exited",                                                                                                                                                                                                                                   
+"Continued",                                                                                                                                                                                                                                      
+"Stopped (signal)",                                                                                                                                                                                                                               
+"Stopped",                                                                                                                                                                                                                                        
+"Stopped (tty input)",                                                                                                                                                                                                                            
+"Stopped (tty output)",                                                                                                                                                                                                                           
+"Urgent I/O condition",                                                                                                                                                                                                                           
+"CPU time limit exceeded",                                                                                                                                                                                                                        
+"File size limit exceeded",                                                                                                                                                                                                                       
+"Virtual timer expired",                                                                                                                                                                                                                          
+"Profiling timer expired",                                                                                                                                                                                                                        
+"Window changed",                                                                                                                                                                                                                                 
+"I/O possible",                                                                                                                                                                                                                                   
+"Power failure"
+};
+  (void )status;
+  int s;
+  s = job_is_completed(j) ? j->status : 20;
+  fprintf (stderr, "[%d]\t%s\t\t(%ld)\n",j->id , g_sinalmsg[s],(long)j->pgid);
 }
 void  do_job_notification (void)
 {
@@ -96,7 +135,7 @@ void  do_job_notification (void)
   update_status ();
 
   jlast = NULL;
-  for (j = g_first_job; j; j = jnext)
+  for (j = g_jobs.f_job; j; j = jnext)
     {
       jnext = j->next;
 
@@ -107,7 +146,7 @@ void  do_job_notification (void)
         if (jlast)
           jlast->next = jnext;
         else
-          g_first_job = jnext;
+          g_jobs.f_job = jnext;
           free_job (j);
       }
 

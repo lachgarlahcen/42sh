@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_builtin.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+        */
+/*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 04:36:08 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/14 23:41:28 by nsaber           ###   ########.fr       */
+/*   Updated: 2020/02/17 15:30:24 by llachgar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,31 +67,29 @@ int		is_builtin(char *exec)
 
 int		execute_builtin(char **args)
 {
-		if (!ft_strcmp("cd", *args))
-		built_cd(args);
-		/*
-		else if (!ft_strcmp("fg", *args))
-		execute_fg();
-		else if (!ft_strcmp("bg", *args))
-		execute_bg();
-		else if (!ft_strcmp("fc", *args))
+/*	if (!ft_strcmp("cd", *args))
+		execute_cd();
+	else if (!ft_strcmp("fc", *args))
 		execute_fd();
 		*/
-	else if (!ft_strcmp("set", *args))
+	if (!ft_strcmp("set", *args))
 		put_variables();
 	/*	else if (!ft_strcmp("echo", *args))
 		execute_echo();
 	*/
-	else if (!ft_strcmp("exit", *args))
+	if (!ft_strcmp("exit", *args))
 		execute_exit(args);
 	/*	else if (!ft_strcmp("type", *args))
 		execute_type();
-		*/
-	else if (!ft_strcmp("test", *args))
-		return (execute_test(args));
-	/*	else if (!ft_strcmp("jobs", *args))
-		execute_jobs();
-		else if (!ft_strcmp("hash", *args))
+*/	if (!ft_strcmp("test", *args))
+		execute_test(args);
+	else if (!ft_strcmp("jobs", *args))
+		execute_jobs(args);
+	else if (!ft_strcmp("fg", *args))
+		execute_fg(args);
+	else if (!ft_strcmp("bg", *args))
+		execute_bg(args);
+	/*else if (!ft_strcmp("hash", *args))
 		execute_hash();
 		*/
 	else if (!ft_strcmp("unset", *args))

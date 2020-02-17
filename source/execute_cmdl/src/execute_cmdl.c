@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_cmdl.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 05:14:50 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/13 05:05:04 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/17 15:29:05 by llachgar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -300,24 +300,11 @@ int			execute_pipes_line(t_proc *p, int bg)
 		in = pi[0];
 		tp = tp->next;
 	}
-//	wait_for_process(p);
-	j = add_jobs(p, pgid);
+	j = add_jobs(p, pgid, bg);
 	if (bg)
-	{
 		put_job_in_background(j, 0);
-		ft_printf("[1] %ld\n", j->pgid);
-		job_is_completed(j);
-	}
 	else
-	{
 		put_job_in_foreground(j, 0);
-		if (job_is_completed(j))
-			delete_job(j->pgid);
-		// tcsetpgrp (STDIN_FILENO, pgid);
-		// wait_for_process(p);
-		// tcsetpgrp (STDIN_FILENO, g_shell_pgid);
-	}
-	do_job_notification();
 	return (0);
 }
 
@@ -336,6 +323,8 @@ void		separat_cmdl(t_tok *t)
 			while (t && t->id < 4)
 			{
 				check_save_tokens(p, t->token, t->id);
+				p->c = 0;
+				p->s = 0;
 				t = t->next;
 			}
 			if (t && t->id == 4)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct_shell.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 00:32:50 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/08 01:57:11 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/15 12:01:43 by llachgar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,19 @@ typedef struct	s_proc
 typedef struct	s_job
 {
 	t_proc			*p;
+	int				id;
+	int				status;
 	pid_t			pgid;
 	char			notified; 
 	struct s_job	*next;
 }				t_job;
+typedef struct s_jobs
+{
+	struct  s_job *f_job;
+	int 			p;
+	int				id;
+	
+}				t_jobs;
+
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   line_editing.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 04:57:19 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/13 23:33:28 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/17 15:30:42 by llachgar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ int			line_editing(char *line, int lexical)
 			execute_cmdline(alias);
 		else
 			ft_perror(0, 0, "syntax error !!", 1);
-		add_to_hist(ft_strdup(l), 0);
+		do_job_notification();
+		add_to_hist(ft_strdup(*line), 0);
 		ft_memdel((void **)&alias);
 	}
 	ft_memdel((void **)&l);
