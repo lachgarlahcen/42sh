@@ -6,7 +6,7 @@
 /*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/01 20:14:50 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/08 03:44:58 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/17 03:54:19 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,40 @@ int	init_shell(void)
 	return (0);
 }
 
+int	exit_status(int status, int check)
+{
+	static int	e_status;
+
+	if (check)
+		e_status = status;
+	return (e_status);
+}
+
+int	init_fd(void)
+{
+	int	fd;
+
+	if ((fd = open("/dev/tty", O_RDWR) == -1))
+		return (1);
+	if (dup2(fd, 127) == -1)
+		return (1);
+	close(fd);
+	if (dup2(127, 0) == -1)
+		return (1);
+	if (dup2(127, 1) == -1)
+		return (1);
+	if (dup2(127, 2) == -1)
+		return (1);
+	return (0);
+}
+
 int main(int ac, char **av, char **env)
 {
 	int stat;
 	char *line;
 
 	if (init_shell())
-		return (0);
+		return (1);
 	(void)ac;
 	(void)av;
 	stat = 0;
@@ -44,7 +71,7 @@ int main(int ac, char **av, char **env)
 	init_variables(env);
 	while ((line = read_line("42sh $> ")))
 	{
-		line_editing(&line, 1);
+		line_editing(line, 1);
 		ft_memdel((void **)&line);
 	}
 	free_variables();

@@ -6,7 +6,7 @@
 /*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 02:44:32 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/05 04:51:39 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/13 23:19:57 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,6 @@ char	*check_alias(char *line);
 int		check_history_expa(char **line);
 int		line_lexical(char **str, char **alias);
 
-int		line_editing(char **line, int lexical);
+int		line_editing(char *line, int lexical);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 00:09:47 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/04 00:10:04 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/14 00:40:37 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,25 +15,48 @@
 char	*is_alias(char *str)
 {
 	if (!ft_strcmp(str, "la"))
-		return (ft_strdup("bb >> azd"));
+		return (ft_strdup("ls la && la"));
 	if (!ft_strcmp(str, "bb"))
 		return (ft_strdup("ls asdasd &&"));
 	return (0);
 }
 
-int		check_is_alias(int be, int end, char **str)
+int		check_change(char *str, int al)
+{
+	int	i;
+	int	check;
+
+	i = 0;
+	check = 1;
+	while (i < al)
+	{
+		if (str[i] == '&' && str[i - 1] != '>' && str[i - 1] != '<')
+			check = 1;
+		else if (str[i] == '|')
+			check = 1;
+		else if (str[i] == ';')
+			check = 1;
+		else if (!ft_isblank(str[i]))
+			check = 0;
+		i++;
+	}
+	return (check);
+}
+
+int		check_is_alias(int be, int *end, char **str)
 {
 	char	*tp;
 	char	*tmp;
 
-	if (!(tp = ft_strsub(*str, be, end - be)))
+	if (!(tp = ft_strsub(*str, be, *end - be)))
 		return (1);
 	if (!(tmp = is_alias(tp)))
 		return (free_return(tp, 1));
+	*end = *end + ft_strlen(tmp);
 	ft_memdel((void **)&tp);
 	if ((tp = ft_strsub(*str, 0, be)))
 		tmp = strjoin_free(tp, tmp, 1, 1);
-	if ((tp = ft_strsub(*str, end, ft_strlen(*str) - end)))
+	if ((tp = ft_strsub(*str, *end, ft_strlen(*str) - *end)))
 		tmp = strjoin_free(tmp, tp, 1, 1);
 	ft_memdel((void **)&(*str));
 	*str = tmp;
@@ -53,11 +76,12 @@ char	*check_alias(char *line)
 		if (!ft_isblank(alias[i]) && !used_variable(alias[i]))
 		{
 			be = i;
-			while (alias[i] && !ft_isblank(alias[i]) && !used_variable(alias[i]))
+			while (alias[i] && !ft_isblank(alias[i]) &&
+					!used_variable(alias[i]))
 				i++;
-			if (i > be)
-				if (!check_is_alias(be, i, &alias))
-					i = be;
+			if (check_change(alias, be))
+				if (i > be)
+					check_is_alias(be, &i, &alias);
 		}
 		else
 			i++;
