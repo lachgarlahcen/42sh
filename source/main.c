@@ -6,7 +6,7 @@
 /*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/01 20:14:50 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/13 23:24:30 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/17 03:54:19 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,6 @@ int main(int ac, char **av, char **env)
 	(void)ac;
 	(void)av;
 	stat = 0;
-//	if (init_fd())
-//		return (1);
 	signals(1);
 	init_history();
 	g_first_job = 0;
@@ -75,8 +73,6 @@ int main(int ac, char **av, char **env)
 	{
 		line_editing(line, 1);
 		ft_memdel((void **)&line);
-//		if (init_fd())
-//			stat = 1;
 	}
 	free_variables();
 	free_history();
