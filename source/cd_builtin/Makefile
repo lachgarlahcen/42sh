@@ -3,20 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hastid <marvin@42.fr>                      +#+  +:+       +#+         #
+#    By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2020/02/05 03:14:51 by hastid            #+#    #+#              #
-#    Updated: 2020/02/13 04:15:34 by hastid           ###   ########.fr        #
+#    Created: 2020/02/14 22:57:24 by nsaber            #+#    #+#              #
+#    Updated: 2020/02/14 23:02:24 by nsaber           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = intern_variables.a
+NAME = cd_builtin.a
 
-SRC_NAME =	environ.c \
-			variables_cmdl.c \
-			variables_list.c \
-			intern_variables.c \
-			utils.c
+SRC_NAME = sh_buil_cd.c \
+		   sh_builcd.c
 
 OBJ_NAME =	$(SRC_NAME:.c=.o)
 
@@ -29,9 +26,9 @@ OBJ = $(addprefix $(OBJ_PATH)/, $(OBJ_NAME))
 CFLAGS = -Wall -Werror -Wextra
 
 Include = -I../../include \
-		  -I../../libft/include
+		  -I../../libft/include 
 
-DEPS = ../../include/intern_variables.h
+DEPS = ../../include/cd_builtin.h
 
 all: $(NAME)
 
@@ -47,7 +44,7 @@ $(OBJ_PATH)/%.o : $(SRC_PATH)/%.c $(DEPS)
 	@gcc  $(CFLAGS) -g $(Include) -o $@ -c $<
 
 clean:
-	@echo "\033[1;34mRemoving intern_variables's objects directory\033[0m"
+	@echo "\033[1;34mRemoving cd_builtin's objects directory\033[0m"
 	@/bin/rm -rf $(OBJ_PATH) 2> /dev/null
 
 fclean: clean

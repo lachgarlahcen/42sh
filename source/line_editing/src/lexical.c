@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 04:56:33 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/05 04:56:37 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/13 23:32:25 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,11 @@ int		line_lexical(char **str, char **alias)
 	{
 		if (!(temp = read_line("$> ")))
 			break ;
+		if (check_history_expa(&temp))
+		{
+			ft_memdel((void **)&temp);
+			continue ;
+		}
 		if (stat == 5)
 			*str = strjoin_free(*str, "\n", 1, 0);
 		else if (stat != 6)

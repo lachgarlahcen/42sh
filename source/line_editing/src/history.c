@@ -6,30 +6,11 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 04:55:08 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/05 04:55:23 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/13 23:54:06 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "line_editing.h"
-
-int		check_history(char **str, int p, int be)
-{
-	char	*tp;
-	char	*tmp;
-
-	if (!(tp = ft_strsub(*str, be, p - be)))
-		return (0);
-	if (!(p > be) || !(tmp = search_history(tp)))
-		return (ft_perror(tp, '!', ": event not found.", 1));
-	ft_memdel((void **)&tp);
-	if ((tp = ft_strsub(*str, 0, be - 1)))
-		tmp = strjoin_free(tp, tmp, 1, 1);
-	if ((tp = ft_strsub(*str, p, ft_strlen(*str) - p)))
-		tmp = strjoin_free(tmp, tp, 1, 1);
-	ft_memdel((void **)&(*str));
-	*str = tmp;
-	return (0);
-}
 
 int		is_value(char c, char qo)
 {
@@ -42,10 +23,34 @@ int		is_value(char c, char qo)
 	return (1);
 }
 
+int		check_history(char **str, int be, int q)
+{
+	int		i;
+	char	*tp;
+	char	*tmp;
+
+	i = be;
+	tp = *str;
+	while (tp[i] && is_value(tp[i], tp[q]))
+		i++;
+	if (!(tp = ft_strsub(*str, be, i - be)))
+		return (0);
+	if (!(i > be) || !(tmp = search_history(tp)))
+		return (ft_perror(tp, '!', ": event not found.", 1));
+	ft_memdel((void **)&tp);
+	if ((tp = ft_strsub(*str, 0, be - 1)))
+		tmp = strjoin_free(tp, tmp, 1, 1);
+	if ((tp = ft_strsub(*str, i, ft_strlen(*str) - i)))
+		tmp = strjoin_free(tmp, tp, 1, 1);
+	tp = *str;
+	ft_memdel((void **)&(tp));
+	*str = tmp;
+	return (0);
+}
+
 int		check_history_expa(char **line)
 {
 	int		i;
-	int		be;
 	int		qo;
 	char	*str;
 
@@ -62,18 +67,12 @@ int		check_history_expa(char **line)
 		}
 		if (str[i] == '!' && str[i + 1] && str[i + 1] != ' ')
 		{
-			be = ++i;
-			while (str[i] && is_value(str[i], str[qo]))
-				i++;
-			if (check_history(&str, i, be))
+			if (check_history(&str, ++i, qo))
 				return (1);
-			i = be;
 		}
 		else
 			i++;
 	}
-	if (ft_strcmp(str, *line))
-		ft_putendl(str);
 	*line = str;
 	return (0);
 }

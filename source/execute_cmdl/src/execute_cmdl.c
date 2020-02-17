@@ -6,7 +6,7 @@
 /*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 05:14:50 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/15 13:10:35 by llachgar         ###   ########.fr       */
+/*   Updated: 2020/02/17 15:29:05 by llachgar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,72 @@ char	*change_tilda(char *str)
 	return (tmp);
 }
 
+char	*change_string(char *str, int be)
+{
+	int		i;
+	char	*tp;
+	char	*tmp;
+
+	i = be;
+	tp = 0;
+	if (str[be] == '{')
+	{
+		while (str[i] && str[i] != '}')
+			i++;
+		be++;
+	}
+	else
+		while (str[i] && ft_isalnum(str[i]) && str[i] != '_')
+			i++;
+	tp = ft_strsub(str, be, i - be);
+	if (!ft_strcmp("?", tp))
+		tmp = ft_itoa(exit_status(0, 0));
+	else
+		tmp = get_variable(tp);
+	ft_memdel((void **)&tp);
+	tp = ft_strsub(str, 0, (str[be - 1] == '{') ? be - 2 : be - 1);
+	if (tmp)
+		tp = strjoin_free(tp, tmp, 1, 1);
+	if (str[i] == '}')
+		i++;
+	tmp = ft_strsub(str, i, ft_strlen(str) - i);
+	tp = strjoin_free(tp, tmp, 1, 1);
+	if (!*tp)
+		ft_memdel((void **)&tp);
+	return (tp);
+}
+
+char	*change_dollar(char *str, int id)
+{
+	int		i;
+	int		be;
+	//	char	*tp;
+	char	*tmp;
+
+	i = 0;
+	tmp = 0;
+	while (str[i])
+	{
+		if (str[i] == '\"' || str[i] == '\'')
+		{
+			be = i++;
+			while (str[i] && str[i] != str[be])
+			{
+				if (str[i] == '$' && str[be] == '\"')
+					return (0);
+				i++;
+			}
+		}
+		if (str[i] == '$')
+			tmp = change_string(str, i + 1);
+		i++;
+	}
+	if (!tmp && id != 0)
+		return (str);
+	ft_memdel((void **)&str);
+	return (tmp);
+}
+
 int		change_expansion(t_tok *t)
 {
 	while (t)
@@ -72,8 +138,8 @@ int		change_expansion(t_tok *t)
 		if (t->token && t->token[0] == '~')
 			if (!(t->token = change_tilda(t->token)))
 				return (1);
-		/*if (check_dollar(t->token))
-			t->token = change_dollar(t->token, t->id);*/
+		if (check_dollar(t->token))
+			t->token = change_dollar(t->token, t->id);
 		t = t->next;
 	}
 	return (0);
@@ -99,7 +165,8 @@ char		**get_args(t_tok *as)
 	tmp = as;
 	while (tmp)
 	{
-		l++;
+		if (tmp->token)
+			l++;
 		tmp =  tmp->next;
 	}
 	if (!(args = (char **)malloc(sizeof(char *) * (l + 1))))
@@ -108,7 +175,8 @@ char		**get_args(t_tok *as)
 	tmp = as;
 	while (tmp)
 	{
-		args[l++] = ft_strdup(tmp->token);
+		if (tmp->token)
+			args[l++] = ft_strdup(tmp->token);
 		tmp = tmp->next;
 	}
 	args[l] = 0;
@@ -133,6 +201,7 @@ char		*search_executable(char *cmdl)
 
 int			launch_process(t_tok *as, int bg, int in, int out)
 {
+	int		ret;
 	char	*exec;
 	char	**env;
 	char	**args;
@@ -154,8 +223,11 @@ int			launch_process(t_tok *as, int bg, int in, int out)
 	signals(0);
 	bg = 0;
 	args =  get_args(as);
-	if (!execute_builtin(args))
-		exit (0);
+	if (is_builtin(args[0]))
+	{
+		ret = execute_builtin(args);
+		exit (ret);
+	}
 	if (!(exec = search_executable(as->token)))
 		exit (EXIT_FAILURE);
 	env = get_env_variables();
@@ -175,6 +247,13 @@ void		wait_for_process(t_proc *p)
 			p->s = 1;
 		else
 			p->c = 1;
+		printf("pid == %i\n", p->pid);
+		if (WIFEXITED(p->stat))
+			exit_status(WEXITSTATUS(p->stat), 1);
+		else if (WIFSIGNALED(p->stat))
+			exit_status(WTERMSIG(p->stat) + 128, 1);
+		else if (WIFSTOPPED(p->stat))
+			exit_status(WSTOPSIG(p->stat) + 128, 1);
 		p = p->next;
 	}
 }
@@ -252,21 +331,7 @@ void		separat_cmdl(t_tok *t)
 				t = t->next;
 		}
 		(t && t->id == 5) ? execute_pipes_line(p, 1) : execute_pipes_line(p, 0);
-		/*		while (p)
-				{
-				printf("pid == %i\n", p->pid);
-				if (WIFEXITED(p->stat)) {
-				printf("exited, status = %d\n", WEXITSTATUS(p->stat));
-				} else if (WIFSIGNALED(p->stat)) {
-				printf("killed by signal %d\n", WTERMSIG(p->stat));
-				} else if (WIFSTOPPED(p->stat)) {
-				printf("stopped by signal %d\n", WSTOPSIG(p->stat));
-				} else if (WIFCONTINUED(p->stat)) {
-				printf("continued\n");
-				}
-				p = p->next;
-				}
-				*/		//free_process(p);
+		//free_process(p);
 		if (t)
 			t = t->next;
 	}
