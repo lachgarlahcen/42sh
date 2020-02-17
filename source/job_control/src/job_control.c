@@ -6,7 +6,7 @@
 /*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 22:18:53 by llachgar          #+#    #+#             */
-/*   Updated: 2020/02/15 18:43:17 by llachgar         ###   ########.fr       */
+/*   Updated: 2020/02/17 14:46:09 by llachgar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ void execute_jobs(char **args)
 void execute_fg(char **args)
 {
   (void )args;
-
+  if (getpid() != g_shell_pgid)
+    ft_printf("fg: no job control\n");
   put_job_in_foreground(g_jobs.f_job, 1);
 }
 
@@ -56,7 +57,7 @@ void  put_job_in_foreground (t_job *j, int cont)
   */
   wait_for_job (j);
   /* 
-  **Put the shell back in the foreground.
+  ** Put the shell back in the foreground.
   */
   tcsetpgrp (STDIN_FILENO, g_shell_pgid);
   tcsetattr (STDIN_FILENO, TCSADRAIN, &g_shell_tmodes);
@@ -67,7 +68,6 @@ void  put_job_in_foreground (t_job *j, int cont)
   else
     j->id = g_jobs.id++;
 }
-
 /*
 ** this function is basctly puts a jib in the background
 ** it it is supanded it sends continue sig
