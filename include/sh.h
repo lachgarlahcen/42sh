@@ -6,7 +6,7 @@
 /*   By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 18:23:41 by aihya             #+#    #+#             */
-/*   Updated: 2020/02/13 19:51:13 by aihya            ###   ########.fr       */
+/*   Updated: 2020/02/17 21:30:17 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # define DEC				-1
 # define BAD_SUBSTITUTION	1
 # define RESET				1
+# define UPDATE				2
 
 typedef struct	s_htnode
 {
@@ -40,7 +41,7 @@ typedef struct	s_data
 	t_htnode	**paths;
 }				t_data;
 
-t_htnode	**init_hashtable();
+t_htnode	**init_hashtable(void);
 t_htnode	*new_htnode(char *name, char *value);
 void		print_hashtable(t_htnode **hashtable, char **names, char *prefix);
 void		pop_htnode(t_htnode **hashtable, char *name);
@@ -54,25 +55,39 @@ char		**get_names(t_htnode **hashtable, size_t size);
 int			alias(char **args);
 t_htnode	**aliases(int init);
 char		**aliases_names(int reset);
-int			save_alias(char *name, char *value);
+size_t		aliases_counter(int action);
 char		*is_alias(char *name);
-void		unalias(char *name);
-void		print_alias();
+int			save_alias(char *name, char *value);
+void		print_alias(char *name);
+void		print_all_alias(void);
+
+// Unalias functions
+int			unalias(char **args);
+int			unalias_usage(void);
 
 // Binaries functions
+int			hash(char **args);
 t_htnode	**binaries(int init);
 char		**binaries_names(int reset);
-int			save_binary(char *bin_name, char *bin_value);
+size_t		binaries_counter(int action);
 char		*is_binary(char *name);
+int			save_binary(char *bin_name, char *bin_value);
 void		remove_binary(char *name);
-void		remove_binaries();
+void		remove_binaries(void);
+int			update_binary(char *name, char *new_value);
 void		print_binaries();
 char		*get_base_name(char *path);
+int			hash_usage(void);
+
+// Error functions
+int			err_msg(char *caller, char *target, char *msg);
+int			invalid_option(char *arg, char target_option, char *caller);
 
 // Sort function
-void	sort(char **chain, size_t size);
+void		sort(char **chain, size_t size);
 
 // Type functions
-void	type(char **args);
+int			type(char **args);
+
 
 #endif

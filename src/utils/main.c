@@ -6,7 +6,7 @@
 /*   By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 17:17:11 by aihya             #+#    #+#             */
-/*   Updated: 2020/02/15 19:48:16 by aihya            ###   ########.fr       */
+/*   Updated: 2020/02/17 23:14:20 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,30 @@
 int		main()
 {
 	aliases(TRUE);
-/*	save_alias("aa", "mok");
+	save_alias("aa", "mok");
 	save_alias("aaa", "you");
 	save_alias("ls", "me");
-	save_alias("b", "too");
-	save_alias("ab", "boom");
-	printf("%s\n", get_base_name("/nam/dsjf"));
-*/
-//	char **args = NULL;
-	// ft_chain_push(&args, "alias");
-	// ft_chain_push(&args, "ls");
-	// ft_chain_push(&args, "kiki=mimi");
-//	ft_chain_push(&args, "kiki");
-	//alias(args);
+//	save_alias("b", "too");
+//	save_alias("ab", "boom");
+
+	binaries(TRUE);
+	save_binary("ls", "/bin/ls");
+	save_binary("ls", "/bin/ls");
+	save_binary("ls", "/bin/ls");
+	char **args = NULL;
+	ft_chain_push(&args, "hash");
+//	ft_chain_push(&args, "-r");
+//	ft_chain_push(&args, "ls");
+//	ft_chain_push(&args, "mimi");
+//	ft_chain_push(&args, "cat");
+	hash(args);
+	ft_chain_free(&args);
+	printf("---------\n");
+	ft_chain_push(&args, "hash");
+	hash(args);
+
 	//print_alias();
-	// binaries(TRUE);
-	// save_binary("ls", "/bin/ls");
+	
 	// save_binary("cd", "/bin/cd");
 	// save_binary("man", "/bin/man");
 	// save_binary("cd", "/usr/bin/cd");
@@ -42,10 +50,6 @@ int		main()
 //	printf("%s\n", is_alias("carrot"));
 
 //	type(binaries_names(FALSE));
-	struct stat	st;
-	int ret = stat("/Users/aihya/FOLDER/fiiile", &st);
-	perror("lol");
-	printf("%d %d\n", ret, st.st_mode);
 //	if (st)
 //		printf("EXIST\n");
 //	else

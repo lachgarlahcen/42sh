@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   type.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aihya <aihya@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 19:21:27 by aihya             #+#    #+#             */
-/*   Updated: 2020/02/01 16:19:13 by aihya            ###   ########.fr       */
+/*   Updated: 2020/02/17 19:45:33 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,18 +50,17 @@ static int	test_binary(char *arg)
 	return (ret);
 }
 
-void		type(char **args)
+int			type(char **args)
 {
-	int		i;
+	int		index;
+	int		status;
 
-	i = 0;
-	while (args[i])
+	status = 0;
+	index = 0;
+	while (args[index])
 	{
-		if (!test_alias(args[i]) && !test_binary(args[i]))
-		{
-			ft_putstr(args[i]);
-			ft_putendl(" not found");
-		}
-		i++;
+		if (!test_alias(args[index]) && !test_binary(args[index]))
+			status = err_msg("type", args[index], "Not found");
+		index++;
 	}
 }

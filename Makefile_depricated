@@ -1,0 +1,82 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2019/05/30 10:17:50 by aihya             #+#    #+#              #
+#    Updated: 2020/02/16 20:43:29 by aihya            ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+.PHONY: all, clean, fclean, re
+
+NAME = 42sh_bin
+
+SRC_PATH =	src
+OBJ_PATH =	obj
+
+SRC_NAME =	main.c \
+			hashtable.c \
+			alias.c \
+			sort.c \
+			type.c
+			
+OBJ_NAME =	$(SRC_NAME:.c=.o)
+
+binaries_SRC_NAME =	binaries.c \
+					binaries_add_remove.c \
+					binaries_utils.c \
+					binaries_update.c \
+					hash_command.c
+binaries_OBJ_NAME =	$(binaries_SRC_NAME:.c=.o)
+
+binaries_SRC_PATH = $(addprefix $(SRC_PATH)/,hash_builtin)
+binaries_OBJ_PATH = $(addprefix $(OBJ_PATH)/,hash_builtin)
+
+SRC =	$(addprefix $(SRC_PATH)/,$(SRC_NAME)) \
+		$(addprefix $(binaries_SRC_PATH)/,$(binaries_SRC_NAME))
+		
+OBJ =	$(addprefix $(OBJ_PATH)/,$(OBJ_NAME)) \
+		$(addprefix $(binaries_OBJ_PATH)/,$(binaries_OBJ_NAME))
+
+CFLAGS = #-Wall \
+		 -Werror \
+		 -Wextra
+
+INCLUDE =	-Iinclude \
+			-Ilibft/include
+
+LIBS = -Llibft -lft
+
+DEPS = include/sh.h
+
+all : $(NAME)
+
+$(NAME): $(OBJ)
+	@make -C libft
+	@echo "\033[1;34mCreating $(NAME)\033[0m"
+	@gcc $(OBJ) $(LIBS) -o $@
+
+$(OBJ_PATH)/%.o : $(SRC_PATH)/%.c $(DEPS)
+	@mkdir $(OBJ_PATH) 2> /dev/null || true
+	@echo "Compiling \033[1;36m[$<]\033[0m to \033[1;32m[$@]\033[0m"
+	@gcc $(CFLAGS) $(INCLUDE) -o $@ -c $<
+
+$(binaries_OBJ_PATH)/%.o: $(binaries_SRC_PATH)/%.c $(DEPS)
+	@mkdir $(binaries_OBJ_PATH) 2> /dev/null || true
+	@echo "HASH_BUILTIN Compiling \033[1;36m[$<]\033[0m to \033[1;32m[$@]\033[0m"
+	@gcc $(CFLAGS) $(INCLUDE) -o $@ -c $<
+
+clean :
+	@make -C libft clean
+	@echo "\033[1;33mRemoving $(NAME)'s objects directory\033[0m"
+	@/bin/rm -rf $(OBJ_PATH) 2> /dev/null
+
+fclean : clean
+	@make -C libft fclean
+	@echo "\033[1;33mRemoving $(NAME)\033[0m"
+	@/bin/rm -f $(NAME)
+
+re : fclean all
