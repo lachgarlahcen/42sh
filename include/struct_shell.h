@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct_shell.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 00:32:50 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/15 12:01:43 by llachgar         ###   ########.fr       */
+/*   Updated: 2020/02/18 06:39:53 by nsaber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ typedef struct	s_job
 	pid_t			pgid;
 	char			notified; 
 	struct s_job	*next;
+	char			option;
+	char			*name;
 }				t_job;
 typedef struct s_jobs
 {

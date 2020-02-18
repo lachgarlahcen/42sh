@@ -3,26 +3,72 @@
 /*                                                        :::      ::::::::   */
 /*   job_control.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 22:18:53 by llachgar          #+#    #+#             */
-/*   Updated: 2020/02/17 14:46:09 by llachgar         ###   ########.fr       */
+/*   Updated: 2020/02/18 06:43:42 by nsaber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "job_control.h"
 
+char  *name_list_concate(t_proc			*p)
+{
+    char *name_args;
+    char *tmp;
+
+    if (p->as->next)
+      name_args = p->as->token;
+    else
+    name_args = ft_strdup(p->as->token); 
+    /*
+    *
+    *     for free purpeses 
+    *      any return from 
+    * this fuction is allocated
+    */
+    while(p->as->next)
+    {
+        tmp = ft_strjoin(name_args, " ");
+        p->as = p->as->next;
+        name_args = ft_strjoin(tmp, p->as->token);
+        free(tmp);
+    }
+    return(name_args);
+}
+
 void execute_jobs(char **args)
 {
   t_job *j;
-
   (void )args;
+  int i;
+  int option;
 
+  i = 0;
+  j = g_jobs.f_job;
+  option = 0;
+  if (args[1] && args[1][0] == '-')
+  {
+      while(args[1][++i])
+      {
+        option = args[1][i];
+        if (!(args[1][i] == 'l' || args[1][i] == 'p'))
+        {
+          option = 'x';
+          break ;
+        }
+      }
+  }
+  /*
+  
+  */
   j = g_jobs.f_job;
   while (j)
   {
     j->notified = 1;
-    format_job_info(j, NULL);
+    j->option = option;
+    j->name = name_list_concate(j->p); // must be freed later
+   format_job_info(j, NULL);
     j = j->next;
   }
 }
