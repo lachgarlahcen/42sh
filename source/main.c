@@ -6,7 +6,7 @@
 /*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/01 20:14:50 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/17 15:30:57 by llachgar         ###   ########.fr       */
+/*   Updated: 2020/02/18 06:45:57 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,15 +44,13 @@ int	init_fd(void)
 
 	if ((fd = open("/dev/tty", O_RDWR) == -1))
 		return (1);
-	if (dup2(fd, 127) == -1)
+	if (dup2(fd, 0) == -1)
+		return (1);
+	if (dup2(fd, 1) == -1)
+		return (1);
+	if (dup2(fd, 2) == -1)
 		return (1);
 	close(fd);
-	if (dup2(127, 0) == -1)
-		return (1);
-	if (dup2(127, 1) == -1)
-		return (1);
-	if (dup2(127, 2) == -1)
-		return (1);
 	return (0);
 }
 

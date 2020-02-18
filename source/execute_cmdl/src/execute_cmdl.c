@@ -6,12 +6,11 @@
 /*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 05:14:50 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/18 05:57:52 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/18 06:48:31 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute_cmdl.h"
-
 
 void		check_save_tokens(t_proc *p, char *token, int id)
 {
@@ -23,7 +22,6 @@ void		check_save_tokens(t_proc *p, char *token, int id)
 		save_tokens(&(p->red), token, id);
 }
 
-
 void		wait_for_process(t_proc *p)
 {
 	int	status;
@@ -32,7 +30,7 @@ void		wait_for_process(t_proc *p)
 	{
 		waitpid(p->pid, &status, WUNTRACED | WCONTINUED);
 		p->stat = status;
-		if (WIFSTOPPED (status))
+		if (WIFSTOPPED(status))
 			p->s = 1;
 		else
 			p->c = 1;
@@ -85,8 +83,6 @@ void		separat_cmdl(t_tok *t)
 			while (t && t->id < 4)
 			{
 				check_save_tokens(p, t->token, t->id);
-				p->c = 0;
-				p->s = 0;
 				t = t->next;
 			}
 			if (t && t->id == 4)

@@ -6,7 +6,7 @@
 /*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 01:41:09 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/15 12:07:53 by llachgar         ###   ########.fr       */
+/*   Updated: 2020/02/18 06:54:52 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ static t_job	*add_job(t_proc *p, pid_t pgid, int bg)
 	j->next = 0;
 	return (j);
 }
+
 void delete_job(pid_t pgid)
 {
 	t_job *j;

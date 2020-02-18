@@ -6,7 +6,7 @@
 /*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 00:32:50 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/15 12:01:43 by llachgar         ###   ########.fr       */
+/*   Updated: 2020/02/18 06:53:31 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct	s_job
 	char			notified; 
 	struct s_job	*next;
 }				t_job;
+
 typedef struct s_jobs
 {
 	struct  s_job *f_job;

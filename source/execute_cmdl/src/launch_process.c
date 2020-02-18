@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 04:57:40 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/18 06:05:11 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/18 06:32:12 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,8 @@ int		execute_without_fork(t_proc *p, int iv)
 	if (change_expansion(as))
 		return (exit_status(1, 1));
 	args = get_args(as);
-	execute_builtin(args);
+	exit_status(execute_builtin(args), 1);
+	free_tab(args);
 	return (0);
 }
 

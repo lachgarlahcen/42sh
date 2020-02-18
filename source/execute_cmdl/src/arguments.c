@@ -6,13 +6,13 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 04:58:13 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/18 05:51:15 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/18 06:44:32 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute_cmdl.h"
 
-int			is_intern_variable(char *name)
+static int	is_intern_variable(char *name)
 {
 	int	i;
 
@@ -46,12 +46,31 @@ int			check_all_arguments(t_proc *p)
 			if (!is_intern_variable(as->token))
 				as->id = 1;
 			if (!as->id)
-				break;
+				break ;
 			as = as->next;
 		}
 		tp = tp->next;
 	}
 	return (0);
+}
+
+static char	*delet_quotes(char *str)
+{
+	int		i;
+	int		j;
+	char	buf[READ_SIZE];
+
+	i = 0;
+	j = 0;
+	ft_bzero(buf, READ_SIZE);
+	while (str[i] && i < READ_SIZE)
+	{
+		if (str[i] == '\'' || str[i] == '\"' || str[i] == '\\')
+			i++;
+		buf[j++] = str[i];
+		i++;
+	}
+	return (ft_strdup(buf));
 }
 
 char		**get_args(t_tok *as)
@@ -67,7 +86,7 @@ char		**get_args(t_tok *as)
 	{
 		if (!tmp->id && tmp->token)
 			l++;
-		tmp =  tmp->next;
+		tmp = tmp->next;
 	}
 	if (!(args = (char **)malloc(sizeof(char *) * (l + 1))))
 		return (0);
@@ -76,9 +95,20 @@ char		**get_args(t_tok *as)
 	while (tmp)
 	{
 		if (tmp->token)
-			args[l++] = ft_strdup(tmp->token);
+			args[l++] = delet_quotes(tmp->token);
 		tmp = tmp->next;
 	}
 	args[l] = 0;
 	return (args);
+}
+
+void		free_tab(char **tab)
+{
+	int	i;
+
+	i = 0;
+	while (tab[i])
+		ft_memdel((void **)&tab[i++]);
+	free(tab);
+	tab = 0;
 }
