@@ -6,7 +6,7 @@
 /*   By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/16 18:41:02 by aihya             #+#    #+#             */
-/*   Updated: 2020/02/17 15:31:04 by aihya            ###   ########.fr       */
+/*   Updated: 2020/02/18 12:36:48 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,5 @@ char		*is_binary(char *name)
 
 	if ((path = find_htnode(binaries(FALSE), name)) == NULL)
 		return (NULL);
-	path->hits++;
 	return (path->value);
 }

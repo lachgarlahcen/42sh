@@ -6,7 +6,7 @@
 /*   By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/16 18:53:16 by aihya             #+#    #+#             */
-/*   Updated: 2020/02/17 22:04:44 by aihya            ###   ########.fr       */
+/*   Updated: 2020/02/18 18:15:22 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,12 @@ static int	path_basenames_cmp(char *base_name)
 	char	**table;
 	int		index;
 	int		match;
-	char	*path = "/usr/bin:/bin";
+	char	*path_var;
 
+	path_var = get_variable("PATH");
 	match = 0;
 	index = 0;
-	table = ft_strsplit(path, ':');
+	table = ft_strsplit(path_var, ':');
 	while (table[index])
 	{
 		if (ft_strequ(table[index], base_name))
@@ -54,6 +55,7 @@ static int	path_basenames_cmp(char *base_name)
 		}
 		index++;
 	}
+	ft_strdel(&path_var);
 	ft_chain_free(&table);
 	return (match);
 }

@@ -6,15 +6,15 @@
 /*   By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 17:31:06 by aihya             #+#    #+#             */
-/*   Updated: 2020/01/01 21:00:09 by aihya            ###   ########.fr       */
+/*   Updated: 2020/02/18 18:24:06 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int     ft_strisempty(char *str)
+int		ft_strisempty(char *str)
 {
-	int     i;
+	int		i;
 
 	i = 0;
 	if (str)

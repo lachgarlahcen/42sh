@@ -6,7 +6,7 @@
 /*   By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/16 19:26:51 by aihya             #+#    #+#             */
-/*   Updated: 2020/02/17 22:59:38 by aihya            ###   ########.fr       */
+/*   Updated: 2020/02/18 18:13:36 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,12 @@ void	remove_binaries(void)
 			index++;
 		}
 	}
+}
+
+void	hit_binary(char *name)
+{
+	t_htnode	*node;
+
+	node = find_htnode(binaries(FALSE), name);
+	node->hits++;
 }

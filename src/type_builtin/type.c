@@ -6,11 +6,9 @@
 /*   By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 19:21:27 by aihya             #+#    #+#             */
-/*   Updated: 2020/02/17 19:45:33 by aihya            ###   ########.fr       */
+/*   Updated: 2020/02/18 18:17:03 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-// Options: None.
 
 #include "sh.h"
 
@@ -23,9 +21,7 @@ static int	test_alias(char *arg)
 	tmp = is_alias(arg);
 	if (tmp != NULL)
 	{
-		ft_putstr(arg);
-		ft_putstr(" is aliased to ");
-		ft_putendl(tmp);
+		printf("%s is aliased to `%s'\n", arg, tmp);
 		ret = 1;
 	}
 	ft_strdel(&tmp);
@@ -41,9 +37,7 @@ static int	test_binary(char *arg)
 	tmp = is_binary(arg);
 	if (tmp != NULL)
 	{
-		ft_putstr(arg);
-		ft_putstr(" is ");
-		ft_putendl(tmp);
+		printf("%s is %s\n", arg, tmp);
 		ret = 1;
 	}
 	ft_strdel(&tmp);
@@ -54,13 +48,21 @@ int			type(char **args)
 {
 	int		index;
 	int		status;
+	char	*bin_path;
 
 	status = 0;
-	index = 0;
+	index = 1;
 	while (args[index])
 	{
 		if (!test_alias(args[index]) && !test_binary(args[index]))
-			status = err_msg("type", args[index], "Not found");
+		{
+			if ((bin_path = get_bin_path(args[index])) == NULL)
+				status = err_msg("type", args[index], "Not found");
+			else
+				printf("%s is %s\n", args[index], bin_path);
+			ft_strdel(&bin_path);
+		}
 		index++;
 	}
+	return (status);
 }

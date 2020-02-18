@@ -6,7 +6,7 @@
 /*   By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 19:29:19 by aihya             #+#    #+#             */
-/*   Updated: 2020/01/24 19:42:30 by aihya            ###   ########.fr       */
+/*   Updated: 2020/02/18 18:22:32 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,16 @@ void	swap(char **s1_p, char **s2_p)
 
 void	sort(char **chain, size_t size)
 {
-	size_t	_size;
 	size_t	i;
 	size_t	j;
 
-	_size = size;
 	if (size != 0)
 	{
 		i = 0;
-		while (i < _size - 1)
+		while (i < size - 1)
 		{
 			j = i + 1;
-			while (j < _size)
+			while (j < size)
 			{
 				if (ft_strcmp(chain[i], chain[j]) > 0)
 					swap(&chain[i], &chain[j]);

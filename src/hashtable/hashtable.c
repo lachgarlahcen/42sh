@@ -6,7 +6,7 @@
 /*   By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 18:37:49 by aihya             #+#    #+#             */
-/*   Updated: 2020/02/17 22:58:50 by aihya            ###   ########.fr       */
+/*   Updated: 2020/02/18 18:16:36 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int			hash_function(char *str)
 	return (hash);
 }
 
-t_htnode	**init_hashtable()
+t_htnode	**init_hashtable(void)
 {
 	t_htnode	**hashtable;
 	int			i;

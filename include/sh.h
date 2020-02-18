@@ -6,7 +6,7 @@
 /*   By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 18:23:41 by aihya             #+#    #+#             */
-/*   Updated: 2020/02/17 21:30:17 by aihya            ###   ########.fr       */
+/*   Updated: 2020/02/18 18:01:35 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,14 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include "libft.h"
-#include <sys/stat.h>
+# include <sys/stat.h>
 
 # define HT_LIMIT			20
 # define TRUE				1
 # define FALSE				0
 # define INC				1
 # define DEC				-1
-# define BAD_SUBSTITUTION	1
 # define RESET				1
-# define UPDATE				2
 
 typedef struct	s_htnode
 {
@@ -35,12 +33,7 @@ typedef struct	s_htnode
 	struct s_htnode	*next;
 }				t_htnode;
 
-typedef struct	s_data
-{
-	t_htnode	**aliases;
-	t_htnode	**paths;
-}				t_data;
-
+// Hashtable function
 t_htnode	**init_hashtable(void);
 t_htnode	*new_htnode(char *name, char *value);
 void		print_hashtable(t_htnode **hashtable, char **names, char *prefix);
@@ -78,6 +71,10 @@ int			update_binary(char *name, char *new_value);
 void		print_binaries();
 char		*get_base_name(char *path);
 int			hash_usage(void);
+void		hit_binary(char *name);
+void		print_binaries(void);
+int			is_path_like(char *str);
+int			r_option(char **args, int *status, int* last_index);
 
 // Error functions
 int			err_msg(char *caller, char *target, char *msg);
@@ -89,5 +86,11 @@ void		sort(char **chain, size_t size);
 // Type functions
 int			type(char **args);
 
+// Utils
+char		*get_fullpath(char *basename, char *name);
+char		*get_bin_path(char *bin_name);
+
+// Expansions (simple form)
+char		*expand(char *arg);
 
 #endif

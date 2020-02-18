@@ -6,7 +6,7 @@
 /*   By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/17 15:34:19 by aihya             #+#    #+#             */
-/*   Updated: 2020/02/17 20:08:04 by aihya            ###   ########.fr       */
+/*   Updated: 2020/02/18 18:23:18 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void			remove_aliases(void)
 	}
 }
 
-static int		a_option(char **args, int *status, int* last_index)
+static int		a_option(char **args, int *status, int *last_index)
 {
 	int		i;
 	int		remove_all;
@@ -62,12 +62,12 @@ static void		set_individual_aliases(char **args, int *status)
 {
 	int	remove_all;
 	int	index;
-	
+
 	index = 0;
 	remove_all = a_option(args, status, &index);
 	if (*status)
 		return ;
-	if (remove_all)	
+	if (remove_all)
 		remove_aliases();
 	else
 	{

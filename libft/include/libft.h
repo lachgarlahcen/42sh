@@ -6,7 +6,7 @@
 /*   By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/05 23:15:26 by aihya             #+#    #+#             */
-/*   Updated: 2020/01/24 19:36:42 by aihya            ###   ########.fr       */
+/*   Updated: 2020/02/18 18:30:01 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,21 +27,21 @@ typedef struct	s_node
 	struct s_node	*next;
 }				t_node;
 
-typedef struct		s_list
+typedef struct	s_list
 {
 	void			*content;
 	size_t			content_size;
 	struct s_list	*next;
-}					t_list;
+}				t_list;
 
-typedef struct		s_lst
+typedef struct	s_lst
 {
 	char			*cut;
 	int				fd;
 	struct s_lst	*next;
-}					t_lst;
+}				t_lst;
 
-size_t			ft_char_count(char* str, char c);
+size_t			ft_char_count(char *str, char c);
 int				ft_strisempty(char *str);
 char			*ft_strappend(char **a_s1, char c, int overwrite);
 int				ft_isalphanumeric(char c);
@@ -99,7 +99,7 @@ void			ft_bzero(void *s, size_t n);
 char			*ft_itoa(int n);
 char			*ft_itoa_base(long long value, int base);
 char			*ft_strnstr(const char *haystack, const char *needle,
-		size_t len);
+				size_t len);
 void			*ft_memalloc(size_t size);
 void			ft_memdel(void **ap);
 char			*ft_strnew(size_t size);
