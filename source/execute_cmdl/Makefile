@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hastid <marvin@42.fr>                      +#+  +:+       +#+         #
+#    By: iel-bouh <iel-bouh@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/05 05:16:42 by hastid            #+#    #+#              #
-#    Updated: 2020/02/07 02:02:04 by hastid           ###   ########.fr        #
+#    Updated: 2020/02/18 02:44:04 by iel-bouh         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,8 @@
 NAME = execute_cmdl.a
 
 SRC_NAME = execute_cmdl.c \
-		   process_list.c
+		   process_list.c \
+		   redirection.c
 
 OBJ_NAME =	$(SRC_NAME:.c=.o)
 

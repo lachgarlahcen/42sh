@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_cmdl.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iel-bouh <iel-bouh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 05:14:50 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/17 15:29:05 by llachgar         ###   ########.fr       */
+/*   Updated: 2020/02/18 05:34:26 by iel-bouh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -286,8 +286,11 @@ int			execute_pipes_line(t_proc *p, int bg)
 		{
 			if (tp->next)
 				close(pi[0]);
+			if (ft_redirection(p) == -1)
+				exit(1);
 			if (!change_expansion(tp->as))
 				launch_process(tp->as, bg, in, out);
+
 			exit(1);
 		}
 		if (!pgid)

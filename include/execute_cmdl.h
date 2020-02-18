@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_cmdl.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: iel-bouh <iel-bouh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 05:18:12 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/08 03:40:32 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/18 05:11:35 by iel-bouh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,7 @@ int		add_process(t_proc **pipes);
 void	free_process(t_proc *pipes);
 
 int		execute_cmdline(char *line);
+
+int		ft_redirection(t_proc *p);
 
 #endif
