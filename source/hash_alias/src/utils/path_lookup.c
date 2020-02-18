@@ -6,7 +6,7 @@
 /*   By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 12:48:55 by aihya             #+#    #+#             */
-/*   Updated: 2020/02/18 18:20:04 by aihya            ###   ########.fr       */
+/*   Updated: 2020/02/19 00:44:04 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*get_bin_path(char *bin_name)
 	int			index;
 
 	path_var = get_variable("PATH");
-	basenames = ft_strsplit(path, ':');
+	basenames = ft_strsplit(path_var, ':');
 	index = 0;
 	while (basenames[index])
 	{

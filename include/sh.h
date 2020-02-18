@@ -6,7 +6,7 @@
 /*   By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 18:23:41 by aihya             #+#    #+#             */
-/*   Updated: 2020/02/18 18:01:35 by aihya            ###   ########.fr       */
+/*   Updated: 2020/02/19 00:40:43 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@
 # include <stdlib.h>
 # include "libft.h"
 # include <sys/stat.h>
+# include "intern_variables.h"
 
 # define HT_LIMIT			20
 # define TRUE				1
 # define FALSE				0
 # define INC				1
 # define DEC				-1
-# define RESET				1
 
 typedef struct	s_htnode
 {

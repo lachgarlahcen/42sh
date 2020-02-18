@@ -6,7 +6,7 @@
 /*   By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/16 18:53:16 by aihya             #+#    #+#             */
-/*   Updated: 2020/02/18 18:15:22 by aihya            ###   ########.fr       */
+/*   Updated: 2020/02/19 00:41:57 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void		update_binaries(void)
 		ft_strdel(&base_name);
 		index++;
 	}
-	binaries_names(RESET);
+	binaries_names(TRUE);
 }
 
 int			update_binary(char *name, char *new_value)

@@ -40,7 +40,7 @@ LIBS =	libft/libft.a \
 		source/shell_signals/shell_signals.a \
 		source/execute_builtin/execute_builtin.a \
 		source/intern_variables/intern_variables.a \
-		source/hash_alias/hash_alais.a \
+		source/hash_alias/hash_alias.a \
 		source/cd_builtin/cd_builtin.a 
 
 DEPS = include/shell.h
@@ -55,7 +55,7 @@ LIB_C = libft_c \
 		shell_signals_c \
 		execute_builtin_c \
 		intern_variables_c \
-		hash_alais_c \
+		hash_alias_c \
 		cd_builtin_c
 
 
@@ -111,7 +111,7 @@ intern_variables_c:
 cd_builtin_c:
 	@make -C source/cd_builtin
 
-hash_alais_c:
+hash_alias_c:
 	@make -C source/hash_alias
 
 $(OBJ_PATH)/%.o : $(SRC_PATH)/%.c $(DEPS)

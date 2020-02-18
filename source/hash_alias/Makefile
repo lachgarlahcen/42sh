@@ -6,7 +6,7 @@
 #    By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/30 10:17:50 by aihya             #+#    #+#              #
-#    Updated: 2020/02/18 18:07:51 by aihya            ###   ########.fr        #
+#    Updated: 2020/02/19 00:25:44 by aihya            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -140,12 +140,10 @@ $(expansions_OBJ_PATH)/%.o: $(expansions_SRC_PATH)/%.c $(DEPS)
 	@gcc $(CFLAGS) $(INCLUDE) -o $@ -c $<
 
 clean :
-	@make -C libft clean
 	@echo "\033[1;33mRemoving $(NAME)'s objects directory\033[0m"
 	@/bin/rm -rf $(OBJ_PATH) 2> /dev/null
 
 fclean : clean
-	@make -C libft fclean
 	@echo "\033[1;33mRemoving $(NAME)\033[0m"
 	@/bin/rm -f $(NAME)
 

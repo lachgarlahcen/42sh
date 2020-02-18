@@ -6,7 +6,7 @@
 /*   By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/16 19:26:51 by aihya             #+#    #+#             */
-/*   Updated: 2020/02/18 18:13:36 by aihya            ###   ########.fr       */
+/*   Updated: 2020/02/19 00:41:14 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int		save_binary(char *bin_name, char *bin_value)
 	if (push_htnode(binaries(FALSE), &bin))
 	{
 		binaries_counter(INC);
-		binaries_names(RESET);
+		binaries_names(TRUE);
 	}
 	return (1);
 }
