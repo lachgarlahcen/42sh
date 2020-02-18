@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   job_notification.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 00:42:10 by llachgar          #+#    #+#             */
-/*   Updated: 2020/02/15 16:53:30 by llachgar         ###   ########.fr       */
+/*   Updated: 2020/02/18 06:44:04 by nsaber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ void  wait_for_job (t_job *j)
          && !job_is_stopped (j)
          && !job_is_completed (j));
 }
+
+
 void  format_job_info (t_job *j, const char *status)
 {
   char *g_sinalmsg[] =
@@ -123,8 +125,21 @@ void  format_job_info (t_job *j, const char *status)
 };
   (void )status;
   int s;
+ 
   s = job_is_completed(j) ? j->status : 20;
-  fprintf (stderr, "[%d]\t%s\t\t(%ld)\n",j->id , g_sinalmsg[s],(long)j->pgid);
+  if (j->option == 0)
+    fprintf (stderr, "[%d]\t%s\t\t%s\n",j->id , g_sinalmsg[s], j->name);
+  else if (j->option == 'l')
+  {
+    fprintf (stderr, "[%d]\t%ld\t%s\t\t%s\n",j->id , (long)j->pgid, g_sinalmsg[s], j->name);
+  }
+  else if(j->option == 'p')
+        fprintf (stderr, "%d\n",j->pgid);
+  else if (j->option == 'x')
+    fprintf(stderr, "usage: jobs [-lp] [jobspec ...]\n");
+  
+  
+
 }
 void  do_job_notification (void)
 {
