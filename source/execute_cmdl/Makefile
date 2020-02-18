@@ -6,15 +6,18 @@
 #    By: hastid <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/05 05:16:42 by hastid            #+#    #+#              #
-#    Updated: 2020/02/07 02:02:04 by hastid           ###   ########.fr        #
+#    Updated: 2020/02/18 05:51:37 by hastid           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
 NAME = execute_cmdl.a
 
-SRC_NAME = execute_cmdl.c \
-		   process_list.c
+SRC_NAME = arguments.c \
+		   execute_cmdl.c \
+		   process_list.c \
+		   launch_process.c \
+		   change_expansion.c
 
 OBJ_NAME =	$(SRC_NAME:.c=.o)
 

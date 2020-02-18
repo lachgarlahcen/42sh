@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 04:13:44 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/13 04:14:52 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/18 04:20:08 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ int		check_name_variables(char *name, int check)
 {
 	int	i;
 
-	i = 0;
-	if (!ft_isalpha(name[i]) && name[i] != '_')
+	i = 1;
+	if (!ft_isalpha(name[0]) && name[0] != '_')
 		return (ret_error(name));
-	while (name[++i])
+	while (name[i])
 	{
 		if (check && name[i] != '=')
 			break ;

@@ -6,7 +6,7 @@
 /*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 04:36:08 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/17 16:05:16 by llachgar         ###   ########.fr       */
+/*   Updated: 2020/02/18 03:15:30 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,27 +24,27 @@ void	execute_exit(char **args)
 
 int		is_builtin(char *exec)
 {
-		if (!ft_strcmp("cd", exec))
+	if (!ft_strcmp("cd", exec))
 		return (1);
-		else if (!ft_strcmp("fg", exec))
+	else if (!ft_strcmp("fg", exec))
 		return (1);
-		else if (!ft_strcmp("bg", exec))
+	else if (!ft_strcmp("bg", exec))
 		return (1);
-		else if (!ft_strcmp("fc", exec))
+	else if (!ft_strcmp("fc", exec))
 		return (0);
-		else if (!ft_strcmp("set", exec))
+	else if (!ft_strcmp("set", exec))
 		return (1);
-		else if (!ft_strcmp("test", exec))
+	else if (!ft_strcmp("test", exec))
 		return (1);
-		else if (!ft_strcmp("jobs", exec))
+	else if (!ft_strcmp("jobs", exec))
 		return (1);
-		else if (!ft_strcmp("hash", exec))
+	else if (!ft_strcmp("hash", exec))
 		return (0);
-		else if (!ft_strcmp("unset", exec))
+	else if (!ft_strcmp("unset", exec))
 		return (1);
-		else if (!ft_strcmp("exit", exec))
+	else if (!ft_strcmp("exit", exec))
 		return (1);
-		else if (!ft_strcmp("export", exec))
+	else if (!ft_strcmp("export", exec))
 		return (1);
 	/*	else if (!ft_strcmp("echo", *args))
 		execute_echo();
@@ -64,18 +64,18 @@ int		is_builtin(char *exec)
 
 int		execute_builtin(char **args)
 {
-		/*
-	else if (!ft_strcmp("fc", *args))
-		execute_fd();
-		*/
+	/*
+	   else if (!ft_strcmp("fc", *args))
+	   execute_fd();
+	   */
 	/*	else if (!ft_strcmp("echo", *args))
 		execute_echo();
-	*/
+		*/
 	/*	else if (!ft_strcmp("type", *args))
 		execute_type();*/	
 	/*else if (!ft_strcmp("hash", *args))
-		execute_hash();
-		*/
+	  execute_hash();
+	  */
 	/*	else if (!ft_strcmp("alias", *args))
 		execute_alias();
 		*/
@@ -87,7 +87,7 @@ int		execute_builtin(char **args)
 	else if (!ft_strcmp("set", *args))
 		put_variables();
 	else if (!ft_strcmp("exit", *args))
-	execute_exit(args);
+		execute_exit(args);
 	else if (!ft_strcmp("test", *args))
 		execute_test(args);
 	else if (!ft_strcmp("jobs", *args))
