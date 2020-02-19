@@ -6,7 +6,7 @@
 /*   By: iel-bouh <iel-bouh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 03:59:51 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/19 04:18:35 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/19 06:08:57 by iel-bouh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,31 +104,25 @@ int		ft_ampersand(t_proc *p)
 {
 	int fd;
 
-	if (ft_strequ(ft_get_redict_by_id(p, 2), "&>") == 1)
+	if (ft_strequ(ft_get_redict_by_id(p, 2), "&>") == 1
+						&& ft_get_redict_by_id(p, 3))
 	{
-		if (ft_get_redict_by_id(p, 3))
-		{
-			if ((fd = ft_get_file_fd(ft_get_redict_by_id(p, 3), 0)) < 0)
-				return (-1);
-			dup2(fd, 1);
-			dup2(fd, 2);
-		}
+		if ((fd = ft_get_file_fd(ft_get_redict_by_id(p, 3), 0)) < 0)
+			return (-1);
+		dup2(fd, 1);
+		dup2(fd, 2);
 	}
 	if (ft_strequ(ft_get_redict_by_id(p, 2), ">&") == 1)
 	{
-		if (ft_get_redict_by_id(p, 3) && ft_get_redict_by_id(p, 1))
+		if (ft_get_redict_by_id(p, 3) &&
+			!ft_all_digits(ft_get_redict_by_id(p, 3)))
 		{
-			ft_putendl("here");
-			if (!ft_all_digits(ft_get_redict_by_id(p, 1)) &&
-							!ft_all_digits(ft_get_redict_by_id(p, 3)))
-			{
-				ft_putendl("here1");
-//				ft_putnbr(ft_atoi(ft_get_redict_by_id(p, 3)));
-//				ft_putnbr(ft_atoi(ft_get_redict_by_id(p, 1)));
-				if (dup2(2, 1) == -1)
-					ft_putendl("dup err");
-				ft_putendl("here1");
-			}
+			if (ft_get_redict_by_id(p, 1) &&
+					ft_all_digits(ft_get_redict_by_id(p, 1)) == 0)
+				dup2(ft_atoi(ft_get_redict_by_id(p, 3)),
+						ft_atoi(ft_get_redict_by_id(p, 1)));
+			else
+				dup2(ft_atoi(ft_get_redict_by_id(p, 3)), 1);
 		}
 	}
 	return (0);
@@ -136,9 +130,9 @@ int		ft_ampersand(t_proc *p)
 
 int		ft_redirection(t_proc *p)
 {
-	ft_putendl(ft_get_redict_by_id(p, 1));
-	ft_putendl(ft_get_redict_by_id(p, 2));
-	ft_putendl(ft_get_redict_by_id(p, 3));
+	// ft_putendl(ft_get_redict_by_id(p, 1));
+	// ft_putendl(ft_get_redict_by_id(p, 2));
+	// ft_putendl(ft_get_redict_by_id(p, 3));
 	if (ft_get_redict_by_id(p, 2))
 	{
 		if (ft_out_redirection(p) == -1)
