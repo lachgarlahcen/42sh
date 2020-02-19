@@ -6,11 +6,7 @@
 /*   By: iel-bouh <iel-bouh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 03:59:51 by hastid            #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2020/02/19 02:19:49 by iel-bouh         ###   ########.fr       */
-=======
-/*   Updated: 2020/02/19 01:51:04 by iel-bouh         ###   ########.fr       */
->>>>>>> add ampersand
+/*   Updated: 2020/02/19 02:26:40 by iel-bouh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +118,7 @@ int		ft_ampersand(t_proc *p)
 	{
 		if (ft_get_redict_by_id(p, 3) && ft_get_redict_by_id(p, 1))
 		{
+			ft_putendl("here");
 			if (!ft_all_digits(ft_get_redict_by_id(p, 1)) &&
 							!ft_all_digits(ft_get_redict_by_id(p, 3)))
 			{
