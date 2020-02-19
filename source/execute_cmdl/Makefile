@@ -3,21 +3,31 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hastid <marvin@42.fr>                      +#+  +:+       +#+         #
+#    By: iel-bouh <iel-bouh@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/05 05:16:42 by hastid            #+#    #+#              #
+<<<<<<< HEAD
 #    Updated: 2020/02/18 05:51:37 by hastid           ###   ########.fr        #
+=======
+#    Updated: 2020/02/18 02:44:04 by iel-bouh         ###   ########.fr        #
+>>>>>>> add append and out redirection
 #                                                                              #
 # **************************************************************************** #
 
 
 NAME = execute_cmdl.a
 
+<<<<<<< HEAD
 SRC_NAME = arguments.c \
 		   execute_cmdl.c \
 		   process_list.c \
 		   launch_process.c \
 		   change_expansion.c
+=======
+SRC_NAME = execute_cmdl.c \
+		   process_list.c \
+		   redirection.c
+>>>>>>> add append and out redirection
 
 OBJ_NAME =	$(SRC_NAME:.c=.o)
 
