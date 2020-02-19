@@ -6,7 +6,7 @@
 /*   By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 22:18:53 by llachgar          #+#    #+#             */
-/*   Updated: 2020/02/18 06:43:42 by nsaber           ###   ########.fr       */
+/*   Updated: 2020/02/19 01:54:47 by nsaber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,22 +16,24 @@ char  *name_list_concate(t_proc			*p)
 {
     char *name_args;
     char *tmp;
-
-    if (p->as->next)
-      name_args = p->as->token;
+    t_tok *ptr;
+    
+    ptr = p->as;
+    if (ptr->next)
+      name_args = ptr->token;
     else
-    name_args = ft_strdup(p->as->token); 
+    name_args = ft_strdup(ptr->token); 
     /*
-    *
+    * function : for concatinate the name of processe
     *     for free purpeses 
     *      any return from 
     * this fuction is allocated
     */
-    while(p->as->next)
+    while(ptr->next)
     {
         tmp = ft_strjoin(name_args, " ");
-        p->as = p->as->next;
-        name_args = ft_strjoin(tmp, p->as->token);
+        ptr = ptr->next;
+        name_args = ft_strjoin(tmp, ptr->token);
         free(tmp);
     }
     return(name_args);
@@ -54,7 +56,7 @@ void execute_jobs(char **args)
         option = args[1][i];
         if (!(args[1][i] == 'l' || args[1][i] == 'p'))
         {
-          option = 'x';
+          option = args[1][i];
           break ;
         }
       }
@@ -66,10 +68,10 @@ void execute_jobs(char **args)
   while (j)
   {
     j->notified = 1;
-    j->option = option;
-    j->name = name_list_concate(j->p); // must be freed later
-   format_job_info(j, NULL);
+   format_job_info(j, NULL, option);
     j = j->next;
+    if (!(option == 'l' || option == 'p' || option == 0)) // if not one of the fuctions break;
+      break ;
   }
 }
 

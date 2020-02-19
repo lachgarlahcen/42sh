@@ -6,7 +6,7 @@
 /*   By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 00:42:10 by llachgar          #+#    #+#             */
-/*   Updated: 2020/02/18 06:44:04 by nsaber           ###   ########.fr       */
+/*   Updated: 2020/02/19 01:57:08 by nsaber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void  wait_for_job (t_job *j)
 }
 
 
-void  format_job_info (t_job *j, const char *status)
+void  format_job_info (t_job *j, const char *status, char option)
 {
   char *g_sinalmsg[] =
 {
@@ -127,16 +127,16 @@ void  format_job_info (t_job *j, const char *status)
   int s;
  
   s = job_is_completed(j) ? j->status : 20;
-  if (j->option == 0)
+  if (option == 0)
     fprintf (stderr, "[%d]\t%s\t\t%s\n",j->id , g_sinalmsg[s], j->name);
-  else if (j->option == 'l')
+  else if (option == 'l')
   {
-    fprintf (stderr, "[%d]\t%ld\t%s\t\t%s\n",j->id , (long)j->pgid, g_sinalmsg[s], j->name);
+    fprintf (stderr, "[%d]  %ld  %s\t\t%s\n",j->id , (long)j->pgid, g_sinalmsg[s], j->name);
   }
-  else if(j->option == 'p')
+  else if(option == 'p')
         fprintf (stderr, "%d\n",j->pgid);
-  else if (j->option == 'x')
-    fprintf(stderr, "usage: jobs [-lp] [jobspec ...]\n");
+  else
+    fprintf(stderr, "jobs: -%c: invalid option\nusage: jobs [-lp] [jobspec ...]\n",option);
   
   
 
@@ -157,7 +157,7 @@ void  do_job_notification (void)
       /* If all processes have completed, tell the user the job has
          completed and delete it from the list of active jobs.  */
       if (job_is_completed (j)) {
-        format_job_info (j, "completed");
+        format_job_info (j, "completed", 0);
         if (jlast)
           jlast->next = jnext;
         else
@@ -168,7 +168,7 @@ void  do_job_notification (void)
       /* Notify the user about stopped jobs,
          marking them so that we won’t do this more than once.  */
       else if (job_is_stopped (j) && !j->notified) {
-        format_job_info (j, "stopped");
+        format_job_info (j, "stopped", 0);
         j->notified = 1;
         jlast = j;
       }
