@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 04:58:13 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/18 06:44:32 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/19 01:17:24 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,8 @@ char		**get_args(t_tok *as)
 	char	**args;
 
 	l = 0;
-	tmp = as;
+	if (!(tmp = as))
+		return (0);
 	change_expansion(as);
 	while (tmp)
 	{
@@ -88,13 +89,13 @@ char		**get_args(t_tok *as)
 			l++;
 		tmp = tmp->next;
 	}
-	if (!(args = (char **)malloc(sizeof(char *) * (l + 1))))
+	if (!l || !(args = (char **)malloc(sizeof(char *) * (l + 1))))
 		return (0);
 	l = 0;
 	tmp = as;
 	while (tmp)
 	{
-		if (tmp->token)
+		if (!tmp->id && tmp->token)
 			args[l++] = delet_quotes(tmp->token);
 		tmp = tmp->next;
 	}
