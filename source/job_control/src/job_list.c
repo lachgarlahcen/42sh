@@ -6,7 +6,7 @@
 /*   By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 01:41:09 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/19 01:04:18 by nsaber           ###   ########.fr       */
+/*   Updated: 2020/02/19 02:35:46 by nsaber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ static t_job	*add_job(t_proc *p, pid_t pgid, int bg)
 	j->pgid = pgid;
 	j->notified = 0;
 	j->name = name_list_concate(p); // added here by noureddine
+	j->cmd = ft_strdup(p->as->token); // added by noureddine
 	if (bg)
 		j->id = g_jobs.id++;
 	else

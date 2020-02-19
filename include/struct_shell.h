@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct_shell.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 23:54:11 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/18 23:54:12 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/19 02:34:34 by nsaber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct	s_job
 	struct s_job	*next;
 	char			option;
 	char			*name;
+	char			*cmd;
 }				t_job;
 
 typedef struct s_jobs

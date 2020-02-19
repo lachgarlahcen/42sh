@@ -6,78 +6,137 @@
 /*   By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 22:18:53 by llachgar          #+#    #+#             */
-/*   Updated: 2020/02/19 01:54:47 by nsaber           ###   ########.fr       */
+/*   Updated: 2020/02/19 05:50:01 by nsaber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "job_control.h"
 
-char  *name_list_concate(t_proc			*p)
+char *name_list_concate(t_proc *p)
 {
-    char *name_args;
-    char *tmp;
-    t_tok *ptr;
-    
-    ptr = p->as;
-    if (ptr->next)
-      name_args = ptr->token;
-    else
-    name_args = ft_strdup(ptr->token); 
-    /*
+  char *name_args;
+  char *tmp;
+  t_tok *ptr;
+
+  ptr = p->as;
+  if (ptr->next)
+    name_args = ptr->token;
+  else
+    name_args = ft_strdup(ptr->token);
+  /*
     * function : for concatinate the name of processe
     *     for free purpeses 
     *      any return from 
     * this fuction is allocated
     */
-    while(ptr->next)
+  while (ptr->next)
+  {
+    tmp = ft_strjoin(name_args, " ");
+    ptr = ptr->next;
+    name_args = ft_strjoin(tmp, ptr->token);
+    free(tmp);
+  }
+  return (name_args);
+}
+
+void job_printing(char option)
+{
+  t_job *j;
+  j = g_jobs.f_job;
+  while (j)
+  {
+    j->notified = 1;
+    format_job_info(j, NULL, option);
+    j = j->next;
+    if (!(option == 'l' || option == 'p' || option == 0)) // if not one of the fuctions break;
+      break;
+  }
+}
+
+int ft_isdigits(char *str)
+{
+  if (str)
+  {
+    if (*str == '%')
+      str++;
+    while (*str)
     {
-        tmp = ft_strjoin(name_args, " ");
-        ptr = ptr->next;
-        name_args = ft_strjoin(tmp, ptr->token);
-        free(tmp);
+      if (ft_isdigit(*str))
+        str++;
+      else
+        return (0);
     }
-    return(name_args);
+    return (1);
+  }
+  return (0);
 }
 
 void execute_jobs(char **args)
 {
   t_job *j;
-  (void )args;
+  (void)args;
   int i;
-  int option;
+  static char option = 0; // for recursive to conserve value
 
+  if (!(args))
+  {
+    printf("arrived to end\n\n");
+    return;
+  }
   i = 0;
   j = g_jobs.f_job;
-  option = 0;
   if (args[1] && args[1][0] == '-')
   {
-      while(args[1][++i])
+    while (args[1][++i])
+    {
+      option = args[1][i];
+      if (!(args[1][i] == 'l' || args[1][i] == 'p'))
       {
         option = args[1][i];
-        if (!(args[1][i] == 'l' || args[1][i] == 'p'))
-        {
-          option = args[1][i];
-          break ;
-        }
+        break;
       }
+    }
+    if (args[2])
+    {
+      execute_jobs(args + 1);
+      option = 0; // restore value for the other cmd $>jobs
+      return;
+    }
+    job_printing(option);
   }
-  /*
-  
-  */
-  j = g_jobs.f_job;
-  while (j)
+  else if (args[1]) // looking for jobs args :  jobs CMD_NAME
   {
-    j->notified = 1;
-   format_job_info(j, NULL, option);
-    j = j->next;
-    if (!(option == 'l' || option == 'p' || option == 0)) // if not one of the fuctions break;
-      break ;
+    t_job *jj;
+    jj = j;
+    int percent;
+
+    args[1][0] == '%' ? percent = 1 : 0;
+    int i = 1;
+    while (j)
+    {
+      if (args[i] && (ft_strequ(args[i], j->cmd) || (ft_isdigits(args[i]) && ft_atoi(args[i] + percent) == j->id)))
+      {
+        i++;
+        format_job_info(j, NULL, option);
+        j = jj;
+      }
+      else
+        j = j->next;
+      if (!j && args[i])
+      {
+        fprintf(stderr, "jobs: job not found: %s\n", args[i]);
+        break;
+      }
+    }
   }
+  else // cmd  : |$>jobs|
+    job_printing(option);
+  option = 0; // restore value for the other cmd $>jobs -[...]
 }
 
 void execute_fg(char **args)
 {
-  (void )args;
+  (void)args;
   if (getpid() != g_shell_pgid)
     ft_printf("fg: no job control\n");
   put_job_in_foreground(g_jobs.f_job, 1);
@@ -85,33 +144,33 @@ void execute_fg(char **args)
 
 void execute_bg(char **args)
 {
-  (void )args;
+  (void)args;
   put_job_in_background(g_jobs.f_job, 1);
 }
 
-void  put_job_in_foreground (t_job *j, int cont)
+void put_job_in_foreground(t_job *j, int cont)
 {
-    /* Put the job into the foreground.  */
-    tcsetpgrp (STDIN_FILENO, j->pgid);
+  /* Put the job into the foreground.  */
+  tcsetpgrp(STDIN_FILENO, j->pgid);
   /* Send the job a continue signal, if necessary.  */
   if (cont)
-    {
-      //tcsetattr (shell_terminal, TCSADRAIN, &j->tmodes);
-      if (killpg(j->pgid, SIGCONT) < 0)
-        perror ("kill (SIGCONT)");
-    }
+  {
+    //tcsetattr (shell_terminal, TCSADRAIN, &j->tmodes);
+    if (killpg(j->pgid, SIGCONT) < 0)
+      perror("kill (SIGCONT)");
+  }
   /*
   ** Wait for it to report.
   */
-  wait_for_job (j);
+  wait_for_job(j);
   /* 
   ** Put the shell back in the foreground.
   */
-  tcsetpgrp (STDIN_FILENO, g_shell_pgid);
-  tcsetattr (STDIN_FILENO, TCSADRAIN, &g_shell_tmodes);
+  tcsetpgrp(STDIN_FILENO, g_shell_pgid);
+  tcsetattr(STDIN_FILENO, TCSADRAIN, &g_shell_tmodes);
   if (job_is_completed(j))
   {
-			delete_job(j->pgid);
+    delete_job(j->pgid);
   }
   else
     j->id = g_jobs.id++;
@@ -121,7 +180,7 @@ void  put_job_in_foreground (t_job *j, int cont)
 ** it it is supanded it sends continue sig
 ** and it not gave it the control to be and the forground
 */
-void  put_job_in_background (t_job *j, int cont)
+void put_job_in_background(t_job *j, int cont)
 {
   /* 
   **Send the job a continue signal, if necessary.
@@ -129,5 +188,5 @@ void  put_job_in_background (t_job *j, int cont)
   if (cont)
     killpg(j->pgid, SIGCONT);
   else
-    ft_printf("[%d] %ld\n",j->id, j->pgid);
+    ft_printf("[%d] %ld\n", j->id, j->pgid);
 }
