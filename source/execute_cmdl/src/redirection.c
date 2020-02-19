@@ -6,7 +6,7 @@
 /*   By: iel-bouh <iel-bouh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 03:59:51 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/19 02:26:40 by iel-bouh         ###   ########.fr       */
+/*   Updated: 2020/02/19 03:17:39 by iel-bouh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,8 +123,10 @@ int		ft_ampersand(t_proc *p)
 							!ft_all_digits(ft_get_redict_by_id(p, 3)))
 			{
 				ft_putendl("here1");
-				dup2(ft_atoi(ft_get_redict_by_id(p, 1)),
-							ft_atoi(ft_get_redict_by_id(p, 3)));
+				ft_putnbr(ft_atoi(ft_get_redict_by_id(p, 3)));
+				ft_putnbr(ft_atoi(ft_get_redict_by_id(p, 1)));
+				dup2(1, 2);
+				ft_putendl("here1");
 			}
 		}
 	}

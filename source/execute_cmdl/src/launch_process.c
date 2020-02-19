@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   launch_process.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: iel-bouh <iel-bouh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 04:57:40 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/19 01:49:43 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/19 03:04:55 by iel-bouh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int			execute_args(t_tok *as, char **args)
 {
 	char	*exec;
 	char	**env;
+
 
 	while (as && as->id)
 	{
@@ -100,6 +101,9 @@ int			execute_pipe(t_proc *p, int *in, int *pgid)
 	{
 		if (p->next)
 			close(pi[0]);
+		if (p->red)
+			if (ft_redirection(p) == 1)
+				exit (1);
 		launch_process(p->as, args, *in, out);
 	}
 	if (!*pgid)
@@ -143,8 +147,8 @@ int		execute_without_fork(t_proc *p, int iv)
 	t_tok	*as;
 	char	**args;
 
-	//	if (p->red)
-	//		redirect(p->red);
+	if (p->red)
+		ft_redirection(p);
 	if (!(as = p->as))
 		return (0);
 	if (iv)
