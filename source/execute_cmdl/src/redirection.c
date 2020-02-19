@@ -6,7 +6,7 @@
 /*   By: iel-bouh <iel-bouh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 03:59:51 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/19 06:19:24 by iel-bouh         ###   ########.fr       */
+/*   Updated: 2020/02/19 06:35:33 by iel-bouh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,33 @@ int		ft_ampersand(t_proc *p)
 	return (0);
 }
 
+int		ft_in_redirection(t_proc *p)
+{
+	int i;
+
+	if (ft_strequ(ft_get_redict_by_id(p, 2), "<") == 1)
+	{
+		if (access(ft_get_redict_by_id(p, 3), R_OK) == -1)
+		{
+			if (access(ft_get_redict_by_id(p, 3), F_OK) == -1)
+				ft_putstr_fd("no such file or directory: ", 2);
+			else
+				ft_putstr_fd("permission denied: ", 2);
+			ft_putendl_fd(ft_get_redict_by_id(p, 3), 2);
+			return (-1);
+		}
+		if (!ft_is_file(ft_get_redict_by_id(p, 3)))
+		{
+			ft_putstr_fd(ft_get_redict_by_id(p, 3), 2);
+			ft_putendl_fd(": is not a file", 2);
+			return (-1);
+		}
+		i = open(ft_get_redict_by_id(p, 3), O_RDONLY);
+		dup2(i, 0);
+	}
+	return (0);
+}
+
 int		ft_redirection(t_proc *p)
 {
 	// ft_putendl(ft_get_redict_by_id(p, 1));
@@ -151,6 +178,8 @@ int		ft_redirection(t_proc *p)
 		if (ft_out_redirection(p) == -1)
 			return (1);
 		if (ft_ampersand(p) == -1)
+			return (1);
+		if (ft_in_redirection(p) == -1)
 			return (1);
 	}
 	return (0);
