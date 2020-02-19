@@ -6,7 +6,7 @@
 /*   By: iel-bouh <iel-bouh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 03:59:51 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/19 06:35:33 by iel-bouh         ###   ########.fr       */
+/*   Updated: 2020/02/20 00:18:30 by iel-bouh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,19 +168,94 @@ int		ft_in_redirection(t_proc *p)
 	return (0);
 }
 
+void		ft_append_to_doc(char **join, char *buf)
+{
+	char *tmp;
+
+	if (*join == NULL)
+	{
+		*join = ft_strdup(buf);
+		free(buf);
+	}
+	else
+	{
+		tmp = ft_strjoin(*join, "\n");
+		ft_memdel((void **)&(*join));
+		*join = ft_strdup(tmp);
+		ft_memdel((void **)&tmp);
+		tmp = ft_strjoin(*join, buf);
+		free(buf);
+		ft_memdel((void **)&(*join));
+		*join = ft_strdup(tmp);
+		ft_memdel((void **)&tmp);
+	}
+}
+
+int			ft_stop_append_return(char **join, char *stop, int p[2])
+{
+	char *tmp;
+
+	if (*join)
+	{
+		tmp = ft_strjoin(*join, "\n");
+		ft_memdel((void **)&(*join));
+		*join = ft_strdup(tmp);
+		ft_memdel((void **)&tmp);
+		write(p[1], *join, ft_strlen(*join));
+		ft_memdel((void **)&(*join));
+	}
+	close(p[1]);
+	ft_memdel((void **)&stop);
+	return (p[0]);
+}
+
+int		ft_herdoc(t_proc *p)
+{
+	int		fd[2];
+	char	*tmp;
+	char	*join;
+
+	join = NULL;
+	pipe(fd);
+	while (1)
+	{
+		tmp = read_line(">");
+		if (!tmp || ft_strequ(tmp, ft_get_redict_by_id(p, 3)))
+		{
+			free(tmp);
+			dup2(ft_stop_append_return(&join,
+					ft_get_redict_by_id(p, 3), fd), 0);
+			return (0);
+		}
+		else
+			ft_append_to_doc(&join, tmp);
+	}
+	return (0);
+}
+
 int		ft_redirection(t_proc *p)
 {
-	// ft_putendl(ft_get_redict_by_id(p, 1));
-	// ft_putendl(ft_get_redict_by_id(p, 2));
-	// ft_putendl(ft_get_redict_by_id(p, 3));
-	if (ft_get_redict_by_id(p, 2))
+	t_proc *tmp;
+
+	tmp = p;
+	while (tmp)
 	{
-		if (ft_out_redirection(p) == -1)
-			return (1);
-		if (ft_ampersand(p) == -1)
-			return (1);
-		if (ft_in_redirection(p) == -1)
-			return (1);
+			ft_putendl(ft_get_redict_by_id(tmp, 1));
+	ft_putendl(ft_get_redict_by_id(tmp, 2));
+	ft_putendl(ft_get_redict_by_id(tmp, 3));
+		if (ft_get_redict_by_id(tmp, 2))
+		{
+			if (ft_out_redirection(tmp) == -1)
+				return (1);
+			if (ft_ampersand(tmp) == -1)
+				return (1);
+			if (ft_in_redirection(tmp) == -1)
+				return (1);
+			if (ft_strequ(ft_get_redict_by_id(tmp, 2), "<<") == 1
+									&& ft_herdoc(tmp) == -1)
+				return (1);
+		}
+		tmp = tmp->next;
 	}
 	return (0);
 }
