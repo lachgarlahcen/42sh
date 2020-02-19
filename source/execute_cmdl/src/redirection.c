@@ -6,11 +6,28 @@
 /*   By: iel-bouh <iel-bouh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 03:59:51 by hastid            #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2020/02/19 02:19:49 by iel-bouh         ###   ########.fr       */
+=======
+/*   Updated: 2020/02/19 01:51:04 by iel-bouh         ###   ########.fr       */
+>>>>>>> add ampersand
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute_cmdl.h"
+
+int		ft_all_digits(char *str)
+{
+	if (ft_strlen(str) == 0)
+		return (-1);
+	while (*str)
+	{
+		if (!ft_isdigit(*str))
+			return (-1);
+		str++;
+	}
+	return (0);
+}
 
 char	*ft_get_redict_by_id(t_proc *p, int i)
 {
@@ -87,12 +104,47 @@ int		ft_out_redirection(t_proc *tmp)
 	return (0);
 }
 
+int		ft_ampersand(t_proc *p)
+{
+	int fd;
+
+	if (ft_strequ(ft_get_redict_by_id(p, 2), "&>") == 1)
+	{
+		if (ft_get_redict_by_id(p, 3))
+		{
+			if ((fd = ft_get_file_fd(ft_get_redict_by_id(p, 3), 0)) < 0)
+				return (-1);
+			dup2(fd, 1);
+			dup2(fd, 2);
+		}
+	}
+	if (ft_strequ(ft_get_redict_by_id(p, 2), ">&") == 1)
+	{
+		if (ft_get_redict_by_id(p, 3) && ft_get_redict_by_id(p, 1))
+		{
+			if (!ft_all_digits(ft_get_redict_by_id(p, 1)) &&
+							!ft_all_digits(ft_get_redict_by_id(p, 3)))
+			{
+				ft_putendl("here1");
+				dup2(ft_atoi(ft_get_redict_by_id(p, 1)),
+							ft_atoi(ft_get_redict_by_id(p, 3)));
+			}
+		}
+	}
+	return (0);
+}
+
 int		ft_redirection(t_proc *p)
 {
+	ft_putendl(ft_get_redict_by_id(p, 1));
+	ft_putendl(ft_get_redict_by_id(p, 2));
+	ft_putendl(ft_get_redict_by_id(p, 3));
 	if (ft_get_redict_by_id(p, 2))
 	{
 		if (ft_out_redirection(p) == -1)
-			return (-1);
+			return (1);
+		if (ft_ampersand(p) == -1)
+			return (1);
 	}
 	return (0);
 }

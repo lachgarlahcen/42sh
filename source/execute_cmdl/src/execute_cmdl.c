@@ -6,7 +6,7 @@
 /*   By: iel-bouh <iel-bouh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 05:14:50 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/19 02:22:46 by iel-bouh         ###   ########.fr       */
+/*   Updated: 2020/02/19 02:23:27 by iel-bouh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int			check_execute(t_proc *p, t_tok *t, int check)
 		{
 			if (tp->next)
 				close(pi[0]);
-			if (ft_redirection(p) == -1)
+			if (ft_redirection(p) == 1)
 				exit(1);
 			if (!change_expansion(tp->as))
 				launch_process(tp->as, bg, in, out);
