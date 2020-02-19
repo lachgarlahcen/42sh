@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hastid <marvin@42.fr>                      +#+  +:+       +#+         #
+#    By: iel-bouh <iel-bouh@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/05 05:16:42 by hastid            #+#    #+#              #
-#    Updated: 2020/02/18 05:51:37 by hastid           ###   ########.fr        #
+#    Updated: 2020/02/19 03:21:01 by iel-bouh         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,8 @@ SRC_NAME = arguments.c \
 		   execute_cmdl.c \
 		   process_list.c \
 		   launch_process.c \
-		   change_expansion.c
+		   change_expansion.c \
+			redirection.c 
 
 OBJ_NAME =	$(SRC_NAME:.c=.o)
 

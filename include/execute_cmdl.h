@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/05 05:18:12 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/18 06:30:56 by hastid           ###   ########.fr       */
+/*   Created: 2020/02/19 03:40:10 by hastid            #+#    #+#             */
+/*   Updated: 2020/02/19 03:40:16 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,7 @@ int		add_process(t_proc **pipes);
 void	free_process(t_proc *pipes);
 
 int		execute_cmdline(char *line);
+
+int		ft_redirection(t_proc *p);
 
 #endif

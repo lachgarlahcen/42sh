@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   launch_process.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: iel-bouh <iel-bouh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 04:57:40 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/19 01:49:43 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/19 04:16:56 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int			execute_args(t_tok *as, char **args)
 	char	*exec;
 	char	**env;
 
+
 	while (as && as->id)
 	{
 		set_variable(as->token, 1, 1);
@@ -59,10 +60,9 @@ int			execute_args(t_tok *as, char **args)
 	return (0);
 }
 
-int			launch_process(t_tok *as, char **args, int in, int out)
+int			launch_process(t_proc *p, char **args, int in, int out)
 {
-	if (!as)
-		exit (0);
+	signals(0);
 	if (in != 0)
 	{
 		if (dup2(in, 0) == -1)
@@ -75,8 +75,12 @@ int			launch_process(t_tok *as, char **args, int in, int out)
 			exit (1);
 		close (out);
 	}
-	signals(0);
-	execute_args(as, args);
+	if (p->red)
+		if (ft_redirection(p) == 1)
+			exit (1);
+	if (!p->as)
+		exit (0);
+	execute_args(p->as, args);
 	return (0);
 }
 
@@ -100,7 +104,7 @@ int			execute_pipe(t_proc *p, int *in, int *pgid)
 	{
 		if (p->next)
 			close(pi[0]);
-		launch_process(p->as, args, *in, out);
+		launch_process(p, args, *in, out);
 	}
 	if (!*pgid)
 		*pgid = p->pid;
@@ -143,8 +147,8 @@ int		execute_without_fork(t_proc *p, int iv)
 	t_tok	*as;
 	char	**args;
 
-	//	if (p->red)
-	//		redirect(p->red);
+	if (p->red)
+		ft_redirection(p);
 	if (!(as = p->as))
 		return (0);
 	if (iv)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_cmdl.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/05 05:14:50 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/18 06:48:31 by hastid           ###   ########.fr       */
+/*   Created: 2020/02/19 03:40:43 by hastid            #+#    #+#             */
+/*   Updated: 2020/02/19 03:40:46 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,14 @@ int			check_execute(t_proc *p, t_tok *t, int check)
 		}
 		if (check == 2 && !exit_status(0, 0))
 		{
-		free_process(p);
-		return (check);
+			if (tp->next)
+				close(pi[0]);
+			if (ft_redirection(p) == 1)
+				exit(1);
+			if (!change_expansion(tp->as))
+				launch_process(tp->as, bg, in, out);
+
+			exit(1);
 		}
 		*/
 	if (t && t->id == 7)
