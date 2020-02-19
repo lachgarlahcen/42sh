@@ -40,6 +40,7 @@ LIBS =	libft/libft.a \
 		source/shell_signals/shell_signals.a \
 		source/execute_builtin/execute_builtin.a \
 		source/intern_variables/intern_variables.a \
+		source/hash_alias/hash_alias.a \
 		source/cd_builtin/cd_builtin.a 
 
 DEPS = include/shell.h
@@ -54,6 +55,7 @@ LIB_C = libft_c \
 		shell_signals_c \
 		execute_builtin_c \
 		intern_variables_c \
+		hash_alias_c \
 		cd_builtin_c
 
 
@@ -109,6 +111,9 @@ intern_variables_c:
 cd_builtin_c:
 	@make -C source/cd_builtin
 
+hash_alias_c:
+	@make -C source/hash_alias
+
 $(OBJ_PATH)/%.o : $(SRC_PATH)/%.c $(DEPS)
 	@mkdir $(OBJ_PATH) 2> /dev/null || true
 	@clear;
@@ -123,6 +128,7 @@ clean:
 	@make clean -C source/execute_cmdl
 	@make clean -C source/test_builtin
 	@make clean -C source/cd_builtin
+	@make clean -C source/hash_alias
 	@make clean -C source/tokens_parser
 	@make clean -C source/shell_signals
 	@make clean -C source/execute_builtin
@@ -138,6 +144,7 @@ fclean: clean
 	@make fclean -C source/execute_cmdl
 	@make fclean -C source/test_builtin
 	@make fclean -C source/cd_builtin
+	@make fclean -C source/hash_alias
 	@make fclean -C source/tokens_parser
 	@make fclean -C source/shell_signals
 	@make fclean -C source/execute_builtin

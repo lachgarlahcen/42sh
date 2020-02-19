@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/06 12:23:05 by hastid            #+#    #+#             */
-/*   Updated: 2020/01/23 22:46:06 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/19 00:42:55 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,10 @@ typedef struct	s_list
 	struct s_list	*next;
 }				t_list;
 
+char            *ft_strojoin(char **s1, char *s2, int overwrite);
+char			*ft_strappend(char **a_s1, char c, int overwrite);
+void			ft_chain_free(char ***a_chain);
+size_t			ft_chain_size(char **chain);
 void			*ft_memset(void *str, int c, size_t n);
 void			ft_bzero(void *str, size_t n);
 void			*ft_memcpy(void *str1, const void *str2, size_t n);

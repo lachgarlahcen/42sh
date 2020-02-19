@@ -6,11 +6,18 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 04:57:40 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/18 06:32:12 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/19 01:49:43 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute_cmdl.h"
+
+int			ft_perror_pipe(char *error, int ret)
+{
+	ft_putstr_fd("42sh: ", 2);
+	ft_putendl_fd(error, 2);
+	return (ret);
+}
 
 char		*search_executable(char *cmdl)
 {
@@ -29,13 +36,31 @@ char		*search_executable(char *cmdl)
 	return (0);
 }
 
-int			launch_process(t_tok *as, int bg, int in, int out)
+int			execute_args(t_tok *as, char **args)
 {
-	int		ret;
 	char	*exec;
 	char	**env;
-	char	**args;
 
+	while (as && as->id)
+	{
+		set_variable(as->token, 1, 1);
+		as = as->next;
+	}
+	if (change_expansion(as))
+		exit (1);
+	if (is_builtin(args[0]))
+		exit(execute_builtin(args));
+	if (!(exec = search_executable(as->token)))
+		exit (1);
+	env = get_env_variables();
+	if (execve(exec, args, env) == -1)
+		ft_perror_pipe("EXECVE ERROR !!", 1);
+	exit (1);
+	return (0);
+}
+
+int			launch_process(t_tok *as, char **args, int in, int out)
+{
 	if (!as)
 		exit (0);
 	if (in != 0)
@@ -51,60 +76,58 @@ int			launch_process(t_tok *as, int bg, int in, int out)
 		close (out);
 	}
 	signals(0);
-	bg = 0;
-	args =  get_args(as);
-	if (is_builtin(args[0]))
+	execute_args(as, args);
+	return (0);
+}
+
+int			execute_pipe(t_proc *p, int *in, int *pgid)
+{
+	int		out;
+	int		pi[2];
+	char	**args;
+
+	out = 1;
+	if (p->next)
 	{
-		ret = execute_builtin(args);
-		exit (ret);
+		if (pipe(pi) == -1)
+			return (ft_perror_pipe("PIPE ERROR !!", 1));
+		out = pi[1];
 	}
-	if (!(exec = search_executable(as->token)))
-		exit (EXIT_FAILURE);
-	env = get_env_variables();
-	execve(exec, args, env);
-	exit (0);
+	if ((p->pid = fork()) == -1)
+		return (ft_perror_pipe("PIPE ERROR !!", 1));
+	args = get_args(p->as);
+	if (p->pid == 0)
+	{
+		if (p->next)
+			close(pi[0]);
+		launch_process(p->as, args, *in, out);
+	}
+	if (!*pgid)
+		*pgid = p->pid;
+	setpgid(p->pid, *pgid);
+	if (*in != 0)
+		close (*in);
+	if (out != 1)
+		close (out);
+	*in = pi[0];
+	free_tab(args);
+	return (0);
 }
 
 int			execute_pipes_line(t_proc *p, int bg)
 {
 	int		in;
-	int		out;
 	int		pgid;
-	int		pi[2];
-	t_proc	*tp;
 	t_job	*j;
+	t_proc	*tp;
 
 	in = 0;
 	tp = p;
 	pgid = 0;
 	while (tp)
 	{
-		if (tp->next)
-		{
-			if (pipe(pi) == -1)
-				return (1); //				ft_putendl("pipe failed !!");
-			out = pi[1];
-		}
-		else
-			out = 1;
-		if ((tp->pid = fork()) == -1)
-			return (1); //				ft_putendl("fork failed !!");
-		if (tp->pid == 0)
-		{
-			if (tp->next)
-				close(pi[0]);
-			if (!change_expansion(tp->as))
-				launch_process(tp->as, bg, in, out);
-			exit(1);
-		}
-		if (!pgid)
-			pgid = tp->pid;
-		setpgid(tp->pid, pgid);
-		if (in != 0)
-			close (in);
-		if (out != 1)
-			close (out);
-		in = pi[0];
+		if (execute_pipe(tp, &in, &pgid))
+			break ;
 		tp = tp->next;
 	}
 	j = add_jobs(p, pgid, bg);
@@ -120,8 +143,8 @@ int		execute_without_fork(t_proc *p, int iv)
 	t_tok	*as;
 	char	**args;
 
-//	if (p->red)
-//		redirect(p->red);
+	//	if (p->red)
+	//		redirect(p->red);
 	if (!(as = p->as))
 		return (0);
 	if (iv)
