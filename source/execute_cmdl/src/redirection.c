@@ -6,7 +6,7 @@
 /*   By: iel-bouh <iel-bouh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 03:59:51 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/19 06:08:57 by iel-bouh         ###   ########.fr       */
+/*   Updated: 2020/02/19 06:19:24 by iel-bouh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,28 @@ int		ft_out_redirection(t_proc *tmp)
 	return (0);
 }
 
+void	ft_right_ampersand(t_proc *p)
+{
+	if (ft_get_redict_by_id(p, 3) &&
+			!ft_all_digits(ft_get_redict_by_id(p, 3)))
+	{
+		if (ft_get_redict_by_id(p, 1) &&
+				ft_all_digits(ft_get_redict_by_id(p, 1)) == 0)
+			dup2(ft_atoi(ft_get_redict_by_id(p, 3)),
+					ft_atoi(ft_get_redict_by_id(p, 1)));
+		else
+			dup2(ft_atoi(ft_get_redict_by_id(p, 3)), 1);
+	}
+	else if (ft_strequ(ft_get_redict_by_id(p, 3), "-"))
+	{
+		if (ft_get_redict_by_id(p, 1) &&
+				ft_all_digits(ft_get_redict_by_id(p, 1)) == 0)
+			close(ft_atoi(ft_get_redict_by_id(p, 1)));
+		else if (!ft_get_redict_by_id(p, 1))
+			close(1);
+	}
+}
+
 int		ft_ampersand(t_proc *p)
 {
 	int fd;
@@ -114,16 +136,7 @@ int		ft_ampersand(t_proc *p)
 	}
 	if (ft_strequ(ft_get_redict_by_id(p, 2), ">&") == 1)
 	{
-		if (ft_get_redict_by_id(p, 3) &&
-			!ft_all_digits(ft_get_redict_by_id(p, 3)))
-		{
-			if (ft_get_redict_by_id(p, 1) &&
-					ft_all_digits(ft_get_redict_by_id(p, 1)) == 0)
-				dup2(ft_atoi(ft_get_redict_by_id(p, 3)),
-						ft_atoi(ft_get_redict_by_id(p, 1)));
-			else
-				dup2(ft_atoi(ft_get_redict_by_id(p, 3)), 1);
-		}
+		ft_right_ampersand(p);
 	}
 	return (0);
 }
