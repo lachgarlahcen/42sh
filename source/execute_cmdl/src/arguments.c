@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 04:58:13 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/20 05:57:17 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/20 06:08:49 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,9 @@ char		*delet_quotes(char *str, int free)
 		if (str[i])
 			i++;
 	}
-	if (free)
-		ft_memdel((void**)&str);
+	free = 0;
+//	if (free)
+//		ft_memdel((void**)&str);
 	return (ft_strdup(buf));
 }
 
