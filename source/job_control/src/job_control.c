@@ -6,7 +6,7 @@
 /*   By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 22:18:53 by llachgar          #+#    #+#             */
-/*   Updated: 2020/02/20 06:47:24 by nsaber           ###   ########.fr       */
+/*   Updated: 2020/02/20 10:59:36 by nsaber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,21 +133,27 @@ void execute_jobs(char **args)
 void execute_fg(char **args)
 {
     t_job   *j;
+    int percent;
 
-  (void)args;
   j = g_jobs.f_job;
   if (args[1] && ft_isdigits(args[1])) // fg [job_id]
   {
+    percent = args[1][0] == '%' ? 1 : 0;
     while(j)
     {
-      if (j->id == ft_atoi(args[1]))
+      if (j->id == ft_atoi(args[1]+ percent))
         break;
       j = j->next;
+      if (!j)
+      {
+        printf("42sh : fg: %s no such job\n",args[1]);
+        return ;
+      }
     }
   }
   else if (args[1]) // error msgs
   {
-    printf("42sh : fd: %s no such job\n",args[1]);
+    printf("42sh : fg: %s no such job\n",args[1]);
     return ;
   }
   else // fg to to  +
