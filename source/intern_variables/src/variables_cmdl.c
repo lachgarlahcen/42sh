@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 01:02:55 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/17 03:26:53 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/20 05:57:14 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ int		set_variable(char *arg, int id, int temp)
 		if (check_name_variables(arg, 1))
 			return (1);
 		co = 0;
+		arg = delet_quotes(arg, 1);
 		while (arg[co] != '=')
 			co++;
 		if (!(name = ft_strsub(arg, 0, co)))
