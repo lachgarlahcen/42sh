@@ -6,7 +6,7 @@
 /*   By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 22:18:53 by llachgar          #+#    #+#             */
-/*   Updated: 2020/02/20 12:05:47 by nsaber           ###   ########.fr       */
+/*   Updated: 2020/02/20 12:11:43 by nsaber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,15 +198,15 @@ void put_job_in_foreground(t_job *j, int cont)
   */
   tcsetpgrp(STDIN_FILENO, g_shell_pgid);
   tcsetattr(STDIN_FILENO, TCSADRAIN, &g_shell_tmodes);
-  /*
-  -*-*-*-*->ignored by Noureddine for test <-*-*-*-*-
+  
+  //-*-*-*-*->ignored by Noureddine for test <-*-*-*-*-
   if (job_is_completed(j))
   {
     delete_job(j->pgid);
   }
   else
     j->id = g_jobs.id++;
-  */
+  
 }
 /*
 ** this function is basctly puts a jib in the background
