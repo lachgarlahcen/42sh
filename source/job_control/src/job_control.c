@@ -6,7 +6,7 @@
 /*   By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 22:18:53 by llachgar          #+#    #+#             */
-/*   Updated: 2020/02/19 05:50:01 by nsaber           ###   ########.fr       */
+/*   Updated: 2020/02/20 05:02:39 by nsaber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,11 +78,6 @@ void execute_jobs(char **args)
   int i;
   static char option = 0; // for recursive to conserve value
 
-  if (!(args))
-  {
-    printf("arrived to end\n\n");
-    return;
-  }
   i = 0;
   j = g_jobs.f_job;
   if (args[1] && args[1][0] == '-')

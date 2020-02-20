@@ -6,11 +6,43 @@
 /*   By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 01:41:09 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/19 02:35:46 by nsaber           ###   ########.fr       */
+/*   Updated: 2020/02/20 05:21:18 by nsaber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "job_control.h"
+
+void		job_sign(t_job *j)
+{
+	t_job *tmp;
+	int len;
+	int i;
+
+	tmp = g_jobs.f_job;
+	len = 0;
+	while(tmp)
+		{
+			len++;
+			tmp = tmp->next;
+		}
+	if ( len >= 2)
+	{
+		j->sign = '+';
+		tmp = g_jobs.f_job;
+		i = 0;
+		while(i < len - 2)
+		{
+			i++;
+			tmp = tmp->next;
+		}
+		tmp->sign = ' ';
+		tmp->next->sign = '-';
+	}
+	else
+		j->sign = ' ';
+	
+	
+}
 
 static t_job	*add_job(t_proc *p, pid_t pgid, int bg)
 {
@@ -23,6 +55,7 @@ static t_job	*add_job(t_proc *p, pid_t pgid, int bg)
 	j->notified = 0;
 	j->name = name_list_concate(p); // added here by noureddine
 	j->cmd = ft_strdup(p->as->token); // added by noureddine
+	job_sign(j);
 	if (bg)
 		j->id = g_jobs.id++;
 	else
