@@ -6,7 +6,7 @@
 /*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 04:36:08 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/20 04:15:36 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/20 11:16:57 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,34 @@ void	execute_exit(char **args)
 	if (args[1])
 		ex = ft_atoi(args[1]);
 	exit(ex);
+}
+
+static int	execute_echo(char **args)
+{
+	int i;
+	int check;
+
+	check = 1;
+	if (args[1])
+	{
+		i = 1;
+		if (!ft_strcmp("-n", args[i]))
+		{
+			while (args[i] && !ft_strcmp("-n", args[i]))
+				i++;
+			check = 0;
+		}
+		while (args[i])
+		{
+			ft_putstr(args[i]);
+			if (args[i + 1] && args[i] != '\0')
+				ft_putstr(" ");
+			i++;
+		}
+	}
+	if (check)
+		ft_putchar('\n');
+	return (0);
 }
 
 int		is_builtin(char *exec)
@@ -46,9 +74,8 @@ int		is_builtin(char *exec)
 		return (1);
 	else if (!ft_strcmp("export", exec))
 		return (1);
-	/*	else if (!ft_strcmp("echo", *args))
-		execute_echo();
-		*/
+	else if (!ft_strcmp("echo", exec))
+		return (1);
 	else if (!ft_strcmp("type", exec))
 		return (1);
 	else if (!ft_strcmp("alias", exec))
@@ -65,13 +92,12 @@ int		execute_builtin(char **args)
 	   else if (!ft_strcmp("fc", *args))
 	   execute_fd();
 	   */
-	/*	else if (!ft_strcmp("echo", *args))
-		execute_echo();
-		*/
-	if (!ft_strcmp("type", *args))
+	if (!ft_strcmp("echo", *args))
+		execute_echo(args);
+	else if (!ft_strcmp("type", *args))
 		return (type(args));
 	else if (!ft_strcmp("hash", *args))
-	  return (hash(args));
+		return (hash(args));
 	else if (!ft_strcmp("alias", *args))
 		return (alias(args));
 	else if (!ft_strcmp("unalias", *args))

@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 00:10:12 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/14 00:28:19 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/20 11:32:35 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,27 +145,60 @@ int		history_expa_syntax(char *str)
 	return (0);
 }
 
+int		check_dollar_var(char *str, int be, int end)
+{
+	int	i;
+
+	i = be;
+	if ((end - be) == 1 && (str[be] == '$' || str[be] == '?'))
+		return (0);
+	if (str[i] != '_' && !ft_isalnum(str[i]))
+		return (1);
+	while (i < end)
+	{
+		if (str[i] == '{' || str[i] == ' ' || str[i] == '\n')
+			return (1);
+		if (str[i] == '&' || str[i] == '|' || str[i] == '$')
+			return (1);
+		if (str[i] == '\'' || str[i] == '\"' || str[i] == '\\')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 int		expansion_dollar(char *str)
 {
 	int	i;
-	int	count;
+	int	be;
+	int	qu;
 
 	i = 0;
-	count = 0;
+	qu = 0;
 	while (str[i])
 	{
-		if (str[i] == '{' && i && str[i - 1] == '$')
-			count++;
-		if (count > 0 && (used_variable(str[i]) || ft_isblank(str[i]) ||
-					is_inhibitors(str[i]) || str[i] == '\n' ||
-					str[i] == '$' || str[i] == '~'))
-			return (1);
-		if (str[i] == '}' && count > 0)
-			count--;
-		i++;
+		if (str[i] == '\"')
+			qu = qu ? 0 : 1;
+		if (str[i] == '\'' && !qu)
+		{
+			be = i++;
+			while (str[i] && str[i] != str[be])
+				i++;
+		}
+		else if (str[i] == '\\')
+			i++;
+		else if (str[i] == '$' && str[i + 1] == '{')
+		{
+			i++;
+			be = ++i;
+			while (str[i] && str[i] != '}')
+				i++;
+			if (str[i] == '\0' || check_dollar_var(str, be, i))
+				return (1);
+		}
+		else
+			i++;
 	}
-	if (count)
-		return (1);
 	return (0);
 }
 

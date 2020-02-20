@@ -6,7 +6,11 @@
 /*   By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 04:57:40 by hastid            #+#    #+#             */
+<<<<<<< HEAD
+/*   Updated: 2020/02/20 11:28:05 by hastid           ###   ########.fr       */
+=======
 /*   Updated: 2020/02/20 06:39:28 by nsaber           ###   ########.fr       */
+>>>>>>> 91544c8e50583f180158da976e81bef3ba5b19f3
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +27,7 @@ char		*search_executable(char *cmdl)
 {
 	char	*excu;
 
+	cmdl = delet_quotes(cmdl, 0);
 	excu = is_binary(cmdl);
 /*	excu = ft_strjoin("/bin/", cmdl);
 	if (!access(excu, F_OK))
@@ -53,8 +58,6 @@ int			execute_args(t_tok *as, char **args)
 		set_variable(as->token, 1, 1);
 		as = as->next;
 	}
-	if (change_expansion(as))
-		exit (1);
 	if (is_builtin(args[0]))
 		exit(execute_builtin(args));
 	if (!(exec = search_executable(as->token)))
@@ -105,6 +108,8 @@ int			execute_pipe(t_proc *p, int *in, int *pgid)
 	}
 	if ((p->pid = fork()) == -1)
 		return (ft_perror_pipe("PIPE ERROR !!", 1));
+	if (change_expansion(p->as))
+		return (exit_status(1, 0));
 	args = get_args(p->as);
 	if (p->pid == 0)
 	{

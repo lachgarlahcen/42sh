@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 02:52:37 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/05 05:10:11 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/20 11:12:10 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int		free_return(char *str, int ret)
 	return (ret);
 }
 
-int		ft_perror(char *str, char c, char *err, int f)
+int		ft_perror_line(char *str, char c, char *err, int f)
 {
 	ft_putstr_fd("42sh: ", 2);
 	if (c)
@@ -28,6 +28,7 @@ int		ft_perror(char *str, char c, char *err, int f)
 	ft_putendl_fd(err, 2);
 	if (f)
 		ft_memdel((void **)&str);
+	exit_status(258, 1);
 	return (1);
 }
 
@@ -73,7 +74,11 @@ int		end_of_inhibitors(char *str, char c, int be)
 		return (i + 1);
 	}
 	while (str[i] && str[i] != c)
+	{
+		if (str[i] == '\\' && c == '\"')
+			i++;
 		i++;
+	}
 	if (!str[i])
 		return (-2);
 	return (i + 1);
