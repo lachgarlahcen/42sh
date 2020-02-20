@@ -6,7 +6,7 @@
 /*   By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 23:04:02 by aihya             #+#    #+#             */
-/*   Updated: 2020/02/18 18:15:59 by aihya            ###   ########.fr       */
+/*   Updated: 2020/02/20 01:41:42 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@ void	print_binaries(void)
 		return ;
 	names = binaries_names(FALSE);
 	index = 0;
-	printf("%-8s%s\n", "hits", "command");
+	ft_printf("%-8s%s\n", "hits", "command");
 	while (names[index])
 	{
 		node = find_htnode(binaries(FALSE), names[index]);
-		printf("%4d    %s\n", node->hits, node->value);
+		ft_printf("%4d    %s\n", node->hits, node->value);
 		index++;
 	}
 }

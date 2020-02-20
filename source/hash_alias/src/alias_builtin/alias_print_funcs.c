@@ -6,7 +6,7 @@
 /*   By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/17 19:38:15 by aihya             #+#    #+#             */
-/*   Updated: 2020/02/17 19:40:19 by aihya            ###   ########.fr       */
+/*   Updated: 2020/02/20 01:41:13 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void			print_alias(char *name)
 {
-	printf("alias %s='%s'\n", name, is_alias(name));
+	ft_printf("alias %s='%s'\n", name, is_alias(name));
 }
 
 void			print_all_alias(void)
