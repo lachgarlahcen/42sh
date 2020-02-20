@@ -6,7 +6,7 @@
 /*   By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 23:54:11 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/19 02:34:34 by nsaber           ###   ########.fr       */
+/*   Updated: 2020/02/20 05:05:13 by nsaber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct	s_job
 	char			option;
 	char			*name;
 	char			*cmd;
+	char			sign;
 }				t_job;
 
 typedef struct s_jobs
