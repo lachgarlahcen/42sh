@@ -6,7 +6,7 @@
 /*   By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 22:18:48 by llachgar          #+#    #+#             */
-/*   Updated: 2020/02/19 02:28:31 by nsaber           ###   ########.fr       */
+/*   Updated: 2020/02/20 11:50:43 by nsaber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void            execute_jobs(char **args);
 void            execute_fg(char **args);
 void            execute_bg(char **args);
 char            *name_list_concate(t_proc			*p);
+void		    job_sign(t_job *j);
 
 #endif
 

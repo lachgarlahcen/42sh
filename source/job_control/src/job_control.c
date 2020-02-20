@@ -6,13 +6,12 @@
 /*   By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 22:18:53 by llachgar          #+#    #+#             */
-/*   Updated: 2020/02/20 10:59:36 by nsaber           ###   ########.fr       */
+/*   Updated: 2020/02/20 12:05:47 by nsaber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "job_control.h"
 
-void		job_sign(t_job *j);
 char *name_list_concate(t_proc *p)
 {
   char *name_args;
@@ -162,15 +161,15 @@ void execute_fg(char **args)
     {
       if (j->sign == '+')
         break;
+      if (!j->next) // if for any case '+' not found , we make fg
+      break;
       j = j->next;
     }
   }
-  
+  job_sign(j);
   if (getpid() != g_shell_pgid)
     ft_printf("fg: no job control\n");
-  put_job_in_foreground(j, 1);
-  job_sign(j); // added by noureddine
-  
+  put_job_in_foreground(j, 1);  
 }
 
 void execute_bg(char **args)
@@ -199,12 +198,15 @@ void put_job_in_foreground(t_job *j, int cont)
   */
   tcsetpgrp(STDIN_FILENO, g_shell_pgid);
   tcsetattr(STDIN_FILENO, TCSADRAIN, &g_shell_tmodes);
+  /*
+  -*-*-*-*->ignored by Noureddine for test <-*-*-*-*-
   if (job_is_completed(j))
   {
     delete_job(j->pgid);
   }
   else
     j->id = g_jobs.id++;
+  */
 }
 /*
 ** this function is basctly puts a jib in the background
