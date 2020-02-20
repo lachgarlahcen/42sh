@@ -6,12 +6,13 @@
 /*   By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 22:18:53 by llachgar          #+#    #+#             */
-/*   Updated: 2020/02/20 05:02:39 by nsaber           ###   ########.fr       */
+/*   Updated: 2020/02/20 06:47:24 by nsaber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "job_control.h"
 
+void		job_sign(t_job *j);
 char *name_list_concate(t_proc *p)
 {
   char *name_args;
@@ -131,10 +132,39 @@ void execute_jobs(char **args)
 
 void execute_fg(char **args)
 {
+    t_job   *j;
+
   (void)args;
+  j = g_jobs.f_job;
+  if (args[1] && ft_isdigits(args[1])) // fg [job_id]
+  {
+    while(j)
+    {
+      if (j->id == ft_atoi(args[1]))
+        break;
+      j = j->next;
+    }
+  }
+  else if (args[1]) // error msgs
+  {
+    printf("42sh : fd: %s no such job\n",args[1]);
+    return ;
+  }
+  else // fg to to  +
+  {
+    while(j)
+    {
+      if (j->sign == '+')
+        break;
+      j = j->next;
+    }
+  }
+  
   if (getpid() != g_shell_pgid)
     ft_printf("fg: no job control\n");
-  put_job_in_foreground(g_jobs.f_job, 1);
+  put_job_in_foreground(j, 1);
+  job_sign(j); // added by noureddine
+  
 }
 
 void execute_bg(char **args)
@@ -145,7 +175,7 @@ void execute_bg(char **args)
 
 void put_job_in_foreground(t_job *j, int cont)
 {
-  /* Put the job into the foreground.  */
+  /* Put the job into the foreground.  */ // give permission to write on terminal
   tcsetpgrp(STDIN_FILENO, j->pgid);
   /* Send the job a continue signal, if necessary.  */
   if (cont)
