@@ -6,7 +6,7 @@
 /*   By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 00:42:10 by llachgar          #+#    #+#             */
-/*   Updated: 2020/02/20 05:19:09 by nsaber           ###   ########.fr       */
+/*   Updated: 2020/02/20 06:05:37 by nsaber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ void  format_job_info (t_job *j, const char *status, char option)
  
   s = job_is_completed(j) ? j->status : 20;
   if (option == 0)
-    fprintf (stderr, "[%d]\t%s\t\t%s\n",j->id , g_sinalmsg[s], j->name);
+    fprintf (stderr, "[%d]%c %s\t\t%s\n",j->id , j->sign, g_sinalmsg[s], j->name);
   else if (option == 'l')
   {
     fprintf (stderr, "[%d]%c  %ld  %s\t\t%s\n",j->id , j->sign, (long)j->pgid, g_sinalmsg[s], j->name);
