@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 03:40:10 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/19 03:40:16 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/20 05:57:20 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	free_process(t_proc *pipes);
 
 int		execute_cmdline(char *line);
 
+char	*delet_quotes(char *str, int free);
 int		ft_redirection(t_proc *p);
 
 #endif
