@@ -6,7 +6,7 @@
 /*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 04:57:19 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/17 15:35:48 by llachgar         ###   ########.fr       */
+/*   Updated: 2020/02/20 10:04:53 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ int			line_editing(char *line, int lexical)
 		if (!(syntax(alias)))
 			execute_cmdline(alias);
 		else
-			ft_perror(0, 0, "syntax error !!", 1);
+			ft_perror_line(0, 0, "syntax error !!", 1);
 		do_job_notification();
-		add_to_hist(ft_strdup(line), 0);
+		add_to_hist(ft_strdup(l), 0);
 		ft_memdel((void **)&alias);
 	}
 	ft_memdel((void **)&l);
