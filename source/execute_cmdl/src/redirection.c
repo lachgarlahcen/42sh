@@ -6,7 +6,7 @@
 /*   By: iel-bouh <iel-bouh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 03:59:51 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/20 00:18:30 by iel-bouh         ###   ########.fr       */
+/*   Updated: 2020/02/20 01:19:27 by iel-bouh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@ int		ft_all_digits(char *str)
 	return (0);
 }
 
-char	*ft_get_redict_by_id(t_proc *p, int i)
+char	*ft_get_redict_by_id(t_tok *tok, int i)
 {
 	t_tok *tmp;
 
-	tmp = p->red;
+	tmp = tok;
 	while (tmp)
 	{
 		if ((tmp)->id == i)
@@ -75,7 +75,7 @@ int		ft_get_file_fd(char *file, char append)
 	return (i);
 }
 
-int		ft_out_redirection(t_proc *tmp)
+int		ft_out_redirection(t_tok *tmp)
 {
 	int		fd;
 
@@ -100,7 +100,7 @@ int		ft_out_redirection(t_proc *tmp)
 	return (0);
 }
 
-void	ft_right_ampersand(t_proc *p)
+void	ft_right_ampersand(t_tok *p)
 {
 	if (ft_get_redict_by_id(p, 3) &&
 			!ft_all_digits(ft_get_redict_by_id(p, 3)))
@@ -122,7 +122,7 @@ void	ft_right_ampersand(t_proc *p)
 	}
 }
 
-int		ft_ampersand(t_proc *p)
+int		ft_ampersand(t_tok *p)
 {
 	int fd;
 
@@ -141,7 +141,7 @@ int		ft_ampersand(t_proc *p)
 	return (0);
 }
 
-int		ft_in_redirection(t_proc *p)
+int		ft_in_redirection(t_tok *p)
 {
 	int i;
 
@@ -209,7 +209,7 @@ int			ft_stop_append_return(char **join, char *stop, int p[2])
 	return (p[0]);
 }
 
-int		ft_herdoc(t_proc *p)
+int		ft_herdoc(t_tok *p)
 {
 	int		fd[2];
 	char	*tmp;
@@ -235,26 +235,28 @@ int		ft_herdoc(t_proc *p)
 
 int		ft_redirection(t_proc *p)
 {
-	t_proc *tmp;
+	t_tok *tmp;
 
-	tmp = p;
+	tmp = p->red;
 	while (tmp)
 	{
-			ft_putendl(ft_get_redict_by_id(tmp, 1));
-	ft_putendl(ft_get_redict_by_id(tmp, 2));
-	ft_putendl(ft_get_redict_by_id(tmp, 3));
+			// ft_putendl(ft_get_redict_by_id(tmp, 1));
+			// ft_putendl(ft_get_redict_by_id(tmp, 2));
+			// ft_putendl(ft_get_redict_by_id(tmp, 3));
 		if (ft_get_redict_by_id(tmp, 2))
 		{
 			if (ft_out_redirection(tmp) == -1)
 				return (1);
-			if (ft_ampersand(tmp) == -1)
+			else if (ft_ampersand(tmp) == -1)
 				return (1);
-			if (ft_in_redirection(tmp) == -1)
+			else if (ft_in_redirection(tmp) == -1)
 				return (1);
-			if (ft_strequ(ft_get_redict_by_id(tmp, 2), "<<") == 1
-									&& ft_herdoc(tmp) == -1)
+			else if (ft_strequ(ft_get_redict_by_id(tmp, 2), "<<") == 1
+								&& ft_herdoc(tmp) == -1)
 				return (1);
 		}
+		while (tmp->id != 3)
+			tmp = tmp->next;
 		tmp = tmp->next;
 	}
 	return (0);
