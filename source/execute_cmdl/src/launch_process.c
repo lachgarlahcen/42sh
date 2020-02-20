@@ -6,7 +6,7 @@
 /*   By: iel-bouh <iel-bouh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 04:57:40 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/19 04:16:56 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/20 04:37:13 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ char		*search_executable(char *cmdl)
 {
 	char	*excu;
 
-	excu = ft_strjoin("/bin/", cmdl);
+	excu = is_binary(cmdl);
+/*	excu = ft_strjoin("/bin/", cmdl);
 	if (!access(excu, F_OK))
 		return (excu);
 	ft_memdel((void **)&excu);
@@ -31,6 +32,11 @@ char		*search_executable(char *cmdl)
 	if (!access(excu, F_OK))
 		return (excu);
 	ft_memdel((void **)&excu);
+*/
+	if (excu)
+		return (excu);
+	else if ((excu = get_bin_path(cmdl)))
+		return (excu);
 	ft_putstr_fd(cmdl, 2);
 	ft_putendl_fd(" :command not found", 2);
 	return (0);

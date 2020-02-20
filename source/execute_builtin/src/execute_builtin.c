@@ -6,7 +6,7 @@
 /*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 04:36:08 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/18 03:15:30 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/20 04:15:36 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,15 +49,12 @@ int		is_builtin(char *exec)
 	/*	else if (!ft_strcmp("echo", *args))
 		execute_echo();
 		*/
-	/*	else if (!ft_strcmp("type", *args))
-		execute_type();
-		*/
-	/*	else if (!ft_strcmp("alias", *args))
-		execute_alias();
-		*/
-	/*	else if (!ft_strcmp("unalias", *args))
-		execute_unalias();
-		*/
+	else if (!ft_strcmp("type", exec))
+		return (1);
+	else if (!ft_strcmp("alias", exec))
+		return (1);
+	else if (!ft_strcmp("unalias", exec))
+		return (1);
 	return (0);
 
 }
@@ -71,18 +68,15 @@ int		execute_builtin(char **args)
 	/*	else if (!ft_strcmp("echo", *args))
 		execute_echo();
 		*/
-	/*	else if (!ft_strcmp("type", *args))
-		execute_type();*/	
-	/*else if (!ft_strcmp("hash", *args))
-	  execute_hash();
-	  */
-	/*	else if (!ft_strcmp("alias", *args))
-		execute_alias();
-		*/
-	/*	else if (!ft_strcmp("unalias", *args))
-		execute_unalias();
-		*/
-	if (!ft_strcmp("cd", *args))
+	if (!ft_strcmp("type", *args))
+		return (type(args));
+	else if (!ft_strcmp("hash", *args))
+	  return (hash(args));
+	else if (!ft_strcmp("alias", *args))
+		return (alias(args));
+	else if (!ft_strcmp("unalias", *args))
+		return (unalias(args));
+	else if (!ft_strcmp("cd", *args))
 		built_cd(args);
 	else if (!ft_strcmp("set", *args))
 		put_variables();

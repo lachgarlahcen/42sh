@@ -6,7 +6,7 @@
 #    By: hastid <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/10/07 19:31:36 by hastid            #+#    #+#              #
-#    Updated: 2020/02/05 05:42:24 by hastid           ###   ########.fr        #
+#    Updated: 2020/02/20 04:18:40 by hastid           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -81,6 +81,10 @@ SRC_NAME = ft_isalpha.c \
 		   pr_printf.c \
 		   ft_putstr_ret.c \
 		   ft_putchar_ret.c \
+		   ft_chain_free.c \
+		   ft_chain_size.c \
+		   ft_strappend.c \
+		   ft_strojoin.c
 
 
 OBJ_NAME =	$(SRC_NAME:.c=.o)
