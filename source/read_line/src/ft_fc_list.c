@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "read_line.h"
-#define ABS(x) ((x) < 0 ? -(x) : (x))
 
 int ft_fc_get_pos(char *arg, int *pos)
 {
@@ -50,15 +49,15 @@ static void ft_fc_print_list(t_hist *h, t_fc *fc, int f, int l)
     i = 0;
     while (f <= l)
     {
-        fc->n ? ft_printf("%4d", h->count - f) : 1 == 1;
-        ft_putendl_fd(get_element_by_index(h->hist_list, f), 1);
+        !fc->n ? ft_printf("%-4d", h->count - f) : 1 == 1;
+        ft_putendl_fd(get_element_by_index(f, h->hist_list), 1);
         i = 1;
         f++;
     }
     while (!i && f >= l)
     {
-        fc->n ? ft_printf("%4d", h->count - f) : 1 == 1;
-        ft_putendl_fd(get_element_by_index(h->hist_list, f), 1);
+        !fc->n ? ft_printf("%-4d", h->count - f) : 1 == 1;
+        ft_putendl_fd(get_element_by_index(f, h->hist_list), 1);
         f--;
     }
 }
@@ -70,9 +69,15 @@ void ft_fc_list_history(t_fc *fc, int f, int l)
     hist = NULL;
     hist = save_hist(&hist);
     hist->count < ABS(f) ? f = 0 : 1 == 1;
-    hist->count < ABS(l) ? l = 0 : 1 == 1;
-    f = f < 0 ? ABS(f) : (hist->count - f - 1);
-    l = l < 0 ? ABS(l) : (hist->count - l - 1);
+    hist->count < ABS(l)  ? l = 0 : 1 == 1;
+    if (f > 0)
+        f = (hist->count - f);
+    else if (f < 0)
+        f = ABS(f) - 1;
+    if (l > 0)
+        l = (hist->count - l);
+    else if (l < 0)
+        l = ABS(l) - 1;
     ft_fc_print_list(hist, fc, f, l);
 }
 

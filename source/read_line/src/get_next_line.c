@@ -6,59 +6,50 @@
 /*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 18:43:39 by llachgar          #+#    #+#             */
-/*   Updated: 2020/02/05 03:42:49 by llachgar         ###   ########.fr       */
+/*   Updated: 2020/02/21 02:47:50 by llachgar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "read_line.h"
-
-static int		get_the_line(char **s, char **line, int fd)
+# define BUFF_LINE 1
+typedef struct	s_f
 {
-	int		len;
-	char	*tmp;
+	int				d;
+	int				s;
+	char			*b;
+	char			*t;
+	char			r[BUFF_LINE];
+	int				i;
+	int				j;
+	int				k;
+	struct s_f		*n;
+}				t_f;
 
-	len = 0;
-	while (s[fd][len] != '\n' && s[fd][len] != '\0')
-		len++;
-	if (s[fd][len] == '\n')
-	{
-		*line = ft_strsub(s[fd], 0, len);
-		tmp = s[fd];
-		s[fd] = ft_strdup(s[fd] + len + 1);
-		free(tmp);
-	}
-	else if (s[fd][len] == '\0')
-	{
-		*line = ft_strdup(s[fd]);
-		ft_strdel(&s[fd]);
-	}
-	return (1);
-}
-
-int				get_next_line(const int fd, char **line)
+int		get_next_line(const int fd, char **line)
 {
-	static char	*s[256];
-	char		buf[BUFF_SIZE + 1];
-	int			r_res;
+	static t_f		*openfiles;
+	t_f				*f;
+	int				i;
 
-	if (fd < 0 || line == NULL)
+	f = openfiles;
+	while (!(i = 0) && f && f->d != fd)
+		f = f->n;
+	if (fd < 0 || (!f && (!(f = malloc(sizeof(*f))) ||
+		((f->n = openfiles) && 0) || (f->d *= 0) || (f->d += fd) < 0 ||
+		!(openfiles = f) || (f->i *= 0) || (f->j *= 0))) || (f->s *= 0))
 		return (-1);
-	while ((r_res = read(fd, buf, BUFF_SIZE)) > 0)
+	while (!(f->k *= 0) && (f->i < f->j || (!(f->i *= 0) && (f->j = read(fd,
+		f->r, BUFF_LINE)) > 0)) && (f->s == 0 || f->r[f->i] != 10 || !(++f->i)))
 	{
-		buf[r_res] = '\0';
-		if (s[fd] == NULL)
-			s[fd] = ft_strnew(1);
-		s[fd] = ft_strjoin_f(s[fd], buf, 1, 0);
-		if (ft_strchr(buf, '\n'))
-			break ;
+		if (i + BUFF_LINE >= f->s && (f->k -= 1) && ((f->t = f->b) || 1)
+				&& (f->b = (char *)malloc(sizeof(char) * (i + BUFF_LINE + 1))))
+			while (++(f->k) < i && (f->k) < f->s)
+				free(((f->b[f->k] = f->t[f->k]) && (f->k + 1 < i) ? 0 : f->t));
+		if (i + BUFF_LINE >= f->s && ((!f->b && ((f->b = f->t) || 1))
+					|| !(f->s = i + BUFF_LINE + 1)))
+			return (-1);
+		while (f->i < f->j && f->r[f->i] != '\n')
+			f->b[i++] = f->r[f->i++];
 	}
-	if (r_res < 0)
-		return (-1);
-	else if (r_res == 0 && (s[fd] == NULL || s[fd][0] == '\0'))
-	{
-		if (s[fd])
-			free(s[fd]);
-		return (0);
-	}
-	return (get_the_line(s, line, fd));
+	return ((i || f->j > 0) && (*line = f->b) && !(f->b[i] *= 0) ? 1 : f->j);
 }

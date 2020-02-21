@@ -103,6 +103,7 @@
 #define RESET "\e[39m"
 #define HISTORY_FILE_PATH "/tmp/.21sh_history"
 #define O_FILL (O_CREAT | O_WRONLY | O_TRUNC)
+#define ABS(x) ((x) < 0 ? -(x) : (x))
 
 typedef struct s_cmd
 {
@@ -260,6 +261,7 @@ int ft_fc_redo(t_fc *fc);
 int ft_fc_list(t_fc *fc);
 int ft_fc_editor(t_fc *fc);
 int ft_fc_get_pos(char *arg, int *pos);
+int ft_fc(char **av);
 /*
 ** FC BUILTIN FUNCTIONS ENDS
 */

@@ -6,7 +6,7 @@
 /*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 16:35:13 by llachgar          #+#    #+#             */
-/*   Updated: 2020/02/05 03:44:38 by llachgar         ###   ########.fr       */
+/*   Updated: 2020/02/21 03:22:19 by llachgar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,10 @@ static int ft_fc_get_flags(char **av, t_fc *fc)
     int i;
     int j;
 
-    i = -1;
+    i = 0;
     while (av[++i])
     {
-        if (IS_OPT(av[i]))
+        if (IS_OPT(av[i]) && !ft_atoi(av[i]))
         {
             if ((j = ft_get_flags(av[i], fc)) == 0)
                 return (0);

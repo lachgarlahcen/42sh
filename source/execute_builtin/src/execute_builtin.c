@@ -31,7 +31,7 @@ int		is_builtin(char *exec)
 	else if (!ft_strcmp("bg", exec))
 		return (1);
 	else if (!ft_strcmp("fc", exec))
-		return (0);
+		return (1);
 	else if (!ft_strcmp("set", exec))
 		return (1);
 	else if (!ft_strcmp("test", exec))
@@ -65,8 +65,6 @@ int		is_builtin(char *exec)
 int		execute_builtin(char **args)
 {
 	/*
-	   else if (!ft_strcmp("fc", *args))
-	   execute_fd();
 	   */
 	/*	else if (!ft_strcmp("echo", *args))
 		execute_echo();
@@ -100,5 +98,7 @@ int		execute_builtin(char **args)
 		return (unset_variables(args));
 	else if (!ft_strcmp("export", *args))
 		return (execute_export(args));
+	else if (!ft_strcmp("fc", *args))
+		ft_fc(args);
 	return (0);
 }

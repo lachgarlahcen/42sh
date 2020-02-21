@@ -33,7 +33,11 @@ SRC_NAME = read_line.c \
 		   ft_free.c \
 		   bonus.c \
 		   get_next_line.c \
-		   ft_data.c 
+		   ft_data.c \
+		   fc_fc_editor.c \
+		   ft_fc.c \
+		   ft_fc_list.c \
+		   ft_fc_redo.c
 
 OBJ_NAME =	$(SRC_NAME:.c=.o)
 

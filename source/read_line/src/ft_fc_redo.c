@@ -6,7 +6,7 @@
 /*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/31 22:24:39 by llachgar          #+#    #+#             */
-/*   Updated: 2020/02/05 03:44:41 by llachgar         ###   ########.fr       */
+/*   Updated: 2020/02/21 02:03:33 by llachgar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,14 @@ static char *ft_fc_get_cmd(t_fc *fc)
 int ft_fc_redo(t_fc *fc)
 {
     char *cmd;
-
-    if ((cmd = ft_fc_get_cmd(fc)))
+    cmd = NULL;
+    if (!(cmd = ft_fc_get_cmd(fc)))
     {
-        ft_putstr_fd("42sh: fc: no command found", 2);
+        ft_putstr_fd("42sh: fc: no command found\n", 2);
         return (0);
     }
     ft_putendl(cmd);
     //Exute pipline here
+    line_editing(cmd, 0);
     return (1);
 }
