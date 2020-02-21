@@ -6,7 +6,7 @@
 /*   By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 22:18:53 by llachgar          #+#    #+#             */
-/*   Updated: 2020/02/20 12:11:43 by nsaber           ###   ########.fr       */
+/*   Updated: 2020/02/21 16:54:40 by nsaber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,16 +166,84 @@ void execute_fg(char **args)
       j = j->next;
     }
   }
-  job_sign(j);
+  // job_sign(j);
   if (getpid() != g_shell_pgid)
     ft_printf("fg: no job control\n");
-  put_job_in_foreground(j, 1);  
+  put_job_in_foreground(j, 1);
 }
 
 void execute_bg(char **args)
 {
   (void)args;
   put_job_in_background(g_jobs.f_job, 1);
+}
+
+t_job   *job_sign_finder(char sign)
+{
+  t_job *tmp;
+
+  tmp = g_jobs.f_job;
+
+  while(tmp)
+  {
+    if (sign == tmp->sign)
+      return(tmp);
+    tmp = tmp->next;
+  }
+  return (0);
+}
+
+void    job_node_trait(t_job *j, int mines)
+{
+  t_job *tmp;
+  int len;
+
+  len =0;
+  if (!(j->sign) || j->sign == ' ') // if node is not for a background process or its not +/- , return
+    return;
+
+// if (j is the last) // j is the last and killed , miness the id
+//   g_jobs.id--;
+
+  tmp = g_jobs.f_job;
+  while(tmp)
+  {
+    len = tmp->id;
+    tmp = tmp->next;
+  }
+  if ((len == j->id && mines) || (len == 0 && mines))
+  {
+    printf("cae the last\n");
+    g_jobs.id--;
+
+  }
+  tmp = g_jobs.f_job;
+  while(tmp) // todo : case if there is no '-' or '+' ? what we do ?
+  {
+      // if (tmp->id == j->id)
+      //   break;
+    if (tmp->sign == '-' && j->sign == '-') // set '-' to node before
+    {
+      printf("arrived to - section in sign_trait\n");
+      printf("-> id : %d\n",tmp->id);
+      if(!(tmp = job_sign_finder(' ')))
+        return;
+      tmp->sign = '-';
+      break ;
+    }
+    if (tmp->sign == '+' && j->sign == '+')
+    {
+      printf("arrived to + section\n");
+      if(!(tmp = job_sign_finder('-')))
+        return;
+      tmp->sign = '+';
+      if(!(tmp = job_sign_finder(' ')))
+        return;
+      tmp->sign = '-'; // we put mines to any free one
+      break;
+    }
+    tmp = tmp->next;
+  }
 }
 
 void put_job_in_foreground(t_job *j, int cont)
@@ -202,10 +270,17 @@ void put_job_in_foreground(t_job *j, int cont)
   //-*-*-*-*->ignored by Noureddine for test <-*-*-*-*-
   if (job_is_completed(j))
   {
+		printf("job_node_trait called for killed bg\n");
+    job_node_trait(j,1); // in case  background_job killed
     delete_job(j->pgid);
   }
   else
-    j->id = g_jobs.id++;
+  {
+		  printf("job_sign called bg not killed\n");
+      job_sign(j); // only enter when job is not killed [fg]
+      printf("jobs sign \n");
+  }
+  //   j->id = g_jobs.id++; // by noureddine for test for fg
   
 }
 /*
