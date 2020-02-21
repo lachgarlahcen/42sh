@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 03:40:43 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/19 03:40:46 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/21 19:48:36 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,23 +49,16 @@ int			check_execute(t_proc *p, t_tok *t, int check)
 {
 	if (t && t->id == 5)
 		return (check_fork(p, 1));
-	/*	if (check == 1 && exit_status(0, 0))
-		{
+	if (check == 1 && exit_status(0, 0))
+	{
 		free_process(p);
 		return (check);
-		}
-		if (check == 2 && !exit_status(0, 0))
-		{
-			if (tp->next)
-				close(pi[0]);
-			if (ft_redirection(p) == 1)
-				exit(1);
-			if (!change_expansion(tp->as))
-				launch_process(tp->as, bg, in, out);
-
-			exit(1);
-		}
-		*/
+	}
+	if (check == 2 && !exit_status(0, 0))
+	{
+		free_process(p);
+		return (check);
+	}
 	if (t && t->id == 7)
 		check = !ft_strcmp("&&", t->token) ? 1 : 2;
 	else

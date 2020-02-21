@@ -6,7 +6,7 @@
 /*   By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 12:16:28 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/21 16:42:43 by nsaber           ###   ########.fr       */
+/*   Updated: 2020/02/21 20:02:05 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,27 +19,52 @@ int			ft_perror_pipe(char *error, int ret)
 	return (ret);
 }
 
+int			is_dir(char *di)
+{
+	DIR	*d;
+	if (!(d = opendir(di)))
+		return (1);
+	closedir(d);
+	return (0);
+}
+
+int			ft_perror_execu(char *cmdl, char *err)
+{
+	ft_putstr_fd("42sh : ", 2);
+	ft_putstr_fd(cmdl, 2);
+	ft_putendl_fd(err, 2);
+	return (1);
+}
+
 char		*search_executable(char *cmdl)
 {
 	char	*excu;
 
 	cmdl = delet_quotes(cmdl, 0);
-	excu = is_binary(cmdl);
-/*	excu = ft_strjoin("/bin/", cmdl);
-	if (!access(excu, F_OK))
-		return (excu);
-	ft_memdel((void **)&excu);
-	excu = ft_strjoin("/usr/bin/", cmdl);
-	if (!access(excu, F_OK))
-		return (excu);
-	ft_memdel((void **)&excu);
-*/
-	if (excu)
-		return (excu);
-	else if ((excu = get_bin_path(cmdl)))
-		return (excu);
-	ft_putstr_fd(cmdl, 2);
-	ft_putendl_fd(" :command not found", 2);
+	if (!access(cmdl, F_OK))
+		if (!access(cmdl, X_OK))
+			if (is_dir(cmdl))
+				return (cmdl);
+	if (is_dir(cmdl))
+	{
+		excu = is_binary(cmdl);
+	/*		excu = ft_strjoin("/bin/", cmdl);
+		if (!access(excu, F_OK))
+			return (excu);
+		ft_memdel((void **)&excu);
+		excu = ft_strjoin("/usr/bin/", cmdl);
+		if (!access(excu, F_OK))
+			return (excu);
+		ft_memdel((void **)&excu);
+	*/
+		if (excu)
+			return (excu);
+		else if ((excu = get_bin_path(cmdl)))
+			return (excu);
+		ft_perror_execu(cmdl, ": command not found");
+	}
+	else
+		ft_perror_execu(cmdl, ": is a directory");
 	return (0);
 }
 
