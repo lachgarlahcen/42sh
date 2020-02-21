@@ -6,7 +6,7 @@
 /*   By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 22:18:53 by llachgar          #+#    #+#             */
-/*   Updated: 2020/02/21 16:54:40 by nsaber           ###   ########.fr       */
+/*   Updated: 2020/02/21 17:01:48 by nsaber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,8 @@ void execute_fg(char **args)
     int percent;
 
   j = g_jobs.f_job;
+  if (!j)
+  return ((void) printf("fg: current: no such job\n"));
   if (args[1] && ft_isdigits(args[1])) // fg [job_id]
   {
     percent = args[1][0] == '%' ? 1 : 0;
