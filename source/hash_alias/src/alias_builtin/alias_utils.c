@@ -6,7 +6,7 @@
 /*   By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/17 19:35:28 by aihya             #+#    #+#             */
-/*   Updated: 2020/02/17 19:42:18 by aihya            ###   ########.fr       */
+/*   Updated: 2020/02/21 19:50:02 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int				save_alias(char *name, char *value)
 {
 	t_htnode	*alias;
 
-	if (name == NULL || value == NULL)
+	if (name == NULL)
 		return (0);
 	alias = new_htnode(name, value);
 	if (alias == NULL)

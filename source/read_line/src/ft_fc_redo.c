@@ -6,7 +6,7 @@
 /*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/31 22:24:39 by llachgar          #+#    #+#             */
-/*   Updated: 2020/02/21 19:46:40 by llachgar         ###   ########.fr       */
+/*   Updated: 2020/02/21 20:59:01 by llachgar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ int ft_fc_redo(t_fc *fc)
     }
     ft_putendl(cmd);
     //Exute pipline here
+	g_h = 1;
+	add_to_hist(ft_strdup(cmd), 0);
     line_editing(cmd, 0);
     g_h = 0;
     return (1);
