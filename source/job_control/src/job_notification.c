@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   job_notification.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+        */
+/*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 00:42:10 by llachgar          #+#    #+#             */
-/*   Updated: 2020/02/20 06:05:37 by nsaber           ###   ########.fr       */
+/*   Updated: 2020/02/21 06:09:56 by llachgar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int mark_process_status (pid_t pid, int status)
             }
               return 0;
             }
+            j->status = p->stat;
             p = p->next;
         }
          j = j->next;
