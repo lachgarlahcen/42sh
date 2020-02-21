@@ -6,7 +6,7 @@
 /*   By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 18:23:41 by aihya             #+#    #+#             */
-/*   Updated: 2020/02/19 00:40:43 by aihya            ###   ########.fr       */
+/*   Updated: 2020/02/21 19:55:33 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char		**aliases_names(int reset);
 size_t		aliases_counter(int action);
 char		*is_alias(char *name);
 int			save_alias(char *name, char *value);
-void		print_alias(char *name);
+void		print_alias(char *name, int prefix);
 void		print_all_alias(void);
 
 // Unalias functions

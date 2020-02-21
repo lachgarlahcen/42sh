@@ -6,7 +6,7 @@
 /*   By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/17 15:34:19 by aihya             #+#    #+#             */
-/*   Updated: 2020/02/18 18:23:18 by aihya            ###   ########.fr       */
+/*   Updated: 2020/02/21 20:18:07 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void			remove_alias(char *name)
 	pop_htnode(aliases(FALSE), name);
 	if (aliases_counter(0) > 0)
 		aliases_counter(DEC);
+	aliases_names(TRUE);
 }
 
 void			remove_aliases(void)
@@ -28,6 +29,7 @@ void			remove_aliases(void)
 	index = 0;
 	while (names[index])
 	{
+		printf("REMOVING (alias): %s\n", names[index]);
 		remove_alias(names[index]);
 		index++;
 	}
