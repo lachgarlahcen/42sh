@@ -6,7 +6,7 @@
 /*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 14:46:01 by llachgar          #+#    #+#             */
-/*   Updated: 2020/02/05 03:54:09 by llachgar         ###   ########.fr       */
+/*   Updated: 2020/02/21 19:01:11 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,8 @@
 #define HISTORY_FILE_PATH "/tmp/.21sh_history"
 #define O_FILL (O_CREAT | O_WRONLY | O_TRUNC)
 #define ABS(x) ((x) < 0 ? -(x) : (x))
+
+int	g_h;
 
 typedef struct s_cmd
 {
