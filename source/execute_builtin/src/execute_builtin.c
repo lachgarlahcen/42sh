@@ -6,7 +6,7 @@
 /*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 04:36:08 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/20 11:16:57 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/21 15:45:40 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int		is_builtin(char *exec)
 	else if (!ft_strcmp("jobs", exec))
 		return (1);
 	else if (!ft_strcmp("hash", exec))
-		return (0);
+		return (1);
 	else if (!ft_strcmp("unset", exec))
 		return (1);
 	else if (!ft_strcmp("exit", exec))
