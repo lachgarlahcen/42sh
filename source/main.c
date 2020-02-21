@@ -6,7 +6,7 @@
 /*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/01 20:14:50 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/20 04:24:48 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/21 19:40:21 by llachgar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ int main(int ac, char **av, char **env)
 	aliases_names(1);
 	init_history();
 	g_jobs.f_job = 0;
+	g_h = 1;
 	init_variables(env);
 	while ((line = read_line("42sh $> ")))
 	{

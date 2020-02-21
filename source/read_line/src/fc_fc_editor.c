@@ -6,7 +6,7 @@
 /*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 04:19:31 by llachgar          #+#    #+#             */
-/*   Updated: 2020/02/21 03:20:30 by llachgar         ###   ########.fr       */
+/*   Updated: 2020/02/21 19:52:15 by llachgar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void ft_fc_lanch_editor(t_fc *fc)
 
     editor = ft_strjoin_f(ft_strjoin(fc->editor, " "), FC_TMP_FILE, 1, 0);
     // execute the editor in pipline
+    g_h = 0;
     line_editing(editor, 0);
     ft_strdel(&editor);
 }
@@ -64,6 +65,7 @@ int ft_fc_execute_file(t_fc *fc)
     (void )fc;
     if (!(fd = open(FC_TMP_FILE, O_RDONLY)))
     {
+        g_h = 0;
         ft_putendl_fd("42sh: fc: cannot open temp file", 2);
         return (0);
     }
@@ -71,13 +73,15 @@ int ft_fc_execute_file(t_fc *fc)
     while (get_next_line(fd, &line) > 0)
     {
         if (*line)
-            ft_printf("--%s--\n", line);
-        // execute the cm in pipline
-        //line_editing(line, 0);
+        {
+            ft_putendl_fd(line, 2);
+            line_editing(line, 0);
+        }
         ft_strdel(&line);
         line = NULL;
     }
     close(fd);
+    g_h = 0;
     return (1);
 }
 
