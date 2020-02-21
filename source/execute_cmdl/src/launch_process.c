@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   launch_process.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 12:16:28 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/20 12:16:34 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/21 09:23:37 by nsaber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,10 @@ int			execute_pipes_line(t_proc *p, int bg)
 	}
 	j = add_jobs(p, pgid, bg);
 	if (bg)
+	{
+		job_sign(j); // added by noureddine
 		put_job_in_background(j, 0);
+	}
 	else
 		put_job_in_foreground(j, 0);
 	return (0);
