@@ -6,7 +6,7 @@
 /*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 02:44:32 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/13 23:19:57 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/20 10:04:43 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int		is_inhibitors(char c);
 int		used_variable(char c);
 int		free_return(char *str, int ret);
 int		end_of_inhibitors(char *str, char c, int be);
-int		ft_perror(char *str, char c, char *err, int f);
+int		ft_perror_line(char *str, char c, char *err, int f);
 char	*strjoin_free(char *s1, char *s2, int f1, int f2);
 
 int		syntax(char *str);

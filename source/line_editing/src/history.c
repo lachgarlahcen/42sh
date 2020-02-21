@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 04:55:08 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/13 23:54:06 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/20 10:05:23 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int		check_history(char **str, int be, int q)
 	if (!(tp = ft_strsub(*str, be, i - be)))
 		return (0);
 	if (!(i > be) || !(tmp = search_history(tp)))
-		return (ft_perror(tp, '!', ": event not found.", 1));
+		return (ft_perror_line(tp, '!', ": event not found.", 1));
 	ft_memdel((void **)&tp);
 	if ((tp = ft_strsub(*str, 0, be - 1)))
 		tmp = strjoin_free(tp, tmp, 1, 1);

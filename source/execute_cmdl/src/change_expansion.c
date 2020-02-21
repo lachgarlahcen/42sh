@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 05:15:41 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/18 05:54:20 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/20 11:13:00 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,15 +78,15 @@ char	*change_string(char *str, int be)
 	tp = ft_strsub(str, be, i - be);
 	if (!ft_strcmp("?", tp))
 		tmp = ft_itoa(exit_status(0, 0));
-	if (!ft_strcmp("&", tp))
-		tmp = ft_itoa(exit_status(0, 0));
+	else if (!ft_strcmp("$", tp))
+		tmp = ft_itoa(getpid());
 	else
 		tmp = get_variable(tp);
 	ft_memdel((void **)&tp);
-	tp = ft_strsub(str, 0, be - 1);
+	tp = ft_strsub(str, 0, be - 2);
 	if (tmp)
 		tp = strjoin_free(tp, tmp, 1, 1);
-	tmp = ft_strsub(str, i, ft_strlen(str) - i);
+	tmp = ft_strsub(str, i + 1, ft_strlen(str) - i - 1);
 	tp = strjoin_free(tp, tmp, 1, 1);
 	if (!*tp)
 		ft_memdel((void **)&tp);
@@ -97,7 +97,6 @@ char	*change_dollar(char *str, int id)
 {
 	int		i;
 	int		be;
-	//	char	*tp;
 	char	*tmp;
 
 	i = 0;
@@ -130,8 +129,8 @@ int		change_expansion(t_tok *t)
 		if (t->token && t->token[0] == '~')
 			if (!(t->token = change_tilda(t->token)))
 				return (1);
-//		if (check_dollar(t->token))
-//			t->token = change_dollar(t->token, t->id);
+		if (check_dollar(t->token))
+			t->token = change_dollar(t->token, t->id);
 		t = t->next;
 	}
 	return (0);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   launch_process.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iel-bouh <iel-bouh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/18 04:57:40 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/19 04:16:56 by hastid           ###   ########.fr       */
+/*   Created: 2020/02/20 12:16:28 by hastid            #+#    #+#             */
+/*   Updated: 2020/02/20 12:16:34 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,9 @@ char		*search_executable(char *cmdl)
 {
 	char	*excu;
 
-	excu = ft_strjoin("/bin/", cmdl);
+	cmdl = delet_quotes(cmdl, 0);
+	excu = is_binary(cmdl);
+/*	excu = ft_strjoin("/bin/", cmdl);
 	if (!access(excu, F_OK))
 		return (excu);
 	ft_memdel((void **)&excu);
@@ -31,6 +33,11 @@ char		*search_executable(char *cmdl)
 	if (!access(excu, F_OK))
 		return (excu);
 	ft_memdel((void **)&excu);
+*/
+	if (excu)
+		return (excu);
+	else if ((excu = get_bin_path(cmdl)))
+		return (excu);
 	ft_putstr_fd(cmdl, 2);
 	ft_putendl_fd(" :command not found", 2);
 	return (0);
@@ -47,8 +54,6 @@ int			execute_args(t_tok *as, char **args)
 		set_variable(as->token, 1, 1);
 		as = as->next;
 	}
-	if (change_expansion(as))
-		exit (1);
 	if (is_builtin(args[0]))
 		exit(execute_builtin(args));
 	if (!(exec = search_executable(as->token)))
@@ -99,6 +104,8 @@ int			execute_pipe(t_proc *p, int *in, int *pgid)
 	}
 	if ((p->pid = fork()) == -1)
 		return (ft_perror_pipe("PIPE ERROR !!", 1));
+	if (change_expansion(p->as))
+		return (exit_status(1, 0));
 	args = get_args(p->as);
 	if (p->pid == 0)
 	{

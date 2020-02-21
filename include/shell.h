@@ -6,13 +6,14 @@
 /*   By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 04:13:05 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/14 23:38:45 by nsaber           ###   ########.fr       */
+/*   Updated: 2020/02/20 04:15:01 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SHELL_H
 # define SHELL_H
 
+# include "sh.h"
 # include "libft.h"
 # include "read_line.h"
 # include "job_control.h"

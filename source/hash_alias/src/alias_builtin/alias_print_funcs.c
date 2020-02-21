@@ -6,7 +6,7 @@
 /*   By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/17 19:38:15 by aihya             #+#    #+#             */
-/*   Updated: 2020/02/20 01:41:13 by aihya            ###   ########.fr       */
+/*   Updated: 2020/02/20 04:27:36 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void			print_all_alias(void)
 
 	names = binaries_names(FALSE);
 	index = 0;
-	while (names[index])
+	while (names && names[index])
 	{
 		print_alias(names[index]);
 		index++;

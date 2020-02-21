@@ -6,7 +6,7 @@
 /*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/01 20:14:50 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/18 06:45:57 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/20 04:24:48 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,10 @@ int main(int ac, char **av, char **env)
 	(void)ac;
 	(void)av;
 	stat = 0;
+	aliases(1);
 	signals(1);
+	binaries(1);
+	aliases_names(1);
 	init_history();
 	g_jobs.f_job = 0;
 	init_variables(env);

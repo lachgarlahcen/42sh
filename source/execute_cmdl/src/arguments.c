@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 04:58:13 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/19 01:17:24 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/20 11:23:04 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,11 @@ int			check_all_arguments(t_proc *p)
 	return (0);
 }
 
-static char	*delet_quotes(char *str)
+char		*delet_quotes(char *str, int free)
 {
 	int		i;
 	int		j;
+	int		be;
 	char	buf[READ_SIZE];
 
 	i = 0;
@@ -65,11 +66,24 @@ static char	*delet_quotes(char *str)
 	ft_bzero(buf, READ_SIZE);
 	while (str[i] && i < READ_SIZE)
 	{
-		if (str[i] == '\'' || str[i] == '\"' || str[i] == '\\')
+		if (str[i] == '\\')
 			i++;
+		if (str[i] == '\'' || str[i] == '\"')
+		{
+			be = i++;
+			while (str[i] && str[i] != str[be])
+			{
+				if (str[i] == '\\' && str[be] == '\"')
+					i++;
+				buf[j++] = str[i++];
+			}
+			i++;
+		}
 		buf[j++] = str[i];
-		i++;
+		if (str[i])
+			i++;
 	}
+	free = 0;
 	return (ft_strdup(buf));
 }
 
@@ -82,7 +96,6 @@ char		**get_args(t_tok *as)
 	l = 0;
 	if (!(tmp = as))
 		return (0);
-	change_expansion(as);
 	while (tmp)
 	{
 		if (!tmp->id && tmp->token)
@@ -96,7 +109,7 @@ char		**get_args(t_tok *as)
 	while (tmp)
 	{
 		if (!tmp->id && tmp->token)
-			args[l++] = delet_quotes(tmp->token);
+			args[l++] = delet_quotes(tmp->token, 0);
 		tmp = tmp->next;
 	}
 	args[l] = 0;

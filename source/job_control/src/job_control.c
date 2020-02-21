@@ -6,7 +6,7 @@
 /*   By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 22:18:53 by llachgar          #+#    #+#             */
-/*   Updated: 2020/02/19 05:50:01 by nsaber           ###   ########.fr       */
+/*   Updated: 2020/02/20 12:11:43 by nsaber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,11 +78,6 @@ void execute_jobs(char **args)
   int i;
   static char option = 0; // for recursive to conserve value
 
-  if (!(args))
-  {
-    printf("arrived to end\n\n");
-    return;
-  }
   i = 0;
   j = g_jobs.f_job;
   if (args[1] && args[1][0] == '-')
@@ -136,10 +131,45 @@ void execute_jobs(char **args)
 
 void execute_fg(char **args)
 {
-  (void)args;
+    t_job   *j;
+    int percent;
+
+  j = g_jobs.f_job;
+  if (args[1] && ft_isdigits(args[1])) // fg [job_id]
+  {
+    percent = args[1][0] == '%' ? 1 : 0;
+    while(j)
+    {
+      if (j->id == ft_atoi(args[1]+ percent))
+        break;
+      j = j->next;
+      if (!j)
+      {
+        printf("42sh : fg: %s no such job\n",args[1]);
+        return ;
+      }
+    }
+  }
+  else if (args[1]) // error msgs
+  {
+    printf("42sh : fg: %s no such job\n",args[1]);
+    return ;
+  }
+  else // fg to to  +
+  {
+    while(j)
+    {
+      if (j->sign == '+')
+        break;
+      if (!j->next) // if for any case '+' not found , we make fg
+      break;
+      j = j->next;
+    }
+  }
+  job_sign(j);
   if (getpid() != g_shell_pgid)
     ft_printf("fg: no job control\n");
-  put_job_in_foreground(g_jobs.f_job, 1);
+  put_job_in_foreground(j, 1);  
 }
 
 void execute_bg(char **args)
@@ -150,7 +180,7 @@ void execute_bg(char **args)
 
 void put_job_in_foreground(t_job *j, int cont)
 {
-  /* Put the job into the foreground.  */
+  /* Put the job into the foreground.  */ // give permission to write on terminal
   tcsetpgrp(STDIN_FILENO, j->pgid);
   /* Send the job a continue signal, if necessary.  */
   if (cont)
@@ -168,12 +198,15 @@ void put_job_in_foreground(t_job *j, int cont)
   */
   tcsetpgrp(STDIN_FILENO, g_shell_pgid);
   tcsetattr(STDIN_FILENO, TCSADRAIN, &g_shell_tmodes);
+  
+  //-*-*-*-*->ignored by Noureddine for test <-*-*-*-*-
   if (job_is_completed(j))
   {
     delete_job(j->pgid);
   }
   else
     j->id = g_jobs.id++;
+  
 }
 /*
 ** this function is basctly puts a jib in the background

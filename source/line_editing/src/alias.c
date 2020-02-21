@@ -6,20 +6,11 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 00:09:47 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/14 00:40:37 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/20 04:20:01 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "line_editing.h"
-
-char	*is_alias(char *str)
-{
-	if (!ft_strcmp(str, "la"))
-		return (ft_strdup("ls la && la"));
-	if (!ft_strcmp(str, "bb"))
-		return (ft_strdup("ls asdasd &&"));
-	return (0);
-}
 
 int		check_change(char *str, int al)
 {
