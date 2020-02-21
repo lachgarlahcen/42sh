@@ -6,7 +6,7 @@
 /*   By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 12:41:07 by aihya             #+#    #+#             */
-/*   Updated: 2020/02/18 13:10:04 by aihya            ###   ########.fr       */
+/*   Updated: 2020/02/21 16:24:17 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ static void	set_arg(char *arg, int *status)
 	char		*bin_path;
 
 	isset = 0;
-	bin_path = get_bin_path(arg);
-	if (bin_path == NULL)
+
+	if (ft_strlen(arg) == 0 || (bin_path = get_bin_path(arg)) == NULL)
 	{
 		*status = err_msg("hash", arg, "Not found");
 		return ;
