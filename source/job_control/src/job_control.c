@@ -6,7 +6,7 @@
 /*   By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 22:18:53 by llachgar          #+#    #+#             */
-/*   Updated: 2020/02/21 17:01:48 by nsaber           ###   ########.fr       */
+/*   Updated: 2020/02/21 18:53:12 by nsaber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -279,6 +279,8 @@ void put_job_in_foreground(t_job *j, int cont)
   else
   {
 		  printf("job_sign called bg not killed\n");
+      if (j->id == 0)
+        j->id = g_jobs.id++;
       job_sign(j); // only enter when job is not killed [fg]
       printf("jobs sign \n");
   }
