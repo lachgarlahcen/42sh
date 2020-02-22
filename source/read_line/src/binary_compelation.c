@@ -6,7 +6,7 @@
 /*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/21 06:21:33 by llachgar          #+#    #+#             */
-/*   Updated: 2020/02/05 04:01:22 by llachgar         ###   ########.fr       */
+/*   Updated: 2020/02/22 15:41:09 by llachgar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,33 @@ static int fill_matches(char *folder, char *match, t_data **matches)
     return (count);
 }
 
+int fill_aliases(char *match, t_data **matches)
+{
+    char **tab;
+    int res;
+    int i;
+    t_data *new_match;
+
+    tab = aliases_names(0);
+    res = 0;
+    if (!tab)
+        return (res);
+    i = 0;
+    while (tab[i])
+    {
+        if (!ft_memcmp(match, tab[i], ft_strlen(match)))
+            {
+                new_match = new_node(ft_strdup(tab[i]));
+                sortedisert(matches, new_match);
+                res++;
+            }
+        i++;
+    }
+    return (res);
+}
 void binary_compelation(char *match, t_cmd *l)
 {
-    char *path = "/Users/llachgar/.brew/bin:/Users/llachgar/goinfre/flutter/bin:/Users/llachgar/Library/Python/2.7/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/munki:/Users/llachgar/.brew/bin:/Users/llachgar/goinfre/flutter/bin:/Users/llachgar/Library/Python/2.7/bin";
+    char *path;
     t_data *matches;
     char **tab;
     int count;
@@ -72,11 +96,17 @@ void binary_compelation(char *match, t_cmd *l)
 
     count = 0;
     i = -1;
+    path = get_variable("PATH");
     matches = NULL;
-    tab = ft_strsplit(path, ':');
-    while (tab[++i])
-        count += fill_matches(tab[i], match, &matches);
+    if (path)
+    {
+        tab = ft_strsplit(path, ':');
+        while (tab[++i])
+            count += fill_matches(tab[i], match, &matches);
+        ft_strdel(&path);
+        free_2d_str(tab);
+    }
+    count += fill_aliases(match, &matches);
     complete_or_print(matches, l, count, match);
-    free_2d_str(tab);
     free_data(&matches);
 }
