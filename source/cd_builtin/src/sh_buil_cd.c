@@ -6,7 +6,7 @@
 /*   By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 16:29:59 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/22 22:35:40 by nsaber           ###   ########.fr       */
+/*   Updated: 2020/02/22 23:10:57 by nsaber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,19 +82,26 @@ char		*read_link(char *tmp)
 	return(mybuf);
 }
 
-void		built_cd_p(char **args,char *dir, char *tmp)
+int		built_cd_p(char **args,char *dir, char *tmp)
 {
 	struct stat buf;
 	char *mybuf;
 
 	if (args[2] && lstat(args[2], &buf) == -1)
-		return ;
+	{
+		if (!access(dir, F_OK) && access(dir,X_OK))
+			return (ft_perror_cd(dir, ": Permission Denied", 1));
+		else if (!access(dir, F_OK))
+			return (ft_perror_cd(dir, ": Not a directory", 1));
+		else
+			return (ft_perror_cd(dir, ": No such file or directory", 1));
+	}
 	if ((buf.st_mode & S_IFMT) == S_IFLNK && isdir(args[2]))
 	{
 		if (args[2][0] != '/')
 		{
 			if (!(dir = get_variable("PWD")))
-				return ((void)ft_perror_cd("env", ": pwd not exists", 1));
+				return (ft_perror_cd("env", ": pwd not exists", 1));
 			dir = strjoin_free(dir,"/", 1, 0);
 			tmp = ft_strjoin(dir, args[2]);
 			free(dir);
@@ -109,6 +116,7 @@ void		built_cd_p(char **args,char *dir, char *tmp)
 	}
 	else
 		built_cd(args+1);
+	return (0);
 }
 
 int			arraylen(char **args)
@@ -132,7 +140,7 @@ int			built_cd(char **args)
 	len = arraylen(args);
 	// printf("len : %d \n",len);
 	if (args[1] && ft_strequ(args[1], "-P")) // noureddine
-		built_cd_p(args,NULL,NULL);
+		return (built_cd_p(args,NULL,NULL));
 	else if (args[1] && ft_strequ(args[1], "-L")) 
 		built_cd(args+1);
 	else if (args[1])
@@ -147,18 +155,18 @@ int			built_cd(char **args)
 		if (isdir(dir))
 			change_dir(dir);
 		else if (!access(dir, F_OK) && access(dir,X_OK))
-			ft_perror_cd(dir, ": Permission Denied", 1);
+			return (ft_perror_cd(dir, ": Permission Denied", 1));
 		else if (!access(dir, F_OK))
-			ft_perror_cd(dir, ": Not a directory", 1);
+			return (ft_perror_cd(dir, ": Not a directory", 1));
 		else
-			ft_perror_cd(dir, ": No such file or directory", 1);
+			return (ft_perror_cd(dir, ": No such file or directory", 1));
 	}
 	else if ((dir = get_variable("HOME")) && !access(dir, F_OK) && !access(dir, X_OK))
 	{
 		change_dir(dir);
 	}
 	else
-		ft_perror_cd("env", ": Home not exists", 1);
+		return (ft_perror_cd("env", ": Home not exists", 1));
 	return (0);
 }
 
