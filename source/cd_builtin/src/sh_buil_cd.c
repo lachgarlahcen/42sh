@@ -6,7 +6,7 @@
 /*   By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 16:29:59 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/17 03:31:53 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/22 22:35:40 by nsaber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,8 +153,10 @@ int			built_cd(char **args)
 		else
 			ft_perror_cd(dir, ": No such file or directory", 1);
 	}
-	else if ((dir = get_variable("HOME")))
+	else if ((dir = get_variable("HOME")) && !access(dir, F_OK) && !access(dir, X_OK))
+	{
 		change_dir(dir);
+	}
 	else
 		ft_perror_cd("env", ": Home not exists", 1);
 	return (0);

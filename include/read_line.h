@@ -6,7 +6,7 @@
 /*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 14:46:01 by llachgar          #+#    #+#             */
-/*   Updated: 2020/02/21 20:59:54 by llachgar         ###   ########.fr       */
+/*   Updated: 2020/02/22 15:53:54 by llachgar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,6 +222,7 @@ void init_cur(t_cmd *l);
 void completion(t_cmd *l);
 void path_completion(char *patt, t_cmd *l);
 void binary_compelation(char *match, t_cmd *l);
+void vars_compelation(char *match, t_cmd *l);
 char *ft_strjoin_f(char *s1, char *s2, int a, int b);
 
 /*
