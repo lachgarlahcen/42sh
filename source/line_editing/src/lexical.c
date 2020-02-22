@@ -6,11 +6,18 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 04:56:33 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/13 23:32:25 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/22 22:23:11 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "line_editing.h"
+
+int		is_inhibitors(char c)
+{
+	if (c == '\'' || c == '\"' || c == '\\')
+		return (1);
+	return (0);
+}
 
 int		line_lexical(char **str, char **alias)
 {

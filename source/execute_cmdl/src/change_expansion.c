@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 05:15:41 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/20 11:13:00 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/22 21:49:47 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,16 @@ int		check_dollar(char *str)
 			be = i++;
 			while (str[i] && str[i] != str[be])
 			{
-				if (str[i] == '$' && str[i + 1] == '{' && str[be] == '\"')
+				if (str[i] == '\\')
+					i++;
+				else if (str[i] == '$' && str[i + 1] == '{' && str[be] == '\"')
 					return (1);
 				i++;
 			}
 		}
-		if (str[i] == '$' && str[i + 1] == '{')
+		if (str[i] == '\\')
+			i++;
+		else if (str[i] == '$' && str[i + 1] == '{')
 			return (1);
 		i++;
 	}
@@ -108,12 +112,16 @@ char	*change_dollar(char *str, int id)
 			be = i++;
 			while (str[i] && str[i] != str[be])
 			{
-				if (str[i] == '$' && str[i + 1] == '{' && str[be] == '\"')
+				if (str[i] == '\\' && str[be] == '\"')
+					i++;
+				else if (str[i] == '$' && str[i + 1] == '{' && str[be] == '\"')
 					return (tmp = change_string(str, i + 2));
 				i++;
 			}
 		}
-		if (str[i] == '$'  && str[i + 1] == '{')
+		if (str[i] == '\\')
+					i++;
+		else if (str[i] == '$'  && str[i + 1] == '{')
 			tmp = change_string(str, i + 2);
 		i++;
 	}

@@ -6,13 +6,13 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 00:09:47 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/20 04:20:01 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/22 22:20:31 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "line_editing.h"
 
-int		check_change(char *str, int al)
+static int	check_change(char *str, int al)
 {
 	int	i;
 	int	check;
@@ -34,7 +34,7 @@ int		check_change(char *str, int al)
 	return (check);
 }
 
-int		check_is_alias(int be, int *end, char **str)
+static int	check_is_alias(int be, int *end, char **str)
 {
 	char	*tp;
 	char	*tmp;
@@ -54,7 +54,7 @@ int		check_is_alias(int be, int *end, char **str)
 	return (0);
 }
 
-char	*check_alias(char *line)
+char		*check_alias(char *line)
 {
 	int		i;
 	int		be;

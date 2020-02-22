@@ -6,13 +6,14 @@
 #    By: hastid <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/05 03:14:51 by hastid            #+#    #+#              #
-#    Updated: 2020/02/13 04:15:34 by hastid           ###   ########.fr        #
+#    Updated: 2020/02/22 22:43:27 by hastid           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = intern_variables.a
 
-SRC_NAME =	environ.c \
+SRC_NAME =	export.c \
+			environ.c \
 			variables_cmdl.c \
 			variables_list.c \
 			intern_variables.c \
