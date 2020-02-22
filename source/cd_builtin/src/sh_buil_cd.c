@@ -6,12 +6,11 @@
 /*   By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 16:29:59 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/22 23:56:22 by nsaber           ###   ########.fr       */
+/*   Updated: 2020/02/23 00:21:06 by nsaber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cd_builtin.h"
-#include <sys/stat.h>
 
 int			ft_perror_cd(char *s, char *str, int ret)
 {
@@ -81,9 +80,9 @@ char		*read_link(char *tmp)
 	return (mybuf);
 }
 
-int		cd_link_dir(char *dir, char *mybuf, char **args, struct stat *buf)
+int			cd_link_dir(char *dir, char *mybuf, char **args, struct stat *buf)
 {
-	char *tmp;
+	char	*tmp;
 
 	if (args[2][0] != '/')
 	{
@@ -103,9 +102,9 @@ int		cd_link_dir(char *dir, char *mybuf, char **args, struct stat *buf)
 	return (0);
 }
 
-int		built_cd_p(char **args, char *dir)
+int			built_cd_p(char **args, char *dir)
 {
-	struct stat			buf;
+	struct stat	buf;
 
 	if (args[2] && lstat(args[2], &buf) == -1)
 	{
@@ -161,7 +160,7 @@ int			built_cd(char **args)
 	return (0);
 }
 
-int		isdir(char *path)
+int			isdir(char *path)
 {
 	DIR			*dir;
 	struct stat	buf;
