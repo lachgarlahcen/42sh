@@ -6,7 +6,7 @@
 /*   By: iel-bouh <iel-bouh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 03:59:51 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/23 00:30:14 by iel-bouh         ###   ########.fr       */
+/*   Updated: 2020/02/23 00:49:40 by iel-bouh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ char	*ft_get_redict_by_id(t_tok *tok, int i)
 	{
 		if ((tmp)->id == i)
 			return ((tmp)->token);
+		if ((tmp)->id == 3)
+			break;
 		(tmp) = (tmp)->next;
 	}
 	return (NULL);
@@ -139,6 +141,11 @@ int		ft_check_fd(char *str, t_tok *p)
 		return (-1);
 	}
 	if (ft_strequ(ft_get_redict_by_id(p, 2), ">&") && write(fd, 0, 0) == -1)
+	{
+		ft_putendl_fd("42sh: bad file descriptor", 2);
+		return (-1);
+	}
+	if (ft_strequ(ft_get_redict_by_id(p, 2), "<&") && read(fd, 0, 0) == -1)
 	{
 		ft_putendl_fd("42sh: bad file descriptor", 2);
 		return (-1);
