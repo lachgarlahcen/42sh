@@ -6,7 +6,7 @@
 /*   By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 00:42:10 by llachgar          #+#    #+#             */
-/*   Updated: 2020/02/22 22:23:54 by nsaber           ###   ########.fr       */
+/*   Updated: 2020/02/23 00:02:02 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,12 +97,12 @@ void  wait_for_job (t_job *j)
 	p = j->p;
 	while (p->next)
 		p = p->next;
-	if (WIFEXITED(j->status))
-		exit_status(WEXITSTATUS(j->status), 1);
+	if (WIFEXITED(p->stat))
+		exit_status(WEXITSTATUS(p->stat), 1);
 	else if (WIFSIGNALED(p->stat))
-		exit_status(WTERMSIG(j->status) + 128, 1);
+		exit_status(WTERMSIG(p->stat) + 128, 1);
 	else if (WIFSTOPPED(j->status))
-		exit_status(WSTOPSIG(j->status) + 128, 1);
+		exit_status(WSTOPSIG(p->stat) + 128, 1);
 }
 
 
