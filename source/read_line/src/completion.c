@@ -6,7 +6,7 @@
 /*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 04:47:14 by llachgar          #+#    #+#             */
-/*   Updated: 2020/02/05 03:42:49 by llachgar         ###   ########.fr       */
+/*   Updated: 2020/02/22 15:16:38 by llachgar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ void completion(t_cmd *l)
     if (context == PATH)
         path_completion(last_word, l);
     /*else if (context == VARS)
-       // vars_compelation();*/
+       vars_compelation();*/
     else
        binary_compelation(last_word, l);
     free(last_word);

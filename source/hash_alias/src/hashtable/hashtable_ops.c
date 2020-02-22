@@ -6,13 +6,13 @@
 /*   By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/17 19:07:44 by aihya             #+#    #+#             */
-/*   Updated: 2020/02/17 21:59:14 by aihya            ###   ########.fr       */
+/*   Updated: 2020/02/22 15:21:26 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh.h"
 
-int			push_htnode(t_htnode **hashtable, t_htnode **new)
+void		push_htnode(t_htnode **hashtable, t_htnode **new)
 {
 	t_htnode	*node;
 	int			index;
@@ -21,13 +21,6 @@ int			push_htnode(t_htnode **hashtable, t_htnode **new)
 	node = hashtable[index];
 	while (node)
 	{
-		if (ft_strequ(node->name, (*new)->name))
-		{
-			ft_strdel(&(node->value));
-			node->value = ft_strdup((*new)->value);
-			free_htnode(new);
-			return (0);
-		}
 		if (node->next == NULL)
 			break ;
 		node = node->next;
@@ -36,7 +29,6 @@ int			push_htnode(t_htnode **hashtable, t_htnode **new)
 		hashtable[index] = *new;
 	else
 		node->next = *new;
-	return (1);
 }
 
 void		pop_htnode(t_htnode **hashtable, char *name)
