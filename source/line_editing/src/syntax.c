@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 00:10:12 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/22 13:42:43 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/22 13:58:07 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,6 @@ int		history_expa_syntax(char *str)
 int		check_dollar_var(char *str, int be, int end)
 {
 	int	i;
-	int	
 
 	i = be;
 	if ((end - be) == 1 && (str[be] == '$' || str[be] == '?'))
