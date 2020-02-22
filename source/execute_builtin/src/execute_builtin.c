@@ -6,7 +6,7 @@
 /*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 04:36:08 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/23 00:27:55 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/23 00:31:19 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int		execute_builtin(char **args)
 	/*
 	   */
 	if (!ft_strcmp("echo", *args))
-		execute_echo(args);
+		return (execute_echo(args));
 	else if (!ft_strcmp("type", *args))
 		return (type(args));
 	else if (!ft_strcmp("hash", *args))
