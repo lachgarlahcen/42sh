@@ -6,7 +6,7 @@
 /*   By: iel-bouh <iel-bouh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 03:59:51 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/23 00:02:25 by iel-bouh         ###   ########.fr       */
+/*   Updated: 2020/02/23 00:30:14 by iel-bouh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,11 +155,8 @@ int		ft_ampersand(t_tok *p)
 							&& ft_get_redict_by_id(p, 3))
 	{
 		if (ft_strequ(ft_get_redict_by_id(p, 2), ">&") &&
-				ft_strequ(ft_get_redict_by_id(p, 3), "-"))
-		{
-			ft_putendl("sdhjshd");
+				(ft_strequ(ft_get_redict_by_id(p, 3), "-") || !ft_all_digits(ft_get_redict_by_id(p, 3))))
 			return (0);
-		}
 		if ((fd = ft_get_file_fd(ft_get_redict_by_id(p, 3), 0)) < 0)
 			return (-1);
 		if (dup2(fd, 1) == -1)
@@ -285,10 +282,7 @@ int		ft_close_fd(t_tok *p)
 					ft_all_digits(ft_get_redict_by_id(p, 1)) == 0)
 				close(ft_atoi(ft_get_redict_by_id(p, 1)));
 			else if (!ft_get_redict_by_id(p, 1))
-			{
-				ft_putendl("ikhan");
 				close(1);
-			}
 		}
 	}
 	return (0);
@@ -334,9 +328,9 @@ int		ft_redirection(t_proc *p)
 	tmp = p->red;
 	while (tmp)
 	{
-			ft_putendl(ft_get_redict_by_id(tmp, 1));
-			ft_putendl(ft_get_redict_by_id(tmp, 2));
-			ft_putendl(ft_get_redict_by_id(tmp, 3));
+			// ft_putendl(ft_get_redict_by_id(tmp, 1));
+			// ft_putendl(ft_get_redict_by_id(tmp, 2));
+			// ft_putendl(ft_get_redict_by_id(tmp, 3));
 		if (ft_get_redict_by_id(tmp, 2))
 		{
 			if (ft_out_redirection(tmp) == -1)
