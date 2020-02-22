@@ -6,7 +6,7 @@
 /*   By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 12:16:28 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/22 15:28:56 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/22 23:49:43 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,15 +48,15 @@ char		*search_executable(char *cmdl)
 	if (!is_dir(cmdl))
 	{
 		excu = is_binary(cmdl);
-	/*		excu = ft_strjoin("/bin/", cmdl);
-		if (!access(excu, F_OK))
-			return (excu);
-		ft_memdel((void **)&excu);
-		excu = ft_strjoin("/usr/bin/", cmdl);
-		if (!access(excu, F_OK))
-			return (excu);
-		ft_memdel((void **)&excu);
-	*/
+		/*		excu = ft_strjoin("/bin/", cmdl);
+				if (!access(excu, F_OK))
+				return (excu);
+				ft_memdel((void **)&excu);
+				excu = ft_strjoin("/usr/bin/", cmdl);
+				if (!access(excu, F_OK))
+				return (excu);
+				ft_memdel((void **)&excu);
+				*/
 		if (excu)
 			return (excu);
 		else if ((excu = get_bin_path(cmdl)))
@@ -129,7 +129,7 @@ int			execute_pipe(t_proc *p, int *in, int *pgid)
 	}
 	if ((p->pid = fork()) == -1)
 		return (ft_perror_pipe("PIPE ERROR !!", 1));
-	if (change_expansion(p->as))
+	if (change_expansion(p->as) || change_expansion(p->red))
 		return (exit_status(1, 0));
 	args = get_args(p->as);
 	if (p->pid == 0)
@@ -184,7 +184,8 @@ int		execute_without_fork(t_proc *p, int iv)
 	char	**args;
 
 	if (p->red)
-		ft_redirection(p);
+		if (change_expansion(p->red) || ft_redirection(p))
+			return (exit_status(1, 1));
 	if (!(as = p->as))
 		return (0);
 	if (iv)
@@ -205,6 +206,8 @@ int		execute_without_fork(t_proc *p, int iv)
 		return (exit_status(1, 1));
 	args = get_args(as);
 	exit_status(execute_builtin(args), 1);
+	if (init_fd(0))
+		exit(1);
 	free_tab(args);
 	return (0);
 }

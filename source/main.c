@@ -6,7 +6,7 @@
 /*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/01 20:14:50 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/22 13:32:10 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/22 23:51:30 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,30 +40,34 @@ int	exit_status(int status, int check)
 	return (e_status);
 }
 
-int	init_fd(void)
+int	init_fd(int	my_fd)
 {
-	int	fd;
+	static int	fd;
 
-	if ((fd = open("/dev/tty", O_RDWR) == -1))
-		return (1);
+	if (my_fd)
+		fd = my_fd;
+	if (!isatty(fd))
+		fd = open("/dev/tty", O_RDWR);
 	if (dup2(fd, 0) == -1)
 		return (1);
 	if (dup2(fd, 1) == -1)
 		return (1);
 	if (dup2(fd, 2) == -1)
 		return (1);
-	close(fd);
 	return (0);
 }
 
 int main(int ac, char **av, char **env)
 {
+	int	fd;
 	int stat;
 	char *line;
 	if (init_shell())
 		return (1);
 	(void)ac;
 	(void)av;
+	fd = open("/dev/tty", O_RDWR);
+	init_fd(fd);
 	stat = 0;
 	aliases(1);
 	signals(1);
