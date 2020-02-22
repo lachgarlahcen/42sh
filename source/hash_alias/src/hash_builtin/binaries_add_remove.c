@@ -6,7 +6,7 @@
 /*   By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/16 19:26:51 by aihya             #+#    #+#             */
-/*   Updated: 2020/02/19 00:41:14 by aihya            ###   ########.fr       */
+/*   Updated: 2020/02/22 14:18:33 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,23 @@ int		save_binary(char *bin_name, char *bin_value)
 {
 	t_htnode	*bin;
 
-	if (bin_name == NULL || bin_value == NULL)
+	if (bin_name == NULL)
 		return (0);
-	bin = new_htnode(bin_name, bin_value);
+	if ((bin = find_htnode(aliases(FALSE), bin_name)) == NULL)
+	{
+		if ((bin = new_htnode(bin_name, bin_value)) == NULL)
+			return (0);
+		push_htnode(binaries(FALSE), &bin);
+		binaries_counter(INC);
+	}
+	else
+	{
+		ft_strdel(&(bin->value));
+		bin->value = ft_strdup(bin_value);
+	}
+	binaries_names(TRUE);
+	return (1);
+/*	bin = new_htnode(bin_name, bin_value);
 	if (bin == NULL)
 		return (0);
 	if (push_htnode(binaries(FALSE), &bin))
@@ -26,7 +40,7 @@ int		save_binary(char *bin_name, char *bin_value)
 		binaries_counter(INC);
 		binaries_names(TRUE);
 	}
-	return (1);
+	return (1);*/
 }
 
 void	remove_binary(char *name)
