@@ -6,11 +6,12 @@
 /*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 04:47:14 by llachgar          #+#    #+#             */
-/*   Updated: 2020/02/22 15:16:38 by llachgar         ###   ########.fr       */
+/*   Updated: 2020/02/22 21:47:08 by llachgar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "read_line.h"
+
 #define CHECK_PATH_CONTEXT(patt) (ft_strrchr(patt, '/') || !ft_strcmp(patt, "..") || !ft_strcmp(patt, "."))
 #define IS_BEGIN_CMD(c) (c == ';' || c == '|' || c == '&')
 enum context
@@ -120,9 +121,9 @@ void completion(t_cmd *l)
     free(pattern);
     if (context == PATH)
         path_completion(last_word, l);
-    /*else if (context == VARS)
-       vars_compelation();*/
+    else if (context == VARS)
+       vars_compelation(last_word, l);
     else
        binary_compelation(last_word, l);
-    free(last_word);
+    ft_strdel(&last_word);
 }
