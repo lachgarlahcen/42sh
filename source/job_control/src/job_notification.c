@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   job_notification.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 00:42:10 by llachgar          #+#    #+#             */
-/*   Updated: 2020/02/22 13:17:22 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/22 22:23:54 by nsaber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,18 +39,24 @@ int mark_process_status (pid_t pid, int status)
 					if (WIFSTOPPED (status))
 					{
 						p->s = 1;
-						j->status = status;
+						j->status = WSTOPSIG(status);
 					}
+
 					else
 					{
 						p->c = 1;
 						j->notified = 0;
-						j->status = status;
+						if (WIFSIGNALED(p->stat))
+							j->status = WTERMSIG(status);
+						else
+							j->status = WEXITSTATUS(status);
 					}
+					// printf("status 111 -> %d\n",j->status);
 					return 0;
 				}
 				p = p->next;
 			}
+	// printf("status 222 -> %d\n",j->status);
 			j = j->next;
 		}
 	}
@@ -139,7 +145,7 @@ void  format_job_info (t_job *j, const char *status, char option)
 	(void )status;
 	int s;
 
-	s = job_is_completed(j) ? j->status : 20;
+	s = j->status;
 	if (option == 0)
 		fprintf (stderr, "[%d]%c %s\t\t%s\n",j->id , j->sign, g_sinalmsg[s], j->name);
 	else if (option == 'l')
