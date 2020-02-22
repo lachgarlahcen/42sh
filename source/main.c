@@ -6,7 +6,7 @@
 /*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/01 20:14:50 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/21 20:58:47 by llachgar         ###   ########.fr       */
+/*   Updated: 2020/02/22 13:32:10 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,14 @@ int	init_shell(void)
 	
 
 	if (!isatty(0) || !isatty(1))
-		return (0);
+		return (1);
 	g_shell_pgid = getpid();
 	/*
 	**Grab control of the terminal.
 	*/
+	g_h = 1;
 	g_jobs.id = 1;
+	g_jobs.f_job = 0;
 	setpgid(g_shell_pgid, g_shell_pgid);
 	tcsetpgrp(STDIN_FILENO, g_shell_pgid);
 	tcgetattr(STDIN_FILENO, &g_shell_tmodes);
@@ -68,12 +70,9 @@ int main(int ac, char **av, char **env)
 	binaries(1);
 	aliases_names(1);
 	init_history();
-	g_jobs.f_job = 0;
-	g_h = 1;
 	init_variables(env);
 	while ((line = read_line("42sh $> ")))
 	{
-		g_h = 0;
 		line_editing(line, 1);
 		ft_memdel((void **)&line);
 	}
