@@ -6,7 +6,7 @@
 /*   By: iel-bouh <iel-bouh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 03:59:51 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/22 16:05:00 by iel-bouh         ###   ########.fr       */
+/*   Updated: 2020/02/22 16:17:14 by iel-bouh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,20 +207,22 @@ int		ft_in_redirection(t_tok *p)
 		if (access(ft_get_redict_by_id(p, 3), R_OK) == -1)
 		{
 			if (access(ft_get_redict_by_id(p, 3), F_OK) == -1)
+			{
 				ft_putstr_fd("42sh: no such file or directory: ", 2);
+				return (-1);
+			}
 			else
+			{
 				ft_putstr_fd("42sh: permission denied: ", 2);
-			ft_putendl_fd(ft_get_redict_by_id(p, 3), 2);
+				return (-1);
+			}
+			// ft_putendl_fd(ft_get_redict_by_id(p, 3), 2);
+		}
+		if ((i = open(ft_get_redict_by_id(p, 3), O_RDONLY)) == -1)
+		{
+			ft_putendl_fd("42sh: bad file", 2);
 			return (-1);
 		}
-		// if (!ft_is_file(ft_get_redict_by_id(p, 3)))
-		// {
-		// 	ft_putstr_fd(ft_get_redict_by_id(p, 3), 2);
-		// 	ft_putendl_fd(": is not a file", 2);
-		// 	return (-1);
-		// }
-		if ((i = open(ft_get_redict_by_id(p, 3), O_RDONLY)) == -1)
-			ft_putendl_fd("42sh: bad file", 2);	
 		dup2(i, 0);
 	}
 	return (0);
