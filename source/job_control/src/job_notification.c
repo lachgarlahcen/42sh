@@ -6,7 +6,7 @@
 /*   By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 00:42:10 by llachgar          #+#    #+#             */
-/*   Updated: 2020/02/22 22:23:54 by nsaber           ###   ########.fr       */
+/*   Updated: 2020/02/22 23:16:57 by nsaber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ void  format_job_info (t_job *j, const char *status, char option)
 {
 	char *g_sinalmsg[] =
 	{
-		"Done",
+		"running",
 		"Hangup",                                                                                                                                                                                                                                         
 		"Interrupt",                                                                                                                                                                                                                                      
 		"Quit",                                                                                                                                                                                                  
