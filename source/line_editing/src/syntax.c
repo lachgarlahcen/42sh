@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 00:10:12 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/20 11:32:35 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/22 13:58:07 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,8 @@ int		check_dollar_var(char *str, int be, int end)
 		return (1);
 	while (i < end)
 	{
+		if (str[i] == ':')
+			return (0);
 		if (str[i] == '{' || str[i] == ' ' || str[i] == '\n')
 			return (1);
 		if (str[i] == '&' || str[i] == '|' || str[i] == '$')

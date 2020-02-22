@@ -6,7 +6,7 @@
 /*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 16:35:13 by llachgar          #+#    #+#             */
-/*   Updated: 2020/02/21 03:22:19 by llachgar         ###   ########.fr       */
+/*   Updated: 2020/02/22 15:00:02 by llachgar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,12 @@ int ft_fc(char **av)
 {
     t_fc fc;
     int res;
-    // INIT FC
+
+    if (getpid() != g_shell_pgid)
+    {
+        ft_putendl_fd("42sh: fc: No fc In child proccess", 2);
+        return (1);
+    }
     ft_init_fc(&fc);
     // GET FLGS FROM ARRAY
     if (!ft_fc_get_flags(av, &fc))

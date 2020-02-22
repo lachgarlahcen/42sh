@@ -6,7 +6,7 @@
 /*   By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 16:23:31 by aihya             #+#    #+#             */
-/*   Updated: 2020/02/22 15:21:25 by aihya            ###   ########.fr       */
+/*   Updated: 2020/02/22 15:39:50 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,11 +82,7 @@ static void	set_alias(char *arg, int *status)
 static void	set_individual_aliases(char **args, int *status)
 {
 	int		index;
-	char	*name;
-	char	*value;
 
-	name = NULL;
-	value = NULL;
 	index = 0;
 	while (args[index])
 	{

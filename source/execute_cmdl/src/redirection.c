@@ -6,7 +6,7 @@
 /*   By: iel-bouh <iel-bouh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 03:59:51 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/20 01:19:27 by iel-bouh         ###   ########.fr       */
+/*   Updated: 2020/02/22 15:06:41 by iel-bouh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,19 +59,23 @@ int		ft_get_file_fd(char *file, char append)
 			ft_putendl_fd(": Permission denied", 2);
 			return (-1);
 		}
-		if (!ft_is_file(file))
-		{
-			ft_putstr_fd(file, 2);
-			ft_putendl_fd(": is not a file", 2);
-			return (-1);
-		}
+		// if (!ft_is_file(file))
+		// {
+		// 	ft_putstr_fd(file, 2);
+		// 	ft_putendl_fd(": is not a file", 2);
+		// 	return (-1);
+		// }
 	}
 	if (append == 1)
 	{
-		i = open(file, O_WRONLY | O_CREAT | O_APPEND, S_IRWXU);
+		if ((i = open(file, O_WRONLY | O_CREAT | O_APPEND, S_IRWXU)) == -1)
+			ft_putendl_fd("bad file", 2);
 	}
 	else
-		i = open(file, O_WRONLY | O_CREAT | O_TRUNC, S_IRWXU);
+	{
+		if ((i = open(file, O_WRONLY | O_CREAT | O_TRUNC, S_IRWXU)) == -1)
+			ft_putendl_fd("bad file", 2);
+	}
 	return (i);
 }
 
@@ -84,18 +88,30 @@ int		ft_out_redirection(t_tok *tmp)
 		if ((fd = ft_get_file_fd(ft_get_redict_by_id(tmp, 3), 0)) < 0)
 			return (-1);
 		if (ft_get_redict_by_id(tmp, 1))
-			dup2(fd, ft_atoi(ft_get_redict_by_id(tmp, 1)));
+		{
+			if (dup2(fd, ft_atoi(ft_get_redict_by_id(tmp, 1))) == -1)
+				ft_putendl_fd("bad file descriptor", 2);
+		}
 		else
-			dup2(fd, 1);
+		{
+			if (dup2(fd, 1) == -1)
+				ft_putendl_fd("bad file descriptor", 2);
+		}
 	}
 	else if (ft_strequ(ft_get_redict_by_id(tmp, 2), ">>") == 1)
 	{
 		if ((fd = ft_get_file_fd(ft_get_redict_by_id(tmp, 3), 1)) < 0)
 			return (-1);
 		if (ft_get_redict_by_id(tmp, 1))
-			dup2(fd, ft_atoi(ft_get_redict_by_id(tmp, 1)));
+		{
+			if (dup2(fd, ft_atoi(ft_get_redict_by_id(tmp, 1))) == -1)
+				ft_putendl_fd("bad file descriptor", 2);
+		}
 		else
-			dup2(fd, 1);
+		{
+			if (dup2(fd, 1) == -1)
+				ft_putendl_fd("bad file descriptor", 2);
+		}
 	}
 	return (0);
 }
@@ -107,10 +123,16 @@ void	ft_right_ampersand(t_tok *p)
 	{
 		if (ft_get_redict_by_id(p, 1) &&
 				ft_all_digits(ft_get_redict_by_id(p, 1)) == 0)
-			dup2(ft_atoi(ft_get_redict_by_id(p, 3)),
-					ft_atoi(ft_get_redict_by_id(p, 1)));
+		{
+			if (dup2(ft_atoi(ft_get_redict_by_id(p, 3)),
+					ft_atoi(ft_get_redict_by_id(p, 1))) == -1)
+				ft_putendl_fd("bad file descriptor", 2);
+		}
 		else
-			dup2(ft_atoi(ft_get_redict_by_id(p, 3)), 1);
+		{
+			if (dup2(ft_atoi(ft_get_redict_by_id(p, 3)), 1) == -1)
+				ft_putendl_fd("bad file descriptor", 2);
+		}
 	}
 	else if (ft_strequ(ft_get_redict_by_id(p, 3), "-"))
 	{
@@ -131,8 +153,10 @@ int		ft_ampersand(t_tok *p)
 	{
 		if ((fd = ft_get_file_fd(ft_get_redict_by_id(p, 3), 0)) < 0)
 			return (-1);
-		dup2(fd, 1);
-		dup2(fd, 2);
+		if (dup2(fd, 1) == -1)
+			ft_putendl_fd("bad file descriptor", 2);
+		if (dup2(fd, 2) == -1)
+			ft_putendl_fd("bad file descriptor", 2);
 	}
 	if (ft_strequ(ft_get_redict_by_id(p, 2), ">&") == 1)
 	{
@@ -156,13 +180,14 @@ int		ft_in_redirection(t_tok *p)
 			ft_putendl_fd(ft_get_redict_by_id(p, 3), 2);
 			return (-1);
 		}
-		if (!ft_is_file(ft_get_redict_by_id(p, 3)))
-		{
-			ft_putstr_fd(ft_get_redict_by_id(p, 3), 2);
-			ft_putendl_fd(": is not a file", 2);
-			return (-1);
-		}
-		i = open(ft_get_redict_by_id(p, 3), O_RDONLY);
+		// if (!ft_is_file(ft_get_redict_by_id(p, 3)))
+		// {
+		// 	ft_putstr_fd(ft_get_redict_by_id(p, 3), 2);
+		// 	ft_putendl_fd(": is not a file", 2);
+		// 	return (-1);
+		// }
+		if ((i = open(ft_get_redict_by_id(p, 3), O_RDONLY)) == -1)
+			ft_putendl_fd("bad file", 2);	
 		dup2(i, 0);
 	}
 	return (0);
@@ -223,8 +248,9 @@ int		ft_herdoc(t_tok *p)
 		if (!tmp || ft_strequ(tmp, ft_get_redict_by_id(p, 3)))
 		{
 			free(tmp);
-			dup2(ft_stop_append_return(&join,
-					ft_get_redict_by_id(p, 3), fd), 0);
+			if (dup2(ft_stop_append_return(&join,
+					ft_get_redict_by_id(p, 3), fd), 0) == -1)
+				ft_putendl_fd("bad file descriptor", 2);
 			return (0);
 		}
 		else

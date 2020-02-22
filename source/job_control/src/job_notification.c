@@ -6,7 +6,7 @@
 /*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 00:42:10 by llachgar          #+#    #+#             */
-/*   Updated: 2020/02/21 19:35:33 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/22 13:17:22 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,15 @@ int mark_process_status (pid_t pid, int status)
 				{
 					p->stat = status;
 					if (WIFSTOPPED (status))
+					{
 						p->s = 1;
+						j->status = status;
+					}
 					else
 					{
 						p->c = 1;
 						j->notified = 0;
 						j->status = status;
-						/*if (WIFSIGNALED (status))
-						  fprintf (stderr, "%d: Terminated by signal %d.\n",(int)pid, WTERMSIG (p->stat));*/
 					}
 					return 0;
 				}
@@ -53,7 +54,7 @@ int mark_process_status (pid_t pid, int status)
 			j = j->next;
 		}
 	}
-	return (-1);
+	return (1);
 }
 
 void  update_status (void)
@@ -90,12 +91,12 @@ void  wait_for_job (t_job *j)
 	p = j->p;
 	while (p->next)
 		p = p->next;
-	if (WIFEXITED(p->stat))
-		exit_status(WEXITSTATUS(p->stat), 1);
+	if (WIFEXITED(j->status))
+		exit_status(WEXITSTATUS(j->status), 1);
 	else if (WIFSIGNALED(p->stat))
-		exit_status(WTERMSIG(p->stat) + 128, 1);
-	else if (WIFSTOPPED(p->stat))
-		exit_status(WSTOPSIG(p->stat) + 128, 1);
+		exit_status(WTERMSIG(j->status) + 128, 1);
+	else if (WIFSTOPPED(j->status))
+		exit_status(WSTOPSIG(j->status) + 128, 1);
 }
 
 
