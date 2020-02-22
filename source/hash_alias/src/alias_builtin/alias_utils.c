@@ -6,7 +6,7 @@
 /*   By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/17 19:35:28 by aihya             #+#    #+#             */
-/*   Updated: 2020/02/21 19:50:02 by aihya            ###   ########.fr       */
+/*   Updated: 2020/02/22 15:21:24 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,19 @@ int				save_alias(char *name, char *value)
 
 	if (name == NULL)
 		return (0);
-	alias = new_htnode(name, value);
-	if (alias == NULL)
-		return (0);
-	if (push_htnode(aliases(FALSE), &alias))
+	if ((alias = find_htnode(aliases(FALSE), name)) == NULL)
 	{
+		if ((alias = new_htnode(name, value)) == NULL)
+			return (0);
+		push_htnode(aliases(FALSE), &alias);
 		aliases_counter(INC);
-		aliases_names(TRUE);
 	}
+	else
+	{
+		ft_strdel(&(alias->value));
+		alias->value = ft_strdup(value);
+	}
+	aliases_names(TRUE);
 	return (1);
 }
 

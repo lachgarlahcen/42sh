@@ -5,20 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/21 18:51:01 by aihya             #+#    #+#             */
-/*   Updated: 2020/02/21 19:57:30 by aihya            ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   alias.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 16:23:31 by aihya             #+#    #+#             */
-/*   Updated: 2020/02/21 18:50:59 by aihya            ###   ########.fr       */
+/*   Updated: 2020/02/22 15:21:25 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,20 +15,26 @@
 void		set_name_value(char *arg, char **name, char **value)
 {
 	int		index;
+	char	*tmp_name;
+	char	*tmp_value;
 
 	index = 0;
+	tmp_name = NULL;
+	tmp_value = NULL;
 	while (arg[index] && arg[index] != '=')
 	{
-		ft_strappend(name, arg[index], TRUE);
+		ft_strappend(&tmp_name, arg[index], TRUE);
 		index++;
 	}
-	if (*name != NULL && arg[index] == '=')
+	if (tmp_name != NULL && arg[index] == '=')
 		index++;
 	while (arg[index])
 	{
-		ft_strappend(value, arg[index], TRUE);
+		ft_strappend(&tmp_value, arg[index], TRUE);
 		index++;
 	}
+	*name = tmp_name;
+	*value = tmp_value;
 }
 
 int			valid_alias_name(char *name)
@@ -57,20 +51,32 @@ int			valid_alias_name(char *name)
 	return (1);
 }
 
-static void	set_alias(char *name, char *value, int *status)
+static void	set_alias(char *arg, int *status)
 {
-	char	*tmp;
+	size_t	old;
+	char	*name;
+	char	*value;
 
-	tmp = NULL;
+	set_name_value(arg, &name, &value);
+	old = aliases_counter(0);
 	if (name == NULL)
 	{
-		if ((tmp = is_alias(value)) == NULL)
+		if (is_alias(value) == NULL)
 			*status = err_msg("alias", value, "Not found");
 		else
 			print_alias(value, FALSE);
+		ft_strdel(&value);
+		return ;
 	}
 	else if (save_alias(name, value) == 0)
-		*status = err_msg("alias", name, "Cannot save alias (probable memory lack)");
+		*status = err_msg("alias", name, "Cannot save alias");
+	if (old == aliases_counter(0))
+		ft_strdel(&name);
+	else
+	{
+		ft_strdel(&name);
+		ft_strdel(&value);
+	}
 }
 
 static void	set_individual_aliases(char **args, int *status)
@@ -84,15 +90,12 @@ static void	set_individual_aliases(char **args, int *status)
 	index = 0;
 	while (args[index])
 	{
-		set_name_value(args[index], &name, &value);
 		if (ft_strchr(args[index], '='))
-			set_alias(name, value, status);
-		else if ((value = is_alias(args[index])) == NULL)
-			*status = err_msg("alias", name, "Not found");
+			set_alias(args[index], status);
+		else if (is_alias(args[index]) == NULL)
+			*status = err_msg("alias", args[index], "Not found");
 		else
 			print_alias(args[index], FALSE);
-		ft_strdel(&name);
-		ft_strdel(&value);
 		index++;
 	}
 }

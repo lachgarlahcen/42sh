@@ -6,7 +6,7 @@
 /*   By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 18:23:41 by aihya             #+#    #+#             */
-/*   Updated: 2020/02/21 19:55:33 by aihya            ###   ########.fr       */
+/*   Updated: 2020/02/22 14:14:39 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_htnode	**init_hashtable(void);
 t_htnode	*new_htnode(char *name, char *value);
 void		print_hashtable(t_htnode **hashtable, char **names, char *prefix);
 void		pop_htnode(t_htnode **hashtable, char *name);
-int			push_htnode(t_htnode **hashtable, t_htnode **new);
+void		push_htnode(t_htnode **hashtable, t_htnode **new);
 t_htnode	*find_htnode(t_htnode **hashtable, char *name);
 void		free_htnode(t_htnode **a_htnode);
 int			hash_function(char *str);
