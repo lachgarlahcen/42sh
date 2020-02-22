@@ -6,7 +6,7 @@
 /*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 04:36:08 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/21 15:45:40 by aihya            ###   ########.fr       */
+/*   Updated: 2020/02/22 15:24:08 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,13 +101,13 @@ int		execute_builtin(char **args)
 	else if (!ft_strcmp("unalias", *args))
 		return (unalias(args));
 	else if (!ft_strcmp("cd", *args))
-		built_cd(args);
+		return (built_cd(args));
 	else if (!ft_strcmp("set", *args))
 		put_variables();
 	else if (!ft_strcmp("exit", *args))
 		execute_exit(args);
 	else if (!ft_strcmp("test", *args))
-		execute_test(args);
+		return (execute_test(args));
 	else if (!ft_strcmp("jobs", *args))
 		execute_jobs(args);
 	else if (!ft_strcmp("fg", *args))
@@ -119,6 +119,6 @@ int		execute_builtin(char **args)
 	else if (!ft_strcmp("export", *args))
 		return (execute_export(args));
 	else if (!ft_strcmp("fc", *args))
-		ft_fc(args);
+		return (ft_fc(args));
 	return (0);
 }
