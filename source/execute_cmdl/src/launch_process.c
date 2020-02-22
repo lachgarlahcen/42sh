@@ -6,7 +6,7 @@
 /*   By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 12:16:28 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/21 20:02:05 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/22 15:28:56 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ int			is_dir(char *di)
 {
 	DIR	*d;
 	if (!(d = opendir(di)))
-		return (1);
+		return (0);
 	closedir(d);
-	return (0);
+	return (1);
 }
 
 int			ft_perror_execu(char *cmdl, char *err)
@@ -43,9 +43,9 @@ char		*search_executable(char *cmdl)
 	cmdl = delet_quotes(cmdl, 0);
 	if (!access(cmdl, F_OK))
 		if (!access(cmdl, X_OK))
-			if (is_dir(cmdl))
+			if (!is_dir(cmdl))
 				return (cmdl);
-	if (is_dir(cmdl))
+	if (!is_dir(cmdl))
 	{
 		excu = is_binary(cmdl);
 	/*		excu = ft_strjoin("/bin/", cmdl);

@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 03:40:43 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/21 19:48:36 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/22 15:50:52 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ void		separat_cmdl(t_tok *t)
 				t = t->next;
 		}
 		check = check_execute(p, t, check);
+		free_temp_variables();
 		if (t)
 			t = t->next;
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   job_control.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+        */
+/*   By: iel-bouh <iel-bouh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 22:18:53 by llachgar          #+#    #+#             */
-/*   Updated: 2020/02/21 18:53:12 by nsaber           ###   ########.fr       */
+/*   Updated: 2020/02/22 15:02:41 by iel-bouh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -272,7 +272,7 @@ void put_job_in_foreground(t_job *j, int cont)
   //-*-*-*-*->ignored by Noureddine for test <-*-*-*-*-
   if (job_is_completed(j))
   {
-		printf("job_node_trait called for killed bg\n");
+		// printf("job_node_trait called for killed bg\n");
     job_node_trait(j,1); // in case  background_job killed
     delete_job(j->pgid);
   }
