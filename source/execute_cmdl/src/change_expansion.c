@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   change_expansion.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 05:15:41 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/22 21:49:47 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/23 00:24:15 by nsaber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ char	*change_tilda(char *str)
 	if (str[1] == '\0' || str[1] == '/')
 	{
 		if (!(tp = get_variable("HOME")))
-			return (0); // err  HOME not set
+			return (0);
 		tmp = ft_strjoin(tp, str + 1);
 		ft_memdel((void **)&tp);
 		ft_memdel((void **)&str);
@@ -78,7 +78,7 @@ char	*change_string(char *str, int be)
 	i = be;
 	tp = 0;
 	while (str[i] && str[i] != '}')
-		i++;	
+		i++;
 	tp = ft_strsub(str, be, i - be);
 	if (!ft_strcmp("?", tp))
 		tmp = ft_itoa(exit_status(0, 0));
@@ -97,7 +97,7 @@ char	*change_string(char *str, int be)
 	return (tp);
 }
 
-char	*change_dollar(char *str, int id)
+char		*change_dollar(char *str, int id)
 {
 	int		i;
 	int		be;
@@ -120,7 +120,7 @@ char	*change_dollar(char *str, int id)
 			}
 		}
 		if (str[i] == '\\')
-					i++;
+			i++;
 		else if (str[i] == '$'  && str[i + 1] == '{')
 			tmp = change_string(str, i + 2);
 		i++;
@@ -130,7 +130,7 @@ char	*change_dollar(char *str, int id)
 	ft_memdel((void **)&str);
 	return (tmp);
 }
-int		change_expansion(t_tok *t)
+int			change_expansion(t_tok *t)
 {
 	while (t)
 	{
