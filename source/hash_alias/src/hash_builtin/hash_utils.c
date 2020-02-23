@@ -6,7 +6,7 @@
 /*   By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 23:04:02 by aihya             #+#    #+#             */
-/*   Updated: 2020/02/20 01:41:42 by aihya            ###   ########.fr       */
+/*   Updated: 2020/02/22 19:02:15 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	print_binaries(void)
 	char		**names;
 	int			index;
 
+	printf("COUNTER: %zu\n", binaries_counter(0));
 	if (binaries_counter(0) == 0)
 		return ;
 	names = binaries_names(FALSE);

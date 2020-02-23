@@ -6,7 +6,7 @@
 /*   By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 12:41:07 by aihya             #+#    #+#             */
-/*   Updated: 2020/02/22 15:30:04 by aihya            ###   ########.fr       */
+/*   Updated: 2020/02/22 19:02:17 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	set_arg(char *arg, int *status)
 	if (update_binary(arg, bin_path) == FALSE)
 	{
 		if (save_binary(arg, bin_path) == FALSE)
-			*status = err_msg("hash", arg, "Unable to saved (check memory)");
+			*status = err_msg("hash", arg, "Unable to saved");
 	}
 }
 
@@ -58,7 +58,9 @@ int			hash(char **args)
 
 	status = 0;
 	if (ft_chain_size(args) == 1)
+	{
 		print_binaries();
+	}
 	else
 		set_arguments(args + 1, &status);
 	return (status);

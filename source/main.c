@@ -6,7 +6,7 @@
 /*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/01 20:14:50 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/22 13:32:10 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/22 19:14:01 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int main(int ac, char **av, char **env)
 	aliases(1);
 	signals(1);
 	binaries(1);
-	aliases_names(1);
+//	aliases_names(1);
 	init_history();
 	init_variables(env);
 	while ((line = read_line("42sh $> ")))
