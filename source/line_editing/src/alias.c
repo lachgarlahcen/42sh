@@ -6,7 +6,11 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 00:09:47 by hastid            #+#    #+#             */
+<<<<<<< HEAD
+/*   Updated: 2020/02/22 15:48:35 by aihya            ###   ########.fr       */
+=======
 /*   Updated: 2020/02/22 22:20:31 by hastid           ###   ########.fr       */
+>>>>>>> d4ea9dc253525006127eec1cf5383510512db5e7
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +47,7 @@ static int	check_is_alias(int be, int *end, char **str)
 		return (1);
 	if (!(tmp = is_alias(tp)))
 		return (free_return(tp, 1));
+	tmp = ft_strdup(tmp);
 	*end = *end + ft_strlen(tmp);
 	ft_memdel((void **)&tp);
 	if ((tp = ft_strsub(*str, 0, be)))
