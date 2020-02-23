@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 04:58:13 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/23 18:42:30 by aihya            ###   ########.fr       */
+/*   Updated: 2020/02/23 23:50:21 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void		manage_hashtable(char *bin_name)
 		save_binary(bin_name, bin_path);
 		hit_binary(bin_name);
 		ft_strdel(&bin_path);
-	}	
+	}
 }
 
 int			check_all_arguments(t_proc *p)
