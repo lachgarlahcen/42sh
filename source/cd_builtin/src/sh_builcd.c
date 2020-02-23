@@ -6,7 +6,7 @@
 /*   By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/13 02:26:55 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/23 00:20:59 by nsaber           ###   ########.fr       */
+/*   Updated: 2020/02/23 21:49:35 by nsaber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static char	*del_point(char *str)
 		(str[i] == '/' && str[i + 1] == '.' && !str[i + 2]) ? i += 2 : 0;
 		if (str[i] == '/' && str[i + 1] == '.' && str[i + 2] == '/')
 			i += 2;
-		if (str[i] == '.' && str[i + 1] == 0)
+		if (str[i] == '.' && str[i + 1] == 0 && str[i - 1] != '.')
 			i += 1;
 		buf[p++] = str[i++];
 	}
@@ -115,7 +115,6 @@ static char	*del_point2(char *str)
 	if (!ret)
 		ret = ft_strdup("/");
 	free_tab(tab);
-	 //we need free tab here and else where
 	ft_memdel((void **)&str);
 	return (ret);
 }
@@ -125,6 +124,7 @@ char		*path_of_link(char *dir, char *pwd)
 	int		i;
 	char	*tp;
 	char	*tmp;
+	char	*tmp2;
 
 	i = 0;
 	if (dir[0] == '/')
@@ -137,8 +137,8 @@ char		*path_of_link(char *dir, char *pwd)
 			return (0);
 		ft_memdel((void **)&tp);
 	}
-	tmp = del_point(tmp);
-	tmp = del_slash(tmp);
-	tmp = del_point2(tmp);
-	return (tmp);
+	tmp2 = del_point(tmp);
+	tmp = del_slash(tmp2);
+	tmp2 = del_point2(tmp);
+	return (tmp2);
 }
