@@ -6,7 +6,7 @@
 /*   By: iel-bouh <iel-bouh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 15:48:12 by iel-bouh          #+#    #+#             */
-/*   Updated: 2020/02/23 21:52:16 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/23 22:01:31 by iel-bouh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ int			ft_herdoc(char *file)
 	int		fd[2];
 	char	*tmp;
 	char	*join;
+	int		stop;
 
 	join = NULL;
 	pipe(fd);

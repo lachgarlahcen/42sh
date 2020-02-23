@@ -6,7 +6,7 @@
 /*   By: iel-bouh <iel-bouh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 15:42:27 by iel-bouh          #+#    #+#             */
-/*   Updated: 2020/02/23 15:44:36 by iel-bouh         ###   ########.fr       */
+/*   Updated: 2020/02/23 21:17:30 by iel-bouh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ int		ft_aggregation(t_tok *p, char *file)
 					ft_putendl_fd("42sh: bad file descriptor", 2);
 					return (-1);
 				}
+				close(ft_atoi(file));
 			}
 			else if (!ft_strequ(file, "-"))
 			{
