@@ -6,13 +6,13 @@
 /*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 18:33:26 by llachgar          #+#    #+#             */
-/*   Updated: 2020/02/05 03:44:34 by llachgar         ###   ########.fr       */
+/*   Updated: 2020/02/23 17:51:22 by llachgar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "read_line.h"
 
-static t_cmd *malloc_cmd(void)
+static t_cmd	*malloc_cmd(void)
 {
 	t_cmd *l;
 
@@ -22,7 +22,7 @@ static t_cmd *malloc_cmd(void)
 	return (l);
 }
 
-void swap_p(t_point *p1, t_point *p2, int a)
+void			swap_p(t_point *p1, t_point *p2, int a)
 {
 	if (a)
 	{
@@ -36,7 +36,7 @@ void swap_p(t_point *p1, t_point *p2, int a)
 	}
 }
 
-t_cmd *init_cmd(char *pr)
+t_cmd			*init_cmd(char *pr)
 {
 	t_cmd *l;
 
@@ -64,11 +64,11 @@ t_cmd *init_cmd(char *pr)
 	return (l);
 }
 
-void init_term(void)
+void			init_term(void)
 {
-	char *termtype;
-	int success;
-	struct termios tattr;
+	char			*termtype;
+	int				success;
+	struct termios	tattr;
 
 	termtype = getenv("TERM");
 	if (termtype == 0)

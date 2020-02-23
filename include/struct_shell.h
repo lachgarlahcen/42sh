@@ -6,7 +6,7 @@
 /*   By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 23:54:11 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/20 05:05:13 by nsaber           ###   ########.fr       */
+/*   Updated: 2020/02/23 19:08:39 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ typedef struct	s_job
 	int				id;
 	int				status;
 	pid_t			pgid;
-	char			notified; 
+	char			notified;
 	struct s_job	*next;
 	char			option;
 	char			*name;
@@ -53,13 +53,11 @@ typedef struct	s_job
 	char			sign;
 }				t_job;
 
-typedef struct s_jobs
+typedef struct	s_jobs
 {
-	struct  s_job *f_job;
-	int 			p;
+	struct s_job	*f_job;
+	int				p;
 	int				id;
-	
 }				t_jobs;
-
 
 #endif

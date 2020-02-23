@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 01:20:36 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/11 20:56:47 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/23 19:19:30 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,15 @@ void			free_toks(t_tok *lst)
 		ft_memdel((void **)&lst);
 		lst = tmp;
 	}
+}
+
+int				is_number(char *str)
+{
+	int	i;
+
+	i = -1;
+	while (str[++i])
+		if (!ft_isdigit(str[i]))
+			return (0);
+	return (1);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   job_notification.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+        */
+/*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 00:42:10 by llachgar          #+#    #+#             */
-/*   Updated: 2020/02/23 00:02:02 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/23 21:14:06 by llachgar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,17 +67,13 @@ void  update_status (void)
 {
 	int status;
 	pid_t pid;
-	//t_job *j;
 
-	// j = g_jobs.f_job;
-	// while (j)
-	// {
-	//   ft_printf("pgid%d\n", j->pgid);
-	//   j = j->next;
-	// }
-	do
+	while (1337)
+	{
 		pid = waitpid (WAIT_ANY, &status, WUNTRACED|WNOHANG);
-	while (!mark_process_status(pid, status));
+		if (mark_process_status(pid, status))
+			break ;
+	}
 }
 
 void  wait_for_job (t_job *j)

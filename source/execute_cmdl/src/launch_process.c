@@ -6,7 +6,7 @@
 /*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 12:16:28 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/23 17:46:29 by llachgar         ###   ########.fr       */
+/*   Updated: 2020/02/23 21:20:02 by llachgar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,24 +58,13 @@ char		*search_executable(char *cmdl)
 				ft_memdel((void **)&excu);
 				*/
 		if (excu)
-		{
-			hit_binary(cmdl);
 			return (excu);
-		}
 		else if ((excu = get_bin_path(cmdl)))
-		{
-			save_binary(cmdl, excu);
-			hit_binary(cmdl);
-			printf("GETTING BIN_PATH %s-%s\n", cmdl, is_binary(cmdl));
-			printf("%zu\n", binaries_counter(0));
 			return (excu);
-		}
-		err_msg("42sh", cmdl, "Command not found");
-//		ft_perror_execu(cmdl, ": command not found");
+		ft_perror_execu(cmdl, ": command not found");
 	}
 	else
-		err_msg("42sh", cmdl, "Is a directory");
-	//	ft_perror_execu(cmdl, ": is a directory");
+		ft_perror_execu(cmdl, ": is a directory");
 	return (0);
 }
 

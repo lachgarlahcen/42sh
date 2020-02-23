@@ -6,32 +6,11 @@
 /*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 04:47:14 by llachgar          #+#    #+#             */
-/*   Updated: 2020/02/22 23:45:40 by llachgar         ###   ########.fr       */
+/*   Updated: 2020/02/23 18:10:33 by llachgar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "read_line.h"
-
-int		ft_countwords(char *str, int c)
-{
-	int	words;
-	int	i;
-
-	words = 0;
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] != c && str[i])
-		{
-			while (str[i] != c && str[i])
-				i++;
-			words++;
-		}
-		while (str[i] == c)
-			i++;
-	}
-	return (words);
-}
 
 /*
 ** check word count from 0 or one of cmds seperators {;, |, &}
