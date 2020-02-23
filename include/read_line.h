@@ -6,7 +6,7 @@
 /*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 14:46:01 by llachgar          #+#    #+#             */
-/*   Updated: 2020/02/23 01:02:18 by llachgar         ###   ########.fr       */
+/*   Updated: 2020/02/23 17:42:27 by llachgar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@
 #define CHECK_PATH_CONTEXT1(patt) (!ft_strcmp(patt, "..") || !ft_strcmp(patt, "."))
 #define CHECK_PATH_CONTEXT(patt) (ft_strrchr(patt, '/') || CHECK_PATH_CONTEXT1(patt))
 #define IS_BEGIN_CMD(c) (c == ';' || c == '|' || c == '&')
+#define BUFF_LINE 1
 
 enum	context
 {
@@ -183,6 +184,19 @@ typedef struct s_fc
 	char *last;
 
 } t_fc;
+
+typedef struct	s_f
+{
+	int				d;
+	int				s;
+	char			*b;
+	char			*t;
+	char			r[BUFF_LINE];
+	int				i;
+	int				j;
+	int				k;
+	struct s_f		*n;
+}				t_f;
 
 void right_key(t_cmd *l);
 void left_key(t_cmd *l);

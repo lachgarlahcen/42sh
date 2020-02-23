@@ -6,24 +6,11 @@
 /*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 18:43:39 by llachgar          #+#    #+#             */
-/*   Updated: 2020/02/21 02:47:50 by llachgar         ###   ########.fr       */
+/*   Updated: 2020/02/23 17:42:30 by llachgar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "read_line.h"
-# define BUFF_LINE 1
-typedef struct	s_f
-{
-	int				d;
-	int				s;
-	char			*b;
-	char			*t;
-	char			r[BUFF_LINE];
-	int				i;
-	int				j;
-	int				k;
-	struct s_f		*n;
-}				t_f;
 
 int		get_next_line(const int fd, char **line)
 {
@@ -35,8 +22,8 @@ int		get_next_line(const int fd, char **line)
 	while (!(i = 0) && f && f->d != fd)
 		f = f->n;
 	if (fd < 0 || (!f && (!(f = malloc(sizeof(*f))) ||
-		((f->n = openfiles) && 0) || (f->d *= 0) || (f->d += fd) < 0 ||
-		!(openfiles = f) || (f->i *= 0) || (f->j *= 0))) || (f->s *= 0))
+				((f->n = openfiles) && 0) || (f->d *= 0) || (f->d += fd) < 0 ||
+				!(openfiles = f) || (f->i *= 0) || (f->j *= 0))) || (f->s *= 0))
 		return (-1);
 	while (!(f->k *= 0) && (f->i < f->j || (!(f->i *= 0) && (f->j = read(fd,
 		f->r, BUFF_LINE)) > 0)) && (f->s == 0 || f->r[f->i] != 10 || !(++f->i)))
