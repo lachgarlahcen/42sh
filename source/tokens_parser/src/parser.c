@@ -6,24 +6,13 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 00:46:23 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/11 02:25:09 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/23 19:20:50 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tokens_parser.h"
 
-int		is_number(char *str)
-{
-	int	i;
-
-	i = -1;
-	while (str[++i])
-		if (!ft_isdigit(str[i]))
-			return (0);
-	return (1);
-}
-
-int		token_analyzer(char *str, int check)
+static int	token_analyzer(char *str, int check)
 {
 	if (check && is_number(str))
 		return (1);
@@ -46,7 +35,7 @@ int		token_analyzer(char *str, int check)
 	return (0);
 }
 
-int		parser(char *token, t_tok **t, int check)
+static int	parser(char *token, t_tok **t, int check)
 {
 	int		id;
 
@@ -58,7 +47,7 @@ int		parser(char *token, t_tok **t, int check)
 	return (0);
 }
 
-int		parse_token(t_tok **t, char *line)
+static int	parse_token(t_tok **t, char *line)
 {
 	int		i;
 	int		be;
@@ -86,7 +75,7 @@ int		parse_token(t_tok **t, char *line)
 	return (0);
 }
 
-int		analyse_tokens(t_tok *t)
+static int	analyse_tokens(t_tok *t)
 {
 	t_tok	*tp;
 
@@ -102,7 +91,7 @@ int		analyse_tokens(t_tok *t)
 	return (0);
 }
 
-t_tok	*parse_tokens(char *line)
+t_tok		*parse_tokens(char *line)
 {
 	t_tok	*t;
 
