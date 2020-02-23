@@ -6,7 +6,7 @@
 /*   By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 19:21:27 by aihya             #+#    #+#             */
-/*   Updated: 2020/02/21 17:28:26 by aihya            ###   ########.fr       */
+/*   Updated: 2020/02/23 16:26:00 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int	test_binary(char *arg)
 	tmp = is_binary(arg);
 	if (tmp != NULL)
 	{
-		ft_printf("%s is %s\n", arg, tmp);
+		ft_printf("%s is hashed to %s\n", arg, tmp);
 		ret = 1;
 	}
 	ft_strdel(&tmp);
