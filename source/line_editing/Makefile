@@ -6,7 +6,7 @@
 #    By: hastid <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/03 03:07:16 by hastid            #+#    #+#              #
-#    Updated: 2020/02/04 02:09:53 by hastid           ###   ########.fr        #
+#    Updated: 2020/02/22 22:18:38 by hastid           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ SRC_NAME =	alias.c \
 			syntax.c \
 			lexical.c \
 			history.c \
+			syntax_utils.c \
 			line_editing.c
 
 OBJ_NAME =	$(SRC_NAME:.c=.o)

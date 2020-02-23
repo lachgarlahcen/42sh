@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 02:52:37 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/20 11:12:10 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/22 22:23:30 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,6 @@ int		used_variable(char c)
 	if (c == '&' || c == '|')
 		return (1);
 	if (c == '>' || c == '<')
-		return (1);
-	return (0);
-}
-
-int		is_inhibitors(char c)
-{
-	if (c == '\'' || c == '\"' || c == '\\')
 		return (1);
 	return (0);
 }

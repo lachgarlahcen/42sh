@@ -6,7 +6,11 @@
 /*   By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 12:16:28 by hastid            #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2020/02/22 18:56:54 by aihya            ###   ########.fr       */
+=======
+/*   Updated: 2020/02/23 01:12:24 by hastid           ###   ########.fr       */
+>>>>>>> d4ea9dc253525006127eec1cf5383510512db5e7
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +27,9 @@ int			is_dir(char *di)
 {
 	DIR	*d;
 	if (!(d = opendir(di)))
-		return (1);
+		return (0);
 	closedir(d);
-	return (0);
+	return (1);
 }
 
 int			ft_perror_execu(char *cmdl, char *err)
@@ -40,23 +44,23 @@ char		*search_executable(char *cmdl)
 {
 	char	*excu;
 
-	cmdl = delet_quotes(cmdl, 0);
+	cmdl = delet_quotes(cmdl);
 	if (!access(cmdl, F_OK))
 		if (!access(cmdl, X_OK))
-			if (is_dir(cmdl))
+			if (!is_dir(cmdl))
 				return (cmdl);
-	if (is_dir(cmdl))
+	if (!is_dir(cmdl))
 	{
 		excu = is_binary(cmdl);
-	/*		excu = ft_strjoin("/bin/", cmdl);
-		if (!access(excu, F_OK))
-			return (excu);
-		ft_memdel((void **)&excu);
-		excu = ft_strjoin("/usr/bin/", cmdl);
-		if (!access(excu, F_OK))
-			return (excu);
-		ft_memdel((void **)&excu);
-	*/
+		/*		excu = ft_strjoin("/bin/", cmdl);
+				if (!access(excu, F_OK))
+				return (excu);
+				ft_memdel((void **)&excu);
+				excu = ft_strjoin("/usr/bin/", cmdl);
+				if (!access(excu, F_OK))
+				return (excu);
+				ft_memdel((void **)&excu);
+				*/
 		if (excu)
 		{
 			hit_binary(cmdl);
@@ -140,7 +144,7 @@ int			execute_pipe(t_proc *p, int *in, int *pgid)
 	}
 	if ((p->pid = fork()) == -1)
 		return (ft_perror_pipe("PIPE ERROR !!", 1));
-	if (change_expansion(p->as))
+	if (change_expansion(p->as) || change_expansion(p->red))
 		return (exit_status(1, 0));
 	args = get_args(p->as);
 	if (p->pid == 0)
@@ -195,7 +199,8 @@ int		execute_without_fork(t_proc *p, int iv)
 	char	**args;
 
 	if (p->red)
-		ft_redirection(p);
+		if (change_expansion(p->red) || ft_redirection(p))
+			return (exit_status(1, 1));
 	if (!(as = p->as))
 		return (0);
 	if (iv)
@@ -216,6 +221,8 @@ int		execute_without_fork(t_proc *p, int iv)
 		return (exit_status(1, 1));
 	args = get_args(as);
 	exit_status(execute_builtin(args), 1);
+	if (init_fd(0))
+		exit(1);
 	free_tab(args);
 	return (0);
 }

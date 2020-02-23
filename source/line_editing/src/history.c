@@ -6,13 +6,13 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 04:55:08 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/20 10:05:23 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/22 22:21:00 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "line_editing.h"
 
-int		is_value(char c, char qo)
+static int	is_value(char c, char qo)
 {
 	if (c == ' ' || c == '&' || c == '|' || c == '>' || c == '<' || c == ';')
 		return (0);
@@ -23,7 +23,7 @@ int		is_value(char c, char qo)
 	return (1);
 }
 
-int		check_history(char **str, int be, int q)
+static int	check_history(char **str, int be, int q)
 {
 	int		i;
 	char	*tp;
@@ -48,7 +48,7 @@ int		check_history(char **str, int be, int q)
 	return (0);
 }
 
-int		check_history_expa(char **line)
+int			check_history_expa(char **line)
 {
 	int		i;
 	int		qo;

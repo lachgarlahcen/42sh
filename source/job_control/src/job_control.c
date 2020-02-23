@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   job_control.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iel-bouh <iel-bouh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 22:18:53 by llachgar          #+#    #+#             */
-/*   Updated: 2020/02/22 15:02:41 by iel-bouh         ###   ########.fr       */
+/*   Updated: 2020/02/22 22:26:13 by nsaber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,7 +215,7 @@ void    job_node_trait(t_job *j, int mines)
   }
   if ((len == j->id && mines) || (len == 0 && mines))
   {
-    printf("cae the last\n");
+    // printf("cae the last\n");
     g_jobs.id--;
 
   }
@@ -226,8 +226,8 @@ void    job_node_trait(t_job *j, int mines)
       //   break;
     if (tmp->sign == '-' && j->sign == '-') // set '-' to node before
     {
-      printf("arrived to - section in sign_trait\n");
-      printf("-> id : %d\n",tmp->id);
+      // printf("arrived to - section in sign_trait\n");
+      // printf("-> id : %d\n",tmp->id);
       if(!(tmp = job_sign_finder(' ')))
         return;
       tmp->sign = '-';
@@ -235,7 +235,7 @@ void    job_node_trait(t_job *j, int mines)
     }
     if (tmp->sign == '+' && j->sign == '+')
     {
-      printf("arrived to + section\n");
+      // printf("arrived to + section\n");
       if(!(tmp = job_sign_finder('-')))
         return;
       tmp->sign = '+';
@@ -278,11 +278,11 @@ void put_job_in_foreground(t_job *j, int cont)
   }
   else
   {
-		  printf("job_sign called bg not killed\n");
+		  // printf("job_sign called bg not killed\n");
       if (j->id == 0)
         j->id = g_jobs.id++;
       job_sign(j); // only enter when job is not killed [fg]
-      printf("jobs sign \n");
+      // printf("jobs sign \n");
   }
   //   j->id = g_jobs.id++; // by noureddine for test for fg
   

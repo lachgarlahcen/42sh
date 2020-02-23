@@ -6,13 +6,13 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 00:10:12 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/22 13:58:07 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/22 22:19:51 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "line_editing.h"
 
-int		is_used_variable(char *str)
+static int	is_used_variable(char *str)
 {
 	if (!ft_strcmp(str, ">") || !ft_strcmp(str, "<"))
 		return (2);
@@ -29,7 +29,7 @@ int		is_used_variable(char *str)
 	return (0);
 }
 
-int		check_value(char *str, int be, int end, int stat)
+static int	check_value(char *str, int be, int end, int stat)
 {
 	int		ret;
 	char	*tmp;
@@ -49,24 +49,7 @@ int		check_value(char *str, int be, int end, int stat)
 	return (free_return(tmp, ret));
 }
 
-int		begin_syntax(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] && ft_isblank(str[i]))
-		i++;
-	if (str[i] == ';' || str[i] == '|')
-		return (1);
-	if (str[i] == '&' && (!str[i + 1] ||
-				(str[i + 1] != '>' && str[i + 1] != '<')))
-		return (1);
-	if (str[i] == '!' && !str[i + 1])
-		return (1);
-	return (0);
-}
-
-int		check_syntax(int be, int end, char *str)
+static int	check_syntax(int be, int end, char *str)
 {
 	int		i;
 	int		stat;
@@ -89,7 +72,7 @@ int		check_syntax(int be, int end, char *str)
 	return (stat);
 }
 
-int		line_syntax(char *str)
+static int	line_syntax(char *str)
 {
 	int	i;
 	int	be;
@@ -117,94 +100,7 @@ int		line_syntax(char *str)
 	return (stat);
 }
 
-int		history_expa_syntax(char *str)
-{
-	int i;
-	int	check;
-
-	i = 0;
-	check = 0;
-	while (str[i])
-	{
-		if (str[i] == '&' || str[i] == '|' || str[i] == ';')
-			check = 0;
-		else if (str[i] != ' ' && str[i] != '!')
-			check = 1;
-		if (str[i] == '!' && !check)
-		{
-			while (!check && str[++i] && str[i] != '!')
-				if (str[i] != ' ' && str[i] != '&' &&
-						str[i] != '|' && str[i] != ';')
-					check = 1;
-			if (!check)
-				return (1);
-		}
-		else
-			i++;
-	}
-	return (0);
-}
-
-int		check_dollar_var(char *str, int be, int end)
-{
-	int	i;
-
-	i = be;
-	if ((end - be) == 1 && (str[be] == '$' || str[be] == '?'))
-		return (0);
-	if (str[i] != '_' && !ft_isalnum(str[i]))
-		return (1);
-	while (i < end)
-	{
-		if (str[i] == ':')
-			return (0);
-		if (str[i] == '{' || str[i] == ' ' || str[i] == '\n')
-			return (1);
-		if (str[i] == '&' || str[i] == '|' || str[i] == '$')
-			return (1);
-		if (str[i] == '\'' || str[i] == '\"' || str[i] == '\\')
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-int		expansion_dollar(char *str)
-{
-	int	i;
-	int	be;
-	int	qu;
-
-	i = 0;
-	qu = 0;
-	while (str[i])
-	{
-		if (str[i] == '\"')
-			qu = qu ? 0 : 1;
-		if (str[i] == '\'' && !qu)
-		{
-			be = i++;
-			while (str[i] && str[i] != str[be])
-				i++;
-		}
-		else if (str[i] == '\\')
-			i++;
-		else if (str[i] == '$' && str[i + 1] == '{')
-		{
-			i++;
-			be = ++i;
-			while (str[i] && str[i] != '}')
-				i++;
-			if (str[i] == '\0' || check_dollar_var(str, be, i))
-				return (1);
-		}
-		else
-			i++;
-	}
-	return (0);
-}
-
-int		syntax(char *str)
+int			syntax(char *str)
 {
 	int	stat;
 

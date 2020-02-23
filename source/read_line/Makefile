@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hastid <marvin@42.fr>                      +#+  +:+       +#+         #
+#    By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/08 05:13:41 by hastid            #+#    #+#              #
-#    Updated: 2020/02/08 05:13:42 by hastid           ###   ########.fr        #
+#    Updated: 2020/02/22 15:53:00 by llachgar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ SRC_NAME = read_line.c \
 		   completion.c \
 		   path_completion.c \
 		   binary_compelation.c \
+		   vars_compelation.c \
 		   ft_selectmatch.c \
 		   history_keys.c \
 		   history.c \
