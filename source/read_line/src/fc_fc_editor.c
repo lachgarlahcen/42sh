@@ -6,21 +6,12 @@
 /*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 04:19:31 by llachgar          #+#    #+#             */
-/*   Updated: 2020/02/23 00:13:25 by llachgar         ###   ########.fr       */
+/*   Updated: 2020/02/23 18:11:24 by llachgar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "read_line.h"
 #define FC_TMP_FILE "/tmp/fc-42sh.tmp"
-
-void			ft_nbrswap(int *a, int *b)
-{
-	int		c;
-
-	c = *a;
-	*a = *b;
-	*b = c;
-}
 
 static int		ft_fc_write_to_file(t_hist *h, t_fc *fc, int f, int l)
 {

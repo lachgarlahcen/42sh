@@ -6,13 +6,13 @@
 /*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 13:13:47 by llachgar          #+#    #+#             */
-/*   Updated: 2020/02/05 03:55:42 by llachgar         ###   ########.fr       */
+/*   Updated: 2020/02/23 18:06:50 by llachgar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "read_line.h"
 
-void default_term_mode(void)
+void		default_term_mode(void)
 {
 	struct termios tattr;
 
@@ -22,11 +22,11 @@ void default_term_mode(void)
 	tcsetattr(STDIN_FILENO, TCSADRAIN, &tattr);
 }
 
-void read_key(t_cmd *l)
+void		read_key(t_cmd *l)
 {
-	int res;
-	char buff[READ_SIZE];
-	int i;
+	int		res;
+	char	buff[READ_SIZE];
+	int		i;
 
 	res = read(0, buff, READ_SIZE);
 	ft_bzero(buff + res, 3);
@@ -41,10 +41,10 @@ void read_key(t_cmd *l)
 		l->key = *(int *)buff;
 }
 
-void print_cmd(t_cmd *l)
+void		print_cmd(t_cmd *l)
 {
-	t_point p;
-	int i;
+	t_point	p;
+	int		i;
 
 	i = -1;
 	init_cur(l);
@@ -69,7 +69,7 @@ void print_cmd(t_cmd *l)
 	ft_putstr_fd(SE, 1);
 }
 
-void match_key(t_cmd *l)
+void		match_key(t_cmd *l)
 {
 	static t_key keys[TOUCH_COUNT] = {
 		{RIGHT_K, &right_key},
@@ -98,10 +98,10 @@ void match_key(t_cmd *l)
 	excute_key(keys, l);
 }
 
-char *read_line(char *prompt)
+char		*read_line(char *prompt)
 {
-	t_cmd *l;
-	char *result;
+	t_cmd	*l;
+	char	*result;
 
 	init_term();
 	if ((l = init_cmd(prompt)) == NULL)

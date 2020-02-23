@@ -6,7 +6,7 @@
 /*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 14:46:01 by llachgar          #+#    #+#             */
-/*   Updated: 2020/02/23 17:42:27 by llachgar         ###   ########.fr       */
+/*   Updated: 2020/02/23 18:13:54 by llachgar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -295,4 +295,15 @@ int get_real_index(int v, int count);
 /*
 ** FC BUILTIN FUNCTIONS ENDS
 */
+
+/*
+** FT_ADDONS.C
+*/
+int			ft_countwords(char *str, int c);
+void		ft_nbrswap(int *a, int *b);
+char		*get_base(char *path, int len);
+/*
+** FT_ADDONS.C
+*/
+
 #endif

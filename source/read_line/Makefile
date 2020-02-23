@@ -6,7 +6,7 @@
 #    By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/08 05:13:41 by hastid            #+#    #+#              #
-#    Updated: 2020/02/22 15:53:00 by llachgar         ###   ########.fr        #
+#    Updated: 2020/02/23 18:15:54 by llachgar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,8 @@ SRC_NAME = read_line.c \
 		   fc_fc_editor.c \
 		   ft_fc.c \
 		   ft_fc_list.c \
-		   ft_fc_redo.c
+		   ft_fc_redo.c \
+		   ft_addons.c
 
 OBJ_NAME =	$(SRC_NAME:.c=.o)
 

@@ -6,7 +6,7 @@
 /*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 19:39:13 by llachgar          #+#    #+#             */
-/*   Updated: 2020/02/05 03:42:49 by llachgar         ###   ########.fr       */
+/*   Updated: 2020/02/23 17:48:41 by llachgar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	add_to_hist(char *cmd, int chnge)
 	{
 		free(hist->hist_list->data);
 		hist->hist_list->data = cmd;
-		return ; 
+		return ;
 	}
 	if ((new = (t_data *)malloc(sizeof(t_data))) == NULL)
 		return ;
