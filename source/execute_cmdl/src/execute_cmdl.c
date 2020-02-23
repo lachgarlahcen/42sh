@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 03:40:43 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/22 15:50:52 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/23 16:22:41 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ void		separat_cmdl(t_tok *t)
 	while (t)
 	{
 		p = 0;
+		if (g_exit)
+			return ;
 		while (t && t->id < 5)
 		{
 			add_process(&p);

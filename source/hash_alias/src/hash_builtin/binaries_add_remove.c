@@ -6,7 +6,7 @@
 /*   By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/16 19:26:51 by aihya             #+#    #+#             */
-/*   Updated: 2020/02/22 14:18:33 by aihya            ###   ########.fr       */
+/*   Updated: 2020/02/22 19:10:01 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int		save_binary(char *bin_name, char *bin_value)
 			return (0);
 		push_htnode(binaries(FALSE), &bin);
 		binaries_counter(INC);
+		printf("INTRODUCING NEW ELEMENT %s %s | COUNTER: %zu\n", bin_name, is_binary(bin_name), binaries_counter(0));
 	}
 	else
 	{
@@ -32,15 +33,6 @@ int		save_binary(char *bin_name, char *bin_value)
 	}
 	binaries_names(TRUE);
 	return (1);
-/*	bin = new_htnode(bin_name, bin_value);
-	if (bin == NULL)
-		return (0);
-	if (push_htnode(binaries(FALSE), &bin))
-	{
-		binaries_counter(INC);
-		binaries_names(TRUE);
-	}
-	return (1);*/
 }
 
 void	remove_binary(char *name)
@@ -48,6 +40,7 @@ void	remove_binary(char *name)
 	pop_htnode(binaries(FALSE), name);
 	if (binaries_counter(0) > 0)
 		binaries_counter(DEC);
+	binaries_names(TRUE);
 }
 
 void	remove_binaries(void)
@@ -71,6 +64,6 @@ void	hit_binary(char *name)
 {
 	t_htnode	*node;
 
-	node = find_htnode(binaries(FALSE), name);
-	node->hits++;
+	if ((node = find_htnode(binaries(FALSE), name)))
+		node->hits++;
 }

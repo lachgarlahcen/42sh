@@ -6,12 +6,11 @@
 /*   By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/13 02:26:55 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/14 23:35:23 by nsaber           ###   ########.fr       */
+/*   Updated: 2020/02/23 00:20:59 by nsaber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cd_builtin.h"
-
 
 static char	*del_slash(char *str)
 {
@@ -36,11 +35,6 @@ static char	*del_slash(char *str)
 	return (ft_strdup(buff));
 }
 
-char	*ome_point()
-{
-	return(0);
-}
-
 static char	*del_point(char *str)
 {
 	int		i;
@@ -50,16 +44,16 @@ static char	*del_point(char *str)
 
 	i = 0;
 	p = 0;
-	ft_bzero(buf,READ_SIZE);
+	ft_bzero(buf, READ_SIZE);
 	while (str[i] && p < READ_SIZE - 1)
 	{
-		if(str[0] == '.' && str[i+2] == '/')
-			i+=1;
-		if (str[i] == '/' && str[i+1] == '.' && !str[i+2])
-			i+=2;
-		if (str[i] == '/' && str[i+1] == '.' && str[i+2] == '/')
-			i+=2;
-		buf[p++] = str[i++]; 
+		(str[0] == '.' && str[i + 2] == '/') ? i += 1 : 0;
+		(str[i] == '/' && str[i + 1] == '.' && !str[i + 2]) ? i += 2 : 0;
+		if (str[i] == '/' && str[i + 1] == '.' && str[i + 2] == '/')
+			i += 2;
+		if (str[i] == '.' && str[i + 1] == 0)
+			i += 1;
+		buf[p++] = str[i++];
 	}
 	buf[i] = '\0';
 	if (ft_strstr(buf, "/./"))
@@ -120,7 +114,8 @@ static char	*del_point2(char *str)
 	}
 	if (!ret)
 		ret = ft_strdup("/");
-	// free_tab(tab);we need free tab here and else where
+	free_tab(tab);
+	 //we need free tab here and else where
 	ft_memdel((void **)&str);
 	return (ret);
 }
@@ -130,6 +125,7 @@ char		*path_of_link(char *dir, char *pwd)
 	int		i;
 	char	*tp;
 	char	*tmp;
+
 	i = 0;
 	if (dir[0] == '/')
 		tmp = ft_strdup(dir);
@@ -141,12 +137,8 @@ char		*path_of_link(char *dir, char *pwd)
 			return (0);
 		ft_memdel((void **)&tp);
 	}
-	//  printf("--> 1 :path to go : %s\n",tmp);
 	tmp = del_point(tmp);
-	//   printf("--> 2 :path to go : %s\n",tmp);
 	tmp = del_slash(tmp);
-	//   printf("--> 3 :path to go : %s\n",tmp);
 	tmp = del_point2(tmp);
-	//   printf("--> 4 :path to go : %s\n",tmp);
 	return (tmp);
 }

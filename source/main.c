@@ -6,7 +6,15 @@
 /*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/01 20:14:50 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/22 13:32:10 by hastid           ###   ########.fr       */
+<<<<<<< HEAD
+/*   Updated: 2020/02/23 15:27:52 by hastid           ###   ########.fr       */
+=======
+<<<<<<< HEAD
+/*   Updated: 2020/02/22 19:14:01 by aihya            ###   ########.fr       */
+=======
+/*   Updated: 2020/02/22 23:51:30 by hastid           ###   ########.fr       */
+>>>>>>> d4ea9dc253525006127eec1cf5383510512db5e7
+>>>>>>> f531803a14810614ea1c5bbc756d224f1449fcf8
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +22,9 @@
 
 int	init_shell(void)
 {
-	
+	int	fd;
 
+	fd = 0;
 	if (!isatty(0) || !isatty(1))
 		return (1);
 	g_shell_pgid = getpid();
@@ -23,8 +32,12 @@ int	init_shell(void)
 	**Grab control of the terminal.
 	*/
 	g_h = 1;
+	g_stat = 0;
+	g_exit = 0;
 	g_jobs.id = 1;
 	g_jobs.f_job = 0;
+	fd = open("/dev/tty", O_RDWR);
+	init_fd(fd);
 	setpgid(g_shell_pgid, g_shell_pgid);
 	tcsetpgrp(STDIN_FILENO, g_shell_pgid);
 	tcgetattr(STDIN_FILENO, &g_shell_tmodes);
@@ -40,43 +53,43 @@ int	exit_status(int status, int check)
 	return (e_status);
 }
 
-int	init_fd(void)
+int	init_fd(int	my_fd)
 {
-	int	fd;
+	static int	fd;
 
-	if ((fd = open("/dev/tty", O_RDWR) == -1))
-		return (1);
+	if (my_fd)
+		fd = my_fd;
+	if (!isatty(fd))
+		fd = open("/dev/tty", O_RDWR);
 	if (dup2(fd, 0) == -1)
 		return (1);
 	if (dup2(fd, 1) == -1)
 		return (1);
 	if (dup2(fd, 2) == -1)
 		return (1);
-	close(fd);
 	return (0);
 }
 
 int main(int ac, char **av, char **env)
 {
-	int stat;
 	char *line;
+
 	if (init_shell())
 		return (1);
 	(void)ac;
 	(void)av;
-	stat = 0;
 	aliases(1);
 	signals(1);
 	binaries(1);
-	aliases_names(1);
+//	aliases_names(1);
 	init_history();
 	init_variables(env);
-	while ((line = read_line("42sh $> ")))
+	while (!g_exit && (line = read_line("42sh $> ")))
 	{
 		line_editing(line, 1);
 		ft_memdel((void **)&line);
 	}
 	free_variables();
 	free_history();
-	return (stat);
+	return (g_stat);
 }
