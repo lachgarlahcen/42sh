@@ -6,7 +6,7 @@
 /*   By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 04:13:05 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/22 23:47:43 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/23 15:28:17 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@
 # include "struct_shell.h"
 
 # define READ_SIZE 1000000
+
+int		g_stat;
+int		g_exit;
 
 int		init_fd(int fd);
 int		exit_status(int status, int check);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/06 12:23:05 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/21 15:44:05 by aihya            ###   ########.fr       */
+/*   Updated: 2020/02/23 00:45:34 by llachgar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,7 @@ int				ft_unbrleng(uint64_t n, int base);
 int				check_f(char *str, char c);
 int				nbr_cnvrt(char **str);
 char			*ft_strjoin_free(char *str, char c);
+int				ft_putstr_err_ret(const char *str, int ret);
 
 void			ft_free_st(t_form *frm);
 

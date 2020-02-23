@@ -5,9 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
+<<<<<<< HEAD
 /*   Created: 2020/02/01 20:14:50 by hastid            #+#    #+#             */
 /*   Updated: 2020/02/23 20:32:52 by aihya            ###   ########.fr       */
 /*   Updated: 2020/02/22 23:51:30 by hastid           ###   ########.fr       */
+=======
+/*   Created: 2020/02/23 17:43:21 by llachgar          #+#    #+#             */
+/*   Updated: 2020/02/23 17:43:25 by llachgar         ###   ########.fr       */
+>>>>>>> 6aedd04dbcf3bcf2abce20dc826eea39212cd882
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +20,9 @@
 
 int	init_shell(void)
 {
-	
+	int	fd;
 
+	fd = 0;
 	if (!isatty(0) || !isatty(1))
 		return (1);
 	g_shell_pgid = getpid();
@@ -24,8 +30,12 @@ int	init_shell(void)
 	**Grab control of the terminal.
 	*/
 	g_h = 1;
+	g_stat = 0;
+	g_exit = 0;
 	g_jobs.id = 1;
 	g_jobs.f_job = 0;
+	fd = open("/dev/tty", O_RDWR);
+	init_fd(fd);
 	setpgid(g_shell_pgid, g_shell_pgid);
 	tcsetpgrp(STDIN_FILENO, g_shell_pgid);
 	tcgetattr(STDIN_FILENO, &g_shell_tmodes);
@@ -60,27 +70,23 @@ int	init_fd(int	my_fd)
 
 int main(int ac, char **av, char **env)
 {
-	int	fd;
-	int stat;
 	char *line;
+
 	if (init_shell())
 		return (1);
 	(void)ac;
 	(void)av;
-	fd = open("/dev/tty", O_RDWR);
-	init_fd(fd);
-	stat = 0;
 	aliases(1);
 	signals(1);
 	binaries(1);
 	init_history();
 	init_variables(env);
-	while ((line = read_line("42sh $> ")))
+	while (!g_exit && (line = read_line("42sh $> ")))
 	{
 		line_editing(line, 1);
 		ft_memdel((void **)&line);
 	}
 	free_variables();
 	free_history();
-	return (stat);
+	return (g_stat);
 }
