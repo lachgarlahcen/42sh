@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 04:58:13 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/22 22:19:07 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/23 01:11:56 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int			check_all_arguments(t_proc *p)
 	return (0);
 }
 
-char		*delet_quotes(char *str, int free)
+char		*delet_quotes(char *str)
 {
 	int		i;
 	int		j;
@@ -83,7 +83,6 @@ char		*delet_quotes(char *str, int free)
 		if (str[i])
 			i++;
 	}
-	free = 0;
 	return (ft_strdup(buf));
 }
 
@@ -109,7 +108,7 @@ char		**get_args(t_tok *as)
 	while (tmp)
 	{
 		if (!tmp->id && tmp->token)
-			args[l++] = delet_quotes(tmp->token, 0);
+			args[l++] = delet_quotes(tmp->token);
 		tmp = tmp->next;
 	}
 	args[l] = 0;

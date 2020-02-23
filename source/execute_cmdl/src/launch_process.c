@@ -6,7 +6,7 @@
 /*   By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 12:16:28 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/22 23:49:43 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/23 01:12:24 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char		*search_executable(char *cmdl)
 {
 	char	*excu;
 
-	cmdl = delet_quotes(cmdl, 0);
+	cmdl = delet_quotes(cmdl);
 	if (!access(cmdl, F_OK))
 		if (!access(cmdl, X_OK))
 			if (!is_dir(cmdl))
