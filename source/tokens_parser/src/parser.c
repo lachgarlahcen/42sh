@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 00:46:23 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/23 19:20:50 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/23 21:50:35 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,16 @@ static int	parse_token(t_tok **t, char *line)
 	return (0);
 }
 
+static int	change_tokens(t_tok *tok)
+{
+	int	fd;
+
+	fd = ft_herdoc(tok->token);
+	ft_memdel((void **)&(tok->token));
+	tok->token = ft_itoa(fd);
+	return (0);
+}
+
 static int	analyse_tokens(t_tok *t)
 {
 	t_tok	*tp;
@@ -86,6 +96,8 @@ static int	analyse_tokens(t_tok *t)
 			tp->id = 0;
 		if (tp->id == 2)
 			tp->next->id = 3;
+		if (tp->id == 2 && !ft_strcmp(">>", tp->token))
+			change_tokens(tp->next);
 		tp = tp->next;
 	}
 	return (0);
