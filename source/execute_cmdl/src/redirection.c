@@ -6,7 +6,7 @@
 /*   By: iel-bouh <iel-bouh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 03:59:51 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/23 21:29:02 by iel-bouh         ###   ########.fr       */
+/*   Updated: 2020/02/23 22:25:33 by iel-bouh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int		ft_out_redirection(t_tok *tmp, char *file)
 			ft_putendl_fd("42sh: bad file descriptor", 2);
 			return (-1);
 		}
-		// close(fd);
+		close(fd);
 	}
 	else if (ft_strequ(ft_get_redict_by_id(tmp, 2), ">>") == 1)
 	{
@@ -90,7 +90,7 @@ int		ft_ampersand(t_tok *p, char *file)
 			ft_putendl_fd("42sh: bad file descriptor", 2);
 			return (-1);
 		}
-		// close(fd);
+		close(fd);
 	}
 	return (0);
 }
@@ -125,6 +125,20 @@ int		ft_in_redirection(t_tok *p, char *file)
 	return (0);
 }
 
+int		ft_run_herdoc(t_tok *tmp, char *file)
+{
+	if (ft_strequ(ft_get_redict_by_id(tmp, 2), "<<") == 1)
+	{
+		ft_putendl("hona");
+		ft_putendl(file);
+		 if (dup2(ft_atoi(file), 0) == -1)
+		 {
+		 	ft_putendl_fd("42sh: bad file descriptor", 2);
+			return (-1);
+		 }
+	}
+	return (0);
+}
 int		ft_redirection(t_proc *p)
 {
 	t_tok *tmp;
@@ -142,8 +156,7 @@ int		ft_redirection(t_proc *p)
 				return (1);
 			else if (ft_in_redirection(tmp, file) == -1)
 				return (1);
-			else if (ft_strequ(ft_get_redict_by_id(tmp, 2), "<<") == 1
-								&& ft_herdoc(file) == -1)
+			else if (ft_run_herdoc(tmp, file) == -1)
 				return (1);
 			else if (ft_aggregation(tmp, file) == -1)
 				return (1);
