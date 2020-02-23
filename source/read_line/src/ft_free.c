@@ -6,7 +6,7 @@
 /*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 05:39:04 by llachgar          #+#    #+#             */
-/*   Updated: 2020/02/05 03:42:49 by llachgar         ###   ########.fr       */
+/*   Updated: 2020/02/23 00:54:33 by llachgar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char			*ft_strjoin_f(char *s1, char *s2, int a, int b)
 	return (str);
 }
 
-void	free_out(t_cmd *l)
+void			free_out(t_cmd *l)
 {
 	if (l)
 	{
@@ -46,7 +46,7 @@ void	free_out(t_cmd *l)
 	ft_putchar('\n');
 }
 
-void	go_to_the_end(t_cmd *l)
+void			go_to_the_end(t_cmd *l)
 {
 	l->cur = l->len;
 	print_cmd(l);

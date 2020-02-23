@@ -6,7 +6,7 @@
 /*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 14:46:01 by llachgar          #+#    #+#             */
-/*   Updated: 2020/02/22 15:53:54 by llachgar         ###   ########.fr       */
+/*   Updated: 2020/02/23 01:02:18 by llachgar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,18 @@
 #define HISTORY_FILE_PATH "/tmp/.21sh_history"
 #define O_FILL (O_CREAT | O_WRONLY | O_TRUNC)
 #define ABS(x) ((x) < 0 ? -(x) : (x))
+#define CHECK_PATH_CONTEXT1(patt) (!ft_strcmp(patt, "..") || !ft_strcmp(patt, "."))
+#define CHECK_PATH_CONTEXT(patt) (ft_strrchr(patt, '/') || CHECK_PATH_CONTEXT1(patt))
+#define IS_BEGIN_CMD(c) (c == ';' || c == '|' || c == '&')
+
+enum	context
+{
+	BINARY,
+	VARS,
+	PATH
+};
+
+enum {POINT, NUMBER};
 
 int g_h;
 
@@ -265,6 +277,7 @@ int ft_fc_list(t_fc *fc);
 int ft_fc_editor(t_fc *fc);
 int ft_fc_get_pos(char *arg, int *pos);
 int ft_fc(char **av);
+int get_real_index(int v, int count);
 /*
 ** FC BUILTIN FUNCTIONS ENDS
 */
