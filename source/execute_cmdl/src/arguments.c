@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 04:58:13 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/23 01:11:56 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/23 18:42:30 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,20 @@ static int	is_intern_variable(char *name)
 	return (0);
 }
 
+void		manage_hashtable(char *bin_name)
+{
+	char	*bin_path;
+
+	if (is_binary(bin_name))
+		hit_binary(bin_name);
+	else if (!is_builtin(bin_name) && (bin_path = get_bin_path(bin_name)))
+	{
+		save_binary(bin_name, bin_path);
+		hit_binary(bin_name);
+		ft_strdel(&bin_path);
+	}	
+}
+
 int			check_all_arguments(t_proc *p)
 {
 	t_tok	*as;
@@ -49,6 +63,8 @@ int			check_all_arguments(t_proc *p)
 				break ;
 			as = as->next;
 		}
+		if (as)
+			manage_hashtable(as->token);
 		tp = tp->next;
 	}
 	return (0);

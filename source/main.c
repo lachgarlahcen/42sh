@@ -5,8 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
+<<<<<<< HEAD
+/*   Created: 2020/02/01 20:14:50 by hastid            #+#    #+#             */
+/*   Updated: 2020/02/23 20:32:52 by aihya            ###   ########.fr       */
+/*   Updated: 2020/02/22 23:51:30 by hastid           ###   ########.fr       */
+=======
 /*   Created: 2020/02/23 17:43:21 by llachgar          #+#    #+#             */
 /*   Updated: 2020/02/23 17:43:25 by llachgar         ###   ########.fr       */
+>>>>>>> 6aedd04dbcf3bcf2abce20dc826eea39212cd882
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +79,6 @@ int main(int ac, char **av, char **env)
 	aliases(1);
 	signals(1);
 	binaries(1);
-//	aliases_names(1);
 	init_history();
 	init_variables(env);
 	while (!g_exit && (line = read_line("42sh $> ")))

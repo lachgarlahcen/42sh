@@ -6,7 +6,7 @@
 /*   By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/16 19:26:51 by aihya             #+#    #+#             */
-/*   Updated: 2020/02/22 19:10:01 by aihya            ###   ########.fr       */
+/*   Updated: 2020/02/23 15:20:26 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ int		save_binary(char *bin_name, char *bin_value)
 			return (0);
 		push_htnode(binaries(FALSE), &bin);
 		binaries_counter(INC);
-		printf("INTRODUCING NEW ELEMENT %s %s | COUNTER: %zu\n", bin_name, is_binary(bin_name), binaries_counter(0));
 	}
 	else
 	{
