@@ -6,7 +6,7 @@
 /*   By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 16:29:59 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/23 21:51:41 by nsaber           ###   ########.fr       */
+/*   Updated: 2020/02/23 22:11:04 by nsaber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,11 @@ int			cd_link_dir(char *dir, char *mybuf, char **args, struct stat *buf)
 	if (args[2][0] == '/' && S_ISLNK(buf->st_mode) && mybuf[0] != '/')
 	{
 		chdir(args[2]);
-		if (!(mybuf = getcwd(0, 0)))
+		if (!(mybuf = getcwd(NULL, 0)))
 			return (1);
 	}
 	change_dir(mybuf);
+	free(mybuf);
 	return (0);
 }
 
