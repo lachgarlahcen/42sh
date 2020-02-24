@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   job_control.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 22:18:53 by llachgar          #+#    #+#             */
-/*   Updated: 2020/02/24 04:30:45 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/24 05:31:44 by nsaber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ void execute_jobs(char **args)
 	int i;
 	static char option = 0; // for recursive to conserve value
 
+update_status();
 	i = 0;
 	j = g_jobs.f_job;
 	if (args[1] && args[1][0] == '-')
