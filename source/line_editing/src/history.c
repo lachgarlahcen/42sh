@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 04:55:08 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/22 22:21:00 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/24 04:24:11 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int			check_history_expa(char **line)
 			if (check_history(&str, ++i, qo))
 				return (1);
 		}
-		else
+		else if (str[i] != '\0')
 			i++;
 	}
 	*line = str;

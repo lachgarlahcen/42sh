@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 04:58:13 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/24 03:34:41 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/24 05:03:48 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,29 +72,29 @@ int			check_all_arguments(t_proc *p)
 
 char		*delet_quotes(char *str)
 {
-	int		i;
 	int		j;
-	int		be;
+	char	be;
 	char	buf[READ_SIZE];
 
-	i = 0;
 	j = 0;
 	ft_bzero(buf, READ_SIZE);
-	while (str[i] && i < READ_SIZE)
+	while (*str && j < READ_SIZE)
 	{
-		if (str[i] == '\'' || str[i] == '\"')
+		if (*str == '\\')
+			str++;
+		else if (*str == '\'' || *str == '\"')
 		{
-			be = i++;
-			while (str[i] && str[i] != str[be])
+			be = *str++;
+			while (*str && *str != be)
 			{
-				if (str[i] == '\\' && str[be] == '\"')
-					i++;
-				buf[j++] = str[i++];
+				if (*str == '\\' && be == '\"')
+					str++;
+				buf[j++] = *str++;
 			}
+			str++;
 		}
-		else if (str[i] != '\\')
-			buf[j++] = str[i];
-		i++;
+		buf[j++] = *str;
+		str = (*str != '\0') ? str + 1 : str;
 	}
 	return (ft_strdup(buf));
 }
