@@ -6,7 +6,7 @@
 /*   By: iel-bouh <iel-bouh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 12:16:28 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/24 03:28:04 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/24 20:51:07 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ int		execute_args(t_tok *as, char **args)
 	if (!(exec = search_executable(as->token)))
 		exit(1);
 	env = get_env_variables();
+	free_temp_variables();
 	if (execve(exec, args, env) == -1)
 		ft_perror_pipe("EXECVE ERROR !!", 1);
 	exit(1);
@@ -137,6 +138,7 @@ int		execute_pipe(t_proc *p, int *in, int *pgid)
 	if (out != 1)
 		close(out);
 	*in = pi[0];
+
 	free_tab(args);
 	return (0);
 }
@@ -201,6 +203,7 @@ int		execute_without_fork(t_proc *p, int iv)
 	exit_status(execute_builtin(args), 1);
 	if (init_fd(0))
 		exit(1);
+	free_temp_variables();
 	free_tab(args);
 	return (0);
 }
