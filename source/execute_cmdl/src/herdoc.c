@@ -6,7 +6,7 @@
 /*   By: iel-bouh <iel-bouh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 15:48:12 by iel-bouh          #+#    #+#             */
-/*   Updated: 2020/02/24 01:56:31 by iel-bouh         ###   ########.fr       */
+/*   Updated: 2020/02/24 02:27:31 by iel-bouh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int			ft_herdoc(char *file)
 	return (0);
 }
 
-int		ft_run_herdoc(t_tok *tmp, char *file)
+int			ft_run_herdoc(t_tok *tmp, char *file)
 {
 	if (ft_strequ(ft_get_id(tmp, 2), "<<") == 1)
 	{
