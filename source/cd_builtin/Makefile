@@ -6,14 +6,15 @@
 #    By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/14 22:57:24 by nsaber            #+#    #+#              #
-#    Updated: 2020/02/14 23:02:24 by nsaber           ###   ########.fr        #
+#    Updated: 2020/02/23 21:53:21 by nsaber           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cd_builtin.a
 
 SRC_NAME = sh_buil_cd.c \
-		   sh_builcd.c
+		   sh_builcd.c \
+		   cd_tools.c 
 
 OBJ_NAME =	$(SRC_NAME:.c=.o)
 

@@ -3,31 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   job_notification.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+        */
+/*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 00:42:10 by llachgar          #+#    #+#             */
-/*   Updated: 2020/02/23 00:02:02 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/24 05:58:54 by llachgar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "job_control.h"
 
-/*
- ** Store the status of the process pid that was returned by waitpid.
- ** Return 0 if all went well, nonzero otherwise.
- */
-
-int mark_process_status (pid_t pid, int status)
+void		mark_process(t_proc *p, int status)
 {
-	t_job *j;
-	t_proc *p;
-	j = g_jobs.f_job;
+	p->stat = status;
+	if (WIFEXITED(status) == 1)
+		p->c = 1;
+	else if (WIFSIGNALED(status))
+		p->c = 1;
+	else if (WIFSTOPPED(status))
+		p->s = 1;
+	else if (WIFCONTINUED(status))
+		p->s = 0;
+}
 
+int			mark_process_status(pid_t pid, int status)
+{
+	t_job	*j;
+	t_proc	*p;
+
+	j = g_jobs.f_job;
 	if (pid > 0)
 	{
-		/* 
-		 **Update the record for the process.
-		 */
 		while (j)
 		{
 			p = j->p;
@@ -35,61 +40,45 @@ int mark_process_status (pid_t pid, int status)
 			{
 				if (p->pid == pid)
 				{
-					p->stat = status;
-					if (WIFSTOPPED (status))
-					{
-						p->s = 1;
-						j->status = WSTOPSIG(status);
-					}
-
-					else
-					{
-						p->c = 1;
-						j->notified = 0;
-						if (WIFSIGNALED(p->stat))
-							j->status = WTERMSIG(status);
-						else
-							j->status = WEXITSTATUS(status);
-					}
-					// printf("status 111 -> %d\n",j->status);
-					return 0;
+					mark_process(p, status);
+					j->notified = 0;
+					if (!p->next)
+						j->status = p->stat;
+					return (0);
 				}
 				p = p->next;
 			}
-	// printf("status 222 -> %d\n",j->status);
 			j = j->next;
 		}
 	}
 	return (1);
 }
 
-void  update_status (void)
+void		update_status(void)
 {
-	int status;
-	pid_t pid;
-	//t_job *j;
+	int		status;
+	pid_t	pid;
+	t_job	*j;
 
-	// j = g_jobs.f_job;
-	// while (j)
-	// {
-	//   ft_printf("pgid%d\n", j->pgid);
-	//   j = j->next;
-	// }
-	do
-		pid = waitpid (WAIT_ANY, &status, WUNTRACED|WNOHANG);
-	while (!mark_process_status(pid, status));
+	j = g_jobs.f_job;
+	while (1337)
+	{
+		pid = waitpid(WAIT_ANY, &status, WUNTRACED | WNOHANG);
+		if (mark_process_status(pid, status))
+			break ;
+	}
 }
 
-void  wait_for_job (t_job *j)
+void		wait_for_job(t_job *j)
 {
-	int status;
-	pid_t pid;
+	int		status;
+	pid_t	pid;
 	t_proc	*p;
 
 	while (1)
 	{
-		pid = waitpid (WAIT_ANY, &status, WUNTRACED);
-		if (mark_process_status (pid, status))
+		pid = waitpid(WAIT_ANY, &status, WUNTRACED);
+		if (mark_process_status(pid, status))
 			break ;
 		if (job_is_stopped(j) || job_is_completed(j))
 			break ;
@@ -100,100 +89,90 @@ void  wait_for_job (t_job *j)
 	if (WIFEXITED(p->stat))
 		exit_status(WEXITSTATUS(p->stat), 1);
 	else if (WIFSIGNALED(p->stat))
+	{
 		exit_status(WTERMSIG(p->stat) + 128, 1);
+		if (WTERMSIG(p->stat) != 2)
+			do_job_notification();
+	}
 	else if (WIFSTOPPED(j->status))
 		exit_status(WSTOPSIG(p->stat) + 128, 1);
 }
 
-
-void  format_job_info (t_job *j, const char *status, char option)
+void		printf_job_info(t_job *j, char *status, char opt)
 {
-	char *g_sinalmsg[] =
-	{
-		"running",
-		"Hangup",                                                                                                                                                                                                                                         
-		"Interrupt",                                                                                                                                                                                                                                      
-		"Quit",                                                                                                                                                                                                  
-		"Illegal instruction",                                                                                                                                                                                                                            
-		"Trace/breakpoint trap",                                                                                                                                                                                                                          
-		"Aborted",                                                                                                                                                                                                                                       
-		"Bus error",                                                                                                                                                                                                                                      
-		"Floating point exception",                                                                                                                                                                                                                       
-		"Killed",                                                                                                                                                                                                                                         
-		"User defined signal 1",                                                                                                                                                                                                                          
-		"Segmentation fault",                                                                                                                                                                                                                             
-		"User defined signal 2",                                                                                                                                                                                                                          
-		"Broken pipe",                                                                                                                                                                                                                                    
-		"Alarm clock",                                                                                                                                                                                                                                    
-		"Terminated",                                                                                                                                                                                                                                     
-		"Stack fault",                                                                                                                                                                                                                                    
-		"Child exited",                                                                                                                                                                                                                                   
-		"Continued",                                                                                                                                                                                                                                      
-		"Stopped (signal)",                                                                                                                                                                                                                               
-		"Stopped",                                                                                                                                                                                                                                        
-		"Stopped (tty input)",                                                                                                                                                                                                                            
-		"Stopped (tty output)",                                                                                                                                                                                                                           
-		"Urgent I/O condition",                                                                                                                                                                                                                           
-		"CPU time limit exceeded",                                                                                                                                                                                                                        
-		"File size limit exceeded",                                                                                                                                                                                                                       
-		"Virtual timer expired",                                                                                                                                                                                                                          
-		"Profiling timer expired",                                                                                                                                                                                                                        
-		"Window changed",                                                                                                                                                                                                                                 
-		"I/O possible",                                                                                                                                                                                                                                   
-		"Power failure"
-	};
-	(void )status;
+	if (opt == 0)
+		ft_printf("[%d]%c %s\t\t%s\n", j->id, j->sign, status, j->name);
+	else if (opt == 'l')
+		ft_printf("[%d]%c  %ld  %s\t\t%s\n", j->id,
+				j->sign, (long)j->pgid, status, j->name);
+	else if (opt == 'p')
+		ft_printf("%d\n", j->pgid);
+	else
+		ft_printf("jobs: -%c: invalid option\nusage: jobs [-lp] [jobspec ...]\n"
+				, opt);
+	ft_strdel(&status);
+	if (job_is_completed(j))
+		delete_job(j->pgid);
+}
+
+void		notify_exit(t_job *j, char opt)
+{
 	int s;
 
-	s = j->status;
-	if (option == 0)
-		fprintf (stderr, "[%d]%c %s\t\t%s\n",j->id , j->sign, g_sinalmsg[s], j->name);
-	else if (option == 'l')
-	{
-		fprintf (stderr, "[%d]%c  %ld  %s\t\t%s\n",j->id , j->sign, (long)j->pgid, g_sinalmsg[s], j->name);
-	}
-	else if(option == 'p')
-		fprintf (stderr, "%d\n",j->pgid);
+	s = WEXITSTATUS(j->status);
+	if (!job_is_completed(j))
+		printf_job_info(j, ft_strdup("Running"), opt);
+	else if (s == 0)
+		printf_job_info(j, ft_strdup("Done"), opt);
 	else
-		fprintf(stderr, "jobs: -%c: invalid option\nusage: jobs [-lp] [jobspec ...]\n",option);
-
-
-
+		printf_job_info(j, ft_strjoin_f("Done: ", ft_itoa(s), 0, 1), opt);
 }
-void  do_job_notification (void)
+
+void		notifecation_by_type(char *g_sinalmsg[], t_job *j, char option)
 {
-	t_job *j, *jlast, *jnext;
-	//t_proc *p;
+	int	s;
 
-	/* Update status information for child processes.  */
-	update_status ();
+	s = 0;
+	if (WIFEXITED(j->status) == 1)
+		return (notify_exit(j, option));
+	else if (WIFSIGNALED(j->status))
+		s = WTERMSIG(j->status);
+	else if (WIFSTOPPED(j->status))
+		s = WSTOPSIG(j->status);
+	else if (WIFCONTINUED(j->status))
+		s = 1;
+	printf_job_info(j, ft_strdup(g_sinalmsg[s]), option);
+}
 
-	jlast = NULL;
-	for (j = g_jobs.f_job; j; j = jnext)
+void		format_job_info(t_job *j, char option)
+{
+	static char	*g_sinalmsg[] = {
+		"Done", "Hangup", "Interrupt", "Quit", "Illegal instruction",
+		"Trace/breakpoint trap", "Aborted", "Bus error",
+		"Floating point exception", "Killed", "User defined signal 1",
+		"Segmentation fault", "User defined signal 2", "Broken pipe",
+		"Alarm clock", "Terminated", "Stack fault", "Child exited", "suspended",
+		"Stopped (signal)", "Stopped", "Stopped (tty input)",
+		"Stopped (tty output)", "Urgent I/O condition",
+		"CPU time limit exceeded", "File size limit exceeded",
+		"Virtual timer expired", "Profiling timer expired", "Window changed",
+		"I/O possible", "Power failure"
+	};
+
+	j->notified = 1;
+	notifecation_by_type(g_sinalmsg, j, option);
+}
+
+void		do_job_notification(void)
+{
+	t_job *j;
+
+	update_status();
+	j = g_jobs.f_job;
+	while (j)
 	{
-		jnext = j->next;
-
-		/* If all processes have completed, tell the user the job has
-		   completed and delete it from the list of active jobs.  */
-		if (job_is_completed (j)) {
-			format_job_info (j, "completed", 0);
-			if (jlast)
-				jlast->next = jnext;
-			else
-				g_jobs.f_job = jnext;
-			free_job (j);
-		}
-
-		/* Notify the user about stopped jobs,
-		   marking them so that we won’t do this more than once.  */
-		else if (job_is_stopped (j) && !j->notified) {
-			format_job_info (j, "stopped", 0);
-			j->notified = 1;
-			jlast = j;
-		}
-
-		/* Don’t say anything about jobs that are still running.  */
-		else
-			jlast = j;
+		if (!j->notified)
+			format_job_info(j, 0);
+		j = j->next;
 	}
 }

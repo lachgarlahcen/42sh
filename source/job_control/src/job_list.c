@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   job_list.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+        */
+/*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 01:41:09 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/21 09:23:28 by nsaber           ###   ########.fr       */
+/*   Updated: 2020/02/24 05:22:29 by llachgar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,14 +62,14 @@ static t_job	*add_job(t_proc *p, pid_t pgid, int bg)
 		return (0);
 	j->p = p;
 	j->pgid = pgid;
-	j->notified = 0;
+	j->notified = 1;
 	j->name = name_list_concate(p); // added here by noureddine
-	j->cmd = ft_strdup(p->as->token); // added by noureddine
+	j->cmd = p->as ? ft_strdup(p->as->token) : ft_strdup(p->red->token); // added by noureddine
+	j->sign = 0; // important for later verifications
 	if (bg)
 		j->id = g_jobs.id++;
 	else
-		j->id = 0;
-	
+		j->id = 0;	
 	j->next = 0;
 	return (j);
 }
@@ -81,12 +81,12 @@ void delete_job(pid_t pgid)
 
 	j = g_jobs.f_job;
 	prev = NULL;
-	while (j->pgid != pgid && j->next != NULL)
+	while (j && j->pgid != pgid && j->next != NULL)
 	{
 		prev = j;
 		j = j->next;
 	}
-	if (j->pgid == pgid)
+	if (j && j->pgid == pgid)
 	{
 		if (prev)
 		{
@@ -116,20 +116,26 @@ t_job			*add_jobs(t_proc *p, pid_t pgid, int bg)
 
 void			free_job(t_job *j)
 {
-	free_process(j->p);
-	ft_memdel((void**)&j);
+	if (j)
+	{
+		free_process(j->p);
+		ft_strdel(&j->name);
+		ft_strdel(&j->cmd);
+		ft_memdel((void**)&j);
+	}
 }
 
 void			free_jobs(void)
 {
 	t_job	*tp;
-
-	while (g_jobs.f_job)
+	t_job	*tmp;
+	
+	tp = g_jobs.f_job;
+	while (tp)
 	{
-		tp = g_jobs.f_job->next;
-		free_process(g_jobs.f_job->p);
-		ft_memdel((void**)&g_jobs.f_job);
-		g_jobs.f_job = tp;
+		tmp = tp;
+		tp = tp->next;
+		free_job(tmp);
 	}
 	g_jobs.f_job = 0;
 }

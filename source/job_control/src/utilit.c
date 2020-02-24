@@ -6,7 +6,7 @@
 /*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 22:25:32 by llachgar          #+#    #+#             */
-/*   Updated: 2020/02/15 11:25:40 by llachgar         ###   ########.fr       */
+/*   Updated: 2020/02/24 00:20:28 by llachgar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,12 +66,18 @@ int     job_is_stopped (t_job *j)
   t_proc *p;
 
   p = j->p;
+  if (!p)
+  exit(0);
   while (p)
   {
+
       if (!p->c && !p->s)
+      {
       return (0);
+      }
       p = p->next;
   }
+
   return (1);
 }
 
@@ -85,7 +91,12 @@ int     job_is_completed (t_job *j)
   while (p)
   {
       if (!p->c)
+      {
         return (0);
+
+
+      }
+
     p = p->next;
   }
   return 1;

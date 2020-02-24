@@ -5,35 +5,45 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/13 04:13:44 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/24 20:44:27 by hastid           ###   ########.fr       */
+/*   Created: 2020/02/23 23:37:00 by hastid            #+#    #+#             */
+/*   Updated: 2020/02/23 23:37:36 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "intern_variables.h"
+#include "execute_builtin.h"
 
-int		ret_error(char *err)
+int			ft_perror_buil(char *error)
 {
-	ft_putstr_fd("42sh : ", 2);
-	ft_putstr_fd(err, 2);
-	ft_putendl_fd(": not a valid variable !!", 2);
+	ft_putstr("42sh: ");
+	ft_putendl(error);
 	return (1);
 }
 
-int		check_name_variables(char *name, int check)
+int64_t		ft_atoll(char *str, int *check)
 {
-	int	i;
+	int			s;
+	int			i;
+	uint64_t	r;
 
-	i = 1;	
-	if (!ft_isalpha(name[0]) && name[0] != '_')
-		return (ret_error(name));
-	while (name[i])
+	i = 0;
+	r = 0;
+	s = 1;
+	while (str[i] == ' ' || str[i] == '\n')
+		i++;
+	if (str[i] == '-')
 	{
-		if (check && name[i] == '=')
-			break ;
-		if (!ft_isalnum(name[i]) && name[i] != '_')
-			return (ret_error(name));
+		s = -1;
 		i++;
 	}
-	return (0);
+	else if (str[i] == '+')
+		i++;
+	while (str[i] != '\0' && str[i] >= '0' && str[i] <= '9')
+	{
+		r = r * 10 + (str[i] - '0');
+		*check = (r > 9223372036854775807) ? 1 : 0;
+		i++;
+	}
+	if (str[i] && !ft_isdigit(str[i]) && str[i] != ' ' && str[i] != '\n')
+		*check = 1;
+	return ((int64_t)(r * s));
 }

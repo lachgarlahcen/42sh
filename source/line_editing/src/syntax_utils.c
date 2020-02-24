@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/22 22:13:14 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/22 22:18:09 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/24 04:29:27 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ int		expansion_dollar(char *str)
 		if (str[i] == '$' && str[i + 1] == '{')
 			if (check_dollar_var(str, i + 2))
 				return (1);
-		i++;
+		i = (str[i] != '\0') ? i + 1 : i;
 	}
 	return (0);
 }

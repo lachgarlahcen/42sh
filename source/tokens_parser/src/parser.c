@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: iel-bouh <iel-bouh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 00:46:23 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/23 19:20:50 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/24 01:36:06 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,8 @@ static int	analyse_tokens(t_tok *t)
 			tp->id = 0;
 		if (tp->id == 2)
 			tp->next->id = 3;
+		if (tp->id == 2 && !ft_strcmp("<<", tp->token))
+			change_tokens(tp->next);
 		tp = tp->next;
 	}
 	return (0);

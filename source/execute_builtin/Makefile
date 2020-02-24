@@ -6,13 +6,14 @@
 #    By: hastid <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/08 01:54:05 by hastid            #+#    #+#              #
-#    Updated: 2020/02/10 20:50:51 by hastid           ###   ########.fr        #
+#    Updated: 2020/02/23 23:39:15 by hastid           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = execute_builtin.a
 
-SRC_NAME = execute_builtin.c
+SRC_NAME = execute_builtin.c \
+		   utils.c
 
 OBJ_NAME =	$(SRC_NAME:.c=.o)
 

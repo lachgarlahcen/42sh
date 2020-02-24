@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aihya <aihya@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/01 20:14:50 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/23 20:39:20 by aihya            ###   ########.fr       */
+/*   Created: 2020/02/23 21:16:34 by llachgar          #+#    #+#             */
+/*   Updated: 2020/02/24 21:49:57 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,9 @@ int main(int ac, char **av, char **env)
 		line_editing(line, 1);
 		ft_memdel((void **)&line);
 	}
+	if (g_exit)
+		ft_putendl("exit");
+	free_jobs();
 	free_variables();
 	free_history();
 	return (g_stat);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   arguments.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: aihya <aihya@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 04:58:13 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/23 20:40:40 by aihya            ###   ########.fr       */
+/*   Updated: 2020/02/24 21:49:24 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void		manage_hashtable(char *bin_name)
 		save_binary(bin_name, bin_path);
 		hit_binary(bin_name);
 		ft_strdel(&bin_path);
-	}	
+	}
 }
 
 int			check_all_arguments(t_proc *p)
@@ -72,32 +72,29 @@ int			check_all_arguments(t_proc *p)
 
 char		*delet_quotes(char *str)
 {
-	int		i;
 	int		j;
-	int		be;
+	char	be;
 	char	buf[READ_SIZE];
 
-	i = 0;
 	j = 0;
 	ft_bzero(buf, READ_SIZE);
-	while (str[i] && i < READ_SIZE)
+	while (*str && j < READ_SIZE)
 	{
-		if (str[i] == '\\')
-			i++;
-		if (str[i] == '\'' || str[i] == '\"')
+		if (*str == '\\')
+			str++;
+		else if (*str == '\'' || *str == '\"')
 		{
-			be = i++;
-			while (str[i] && str[i] != str[be])
+			be = *str++;
+			while (*str && *str != be)
 			{
-				if (str[i] == '\\' && str[be] == '\"')
-					i++;
-				buf[j++] = str[i++];
+				if (*str == '\\' && be == '\"')
+					str++;
+				buf[j++] = *str++;
 			}
-			i++;
+			str++;
 		}
-		buf[j++] = str[i];
-		if (str[i])
-			i++;
+		buf[j++] = *str;
+		str = (*str != '\0') ? str + 1 : str;
 	}
 	return (ft_strdup(buf));
 }
@@ -136,8 +133,11 @@ void		free_tab(char **tab)
 	int	i;
 
 	i = 0;
-	while (tab[i])
-		ft_memdel((void **)&tab[i++]);
-	free(tab);
-	tab = 0;
+	if (tab)
+	{
+		while (tab[i])
+			ft_memdel((void **)&tab[i++]);
+		free(tab);
+		tab = 0;
+	}
 }
