@@ -6,7 +6,7 @@
 /*   By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/16 18:53:16 by aihya             #+#    #+#             */
-/*   Updated: 2020/02/19 00:41:57 by aihya            ###   ########.fr       */
+/*   Updated: 2020/02/23 21:30:24 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ static int	path_basenames_cmp(char *base_name)
 	char	*path_var;
 
 	path_var = get_variable("PATH");
+	if (path_var == NULL)
+		return (0);
 	match = 0;
 	index = 0;
 	table = ft_strsplit(path_var, ':');
@@ -70,7 +72,7 @@ void		update_binaries(void)
 	hashtable = binaries(FALSE);
 	names = binaries_names(FALSE);
 	index = 0;
-	while (names[index])
+	while (names && names[index])
 	{
 		base_name = get_base_name(is_binary(names[index]));
 		if (path_basenames_cmp(base_name) == FALSE)

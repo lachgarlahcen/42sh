@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "intern_variables.h"
+#include "sh.h"
 
 int		unset_variables(char **args)
 {
@@ -34,6 +35,7 @@ int		unset_variables(char **args)
 			del_elem(&var, args[i]);
 		}
 		get_intern_variables(&var, 1);
+		update_binaries();
 	}
 	return (ret);
 }
@@ -61,6 +63,7 @@ int		set_variable(char *arg, int id, int temp)
 			get_temp_variables(&var, 1);
 		else
 			get_intern_variables(&var, 1);
+		update_binaries();
 	}
 	return (0);
 }

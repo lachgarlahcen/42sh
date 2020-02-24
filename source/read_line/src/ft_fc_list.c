@@ -62,7 +62,7 @@ static void		ft_fc_print_list(t_hist *h, t_fc *fc, int f, int l)
 	}
 }
 
-void			ft_fc_list_history(t_fc *fc, int f, int l)
+int			ft_fc_list_history(t_fc *fc, int f, int l)
 {
 	t_hist *hist;
 
@@ -78,7 +78,10 @@ void			ft_fc_list_history(t_fc *fc, int f, int l)
 		l = (hist->count - l);
 	else if (l < 0)
 		l = ABS(l) - 1;
+	if (l >= hist->count || f >= hist->count)
+		return (0);
 	ft_fc_print_list(hist, fc, f, l);
+	return (1);
 }
 
 int				ft_fc_list(t_fc *fc)
@@ -89,11 +92,11 @@ int				ft_fc_list(t_fc *fc)
 	f = -16;
 	l = 0;
 	if (fc->first)
-		if (!ft_fc_get_pos(fc->first, &f) || !ft_fc_get_pos(fc->last, &l))
+		if (!ft_fc_get_pos(fc->first, &f) || !ft_fc_get_pos(fc->last, &l)
+		|| !ft_fc_list_history(fc, f, l))
 		{
 			ft_putstr_fd("42sh: fc: history specification out of range\n", 2);
-			return (0);
+			return (1);
 		}
-	ft_fc_list_history(fc, f, l);
-	return (1);
+	return (0);
 }

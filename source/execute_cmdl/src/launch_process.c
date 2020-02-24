@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   launch_process.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iel-bouh <iel-bouh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aihya <aihya@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 12:16:28 by hastid            #+#    #+#             */
 /*   Updated: 2020/02/24 21:55:24 by hastid           ###   ########.fr       */
