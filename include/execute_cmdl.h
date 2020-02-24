@@ -6,7 +6,7 @@
 /*   By: iel-bouh <iel-bouh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 03:40:10 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/24 00:15:21 by iel-bouh         ###   ########.fr       */
+/*   Updated: 2020/02/24 01:56:42 by iel-bouh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int		ft_close_fd(t_tok *p, char *file);
 int		ft_normal_aggregation(char *file);
 int		ft_aggregation(t_tok *p, char *file);
 int		ft_all_digits(char *str);
-char	*ft_get_redict_by_id(t_tok *tok, int i);
+char	*ft_get_id(t_tok *tok, int i);
 int		ft_is_file(char *path);
 int		ft_get_file_fd(char *file, char append);
 int		ft_check_fd(char *str, t_tok *p);
