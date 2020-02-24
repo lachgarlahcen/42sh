@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 04:58:13 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/24 01:26:36 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/24 03:34:41 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,8 +133,11 @@ void		free_tab(char **tab)
 	int	i;
 
 	i = 0;
-	while (tab[i])
-		ft_memdel((void **)&tab[i++]);
-	free(tab);
-	tab = 0;
+	if (tab)
+	{
+		while (tab[i])
+			ft_memdel((void **)&tab[i++]);
+		free(tab);
+		tab = 0;
+	}
 }

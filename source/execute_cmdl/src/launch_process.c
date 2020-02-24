@@ -6,7 +6,7 @@
 /*   By: iel-bouh <iel-bouh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 12:16:28 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/24 03:17:16 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/24 03:28:04 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,16 +141,6 @@ int		execute_pipe(t_proc *p, int *in, int *pgid)
 	return (0);
 }
 
-void	close_heredoc(t_tok *r)
-{
-	while (r)
-	{
-		if (!ft_strcmp("<<", r->token))
-			close(ft_atoi(r->next->token));
-		r = r->next;
-	}
-}
-
 int		execute_pipes_line(t_proc *p, int bg)
 {
 	int		in;
@@ -176,7 +166,6 @@ int		execute_pipes_line(t_proc *p, int bg)
 	}
 	else
 		put_job_in_foreground(j, 0);
-	close_heredoc(p->red);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 03:08:29 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/08 01:36:49 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/24 03:31:00 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,20 @@ int				add_process(t_proc **procs)
 	return (0);
 }
 
+void			free_redirection(t_tok *t)
+{
+	t_tok	*tp;
+
+	tp = t;
+	while (tp)
+	{
+		if (!ft_strcmp(tp->token, "<<"))
+			close(ft_atoi(tp->next->token));
+		tp = tp->next;
+	}
+	free_toks(t);
+}
+
 void			free_process(t_proc *p)
 {
 	t_proc	*tp;
@@ -53,7 +67,7 @@ void			free_process(t_proc *p)
 	{
 		tp = p->next;
 		free_toks(p->as);
-		free_toks(p->red);
+		free_redirection(p->red);
 		ft_memdel((void**)&p);
 		p = tp;
 	}
