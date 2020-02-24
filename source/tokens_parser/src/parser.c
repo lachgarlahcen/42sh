@@ -6,7 +6,7 @@
 /*   By: iel-bouh <iel-bouh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 00:46:23 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/24 01:36:06 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/24 22:11:42 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static int	parse_token(t_tok **t, char *line)
 		while (line[i] && ft_isblank(line[i]))
 			i++;
 		be = i;
-		if (used_variable(line[i]))
+		if (line[i] && used_variable(line[i]))
 			while (line[i] && used_variable(line[i]))
 				i++;
 		else
