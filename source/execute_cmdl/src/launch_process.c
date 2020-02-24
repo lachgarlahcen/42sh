@@ -6,7 +6,7 @@
 /*   By: aihya <aihya@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 12:16:28 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/24 21:55:24 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/24 23:03:58 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,6 +202,7 @@ int		execute_without_fork(t_proc *p, int iv)
 	exit_status(execute_builtin(args), 1);
 	if (init_fd(0))
 		exit(1);
+	free_process(p);
 	free_temp_variables();
 	free_tab(args);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: aihya <aihya@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 04:58:13 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/24 22:01:11 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/24 22:56:38 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,14 @@ void		delet_quotes_arg(t_proc *p)
 	while (tp)
 	{
 		as = tp->as;
+		while (as)
+		{
+			tmp = as->token;
+			as->token = delet_quotes(tmp);
+			ft_memdel((void **)&tmp);
+			as = as->next;
+		}
+		as = tp->red;
 		while (as)
 		{
 			tmp = as->token;
@@ -146,7 +154,7 @@ char		**get_args(t_tok *as)
 	while (tmp)
 	{
 		if (!tmp->id && tmp->token)
-			args[l++] = delet_quotes(tmp->token);
+			args[l++] = ft_strdup(tmp->token);
 		tmp = tmp->next;
 	}
 	args[l] = 0;
