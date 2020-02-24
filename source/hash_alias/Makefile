@@ -6,7 +6,7 @@
 #    By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/30 10:17:50 by aihya             #+#    #+#              #
-#    Updated: 2020/02/19 00:25:44 by aihya            ###   ########.fr        #
+#    Updated: 2020/02/23 21:48:16 by aihya            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,11 +55,6 @@ utils_SRC_NAME =	sort.c			\
 utils_OBJ_NAME =	$(utils_SRC_NAME:.c=.o)
 utils_SRC_PATH =	$(addprefix $(SRC_PATH)/,utils)
 utils_OBJ_PATH =	$(addprefix $(OBJ_PATH)/,utils)
-
-expansions_SRC_NAME =	expansions.c
-expansions_OBJ_NAME =	$(expansions_SRC_NAME:.c=.o)
-expansions_SRC_PATH =	$(addprefix $(SRC_PATH)/,expansions)
-expansions_OBJ_PATH =	$(addprefix $(OBJ_PATH)/,expansions)
 
 errors_SRC_NAME = 	errors.c
 errors_OBJ_NAME =	$(errors_SRC_NAME:.c=.o)
@@ -131,11 +126,6 @@ $(utils_OBJ_PATH)/%.o: $(utils_SRC_PATH)/%.c $(DEPS)
 
 $(errors_OBJ_PATH)/%.o: $(errors_SRC_PATH)/%.c $(DEPS)
 	@mkdir -p $(errors_OBJ_PATH) 2> /dev/null || true
-	@echo "Compiling \033[1;36m[$<]\033[0m to \033[1;32m[$@]\033[0m"
-	@gcc $(CFLAGS) $(INCLUDE) -o $@ -c $<
-
-$(expansions_OBJ_PATH)/%.o: $(expansions_SRC_PATH)/%.c $(DEPS)
-	@mkdir -p $(expansions_OBJ_PATH) 2> /dev/null || true
 	@echo "Compiling \033[1;36m[$<]\033[0m to \033[1;32m[$@]\033[0m"
 	@gcc $(CFLAGS) $(INCLUDE) -o $@ -c $<
 

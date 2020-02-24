@@ -6,7 +6,7 @@
 /*   By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 18:23:41 by aihya             #+#    #+#             */
-/*   Updated: 2020/02/22 14:14:39 by aihya            ###   ########.fr       */
+/*   Updated: 2020/02/23 21:01:38 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ int			save_binary(char *bin_name, char *bin_value);
 void		remove_binary(char *name);
 void		remove_binaries(void);
 int			update_binary(char *name, char *new_value);
+void        update_binaries(void);
 void		print_binaries();
 char		*get_base_name(char *path);
 int			hash_usage(void);

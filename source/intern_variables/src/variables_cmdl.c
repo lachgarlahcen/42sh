@@ -6,11 +6,12 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 01:02:55 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/23 01:13:30 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/23 21:14:27 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "intern_variables.h"
+#include "sh.h"
 
 int		unset_variables(char **args)
 {
@@ -34,6 +35,7 @@ int		unset_variables(char **args)
 			del_elem(&var, args[i]);
 		}
 		get_intern_variables(&var, 1);
+		update_binaries();
 	}
 	return (ret);
 }
@@ -63,6 +65,7 @@ int		set_variable(char *arg, int id, int temp)
 		else
 			get_intern_variables(&var, 1);
 		ft_memdel((void **)&arg);
+		update_binaries();
 	}
 	return (0);
 }

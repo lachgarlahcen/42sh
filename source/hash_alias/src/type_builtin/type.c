@@ -6,7 +6,7 @@
 /*   By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 19:21:27 by aihya             #+#    #+#             */
-/*   Updated: 2020/02/23 16:26:00 by aihya            ###   ########.fr       */
+/*   Updated: 2020/02/24 15:09:15 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,33 +15,37 @@
 static int	test_alias(char *arg)
 {
 	char	*tmp;
-	int		ret;
 
-	ret = 0;
 	tmp = is_alias(arg);
 	if (tmp != NULL)
 	{
 		ft_printf("%s is aliased to `%s'\n", arg, tmp);
-		ret = 1;
+		return (1);
 	}
-	ft_strdel(&tmp);
-	return (ret);
+	return (0);
 }
 
 static int	test_binary(char *arg)
 {
 	char	*tmp;
-	int		ret;
 
-	ret = 0;
 	tmp = is_binary(arg);
 	if (tmp != NULL)
 	{
 		ft_printf("%s is hashed to %s\n", arg, tmp);
-		ret = 1;
+		return (1);
 	}
-	ft_strdel(&tmp);
-	return (ret);
+	return (0);
+}
+
+static int	test_builtin(char *arg)
+{
+	if (is_builtin(arg))
+	{
+		ft_printf("%s is a builting\n", arg);
+		return (1);
+	}
+	return (0);
 }
 
 int			type(char **args)
@@ -54,7 +58,9 @@ int			type(char **args)
 	index = 1;
 	while (args[index])
 	{
-		if (!test_alias(args[index]) && !test_binary(args[index]))
+		if (!test_alias(args[index])
+		&& !test_binary(args[index])
+		&& !test_builtin(args[index]))
 		{
 			if ((bin_path = get_bin_path(args[index])) == NULL)
 				status = err_msg("type", args[index], "Not found");
