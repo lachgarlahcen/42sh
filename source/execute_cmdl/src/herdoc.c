@@ -6,7 +6,7 @@
 /*   By: iel-bouh <iel-bouh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 15:48:12 by iel-bouh          #+#    #+#             */
-/*   Updated: 2020/02/24 02:27:31 by iel-bouh         ###   ########.fr       */
+/*   Updated: 2020/02/24 19:37:35 by iel-bouh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int			ft_run_herdoc(t_tok *tmp, char *file)
 			ft_putendl_fd("42sh: bad file descriptor", 2);
 			return (-1);
 		}
-		close(ft_atoi(file));
+		ft_check_close_fd(ft_atoi(file));
 	}
 	return (0);
 }
