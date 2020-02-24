@@ -6,7 +6,7 @@
 /*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 00:42:10 by llachgar          #+#    #+#             */
-/*   Updated: 2020/02/24 04:35:16 by llachgar         ###   ########.fr       */
+/*   Updated: 2020/02/24 05:58:54 by llachgar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,11 @@ void		wait_for_job(t_job *j)
 	if (WIFEXITED(p->stat))
 		exit_status(WEXITSTATUS(p->stat), 1);
 	else if (WIFSIGNALED(p->stat))
+	{
 		exit_status(WTERMSIG(p->stat) + 128, 1);
+		if (WTERMSIG(p->stat) != 2)
+			do_job_notification();
+	}
 	else if (WIFSTOPPED(j->status))
 		exit_status(WSTOPSIG(p->stat) + 128, 1);
 }
@@ -147,7 +151,7 @@ void		format_job_info(t_job *j, char option)
 		"Trace/breakpoint trap", "Aborted", "Bus error",
 		"Floating point exception", "Killed", "User defined signal 1",
 		"Segmentation fault", "User defined signal 2", "Broken pipe",
-		"Alarm clock", "Terminated", "Stack fault", "Child exited", "Continued",
+		"Alarm clock", "Terminated", "Stack fault", "Child exited", "suspended",
 		"Stopped (signal)", "Stopped", "Stopped (tty input)",
 		"Stopped (tty output)", "Urgent I/O condition",
 		"CPU time limit exceeded", "File size limit exceeded",

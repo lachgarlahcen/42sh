@@ -81,12 +81,12 @@ void delete_job(pid_t pgid)
 
 	j = g_jobs.f_job;
 	prev = NULL;
-	while (j->pgid != pgid && j->next != NULL)
+	while (j && j->pgid != pgid && j->next != NULL)
 	{
 		prev = j;
 		j = j->next;
 	}
-	if (j->pgid == pgid)
+	if (j && j->pgid == pgid)
 	{
 		if (prev)
 		{
@@ -116,10 +116,13 @@ t_job			*add_jobs(t_proc *p, pid_t pgid, int bg)
 
 void			free_job(t_job *j)
 {
-	free_process(j->p);
-	ft_strdel(&j->name);
-	ft_strdel(&j->cmd);
-	ft_memdel((void**)&j);
+	if (j)
+	{
+		free_process(j->p);
+		ft_strdel(&j->name);
+		ft_strdel(&j->cmd);
+		ft_memdel((void**)&j);
+	}
 }
 
 void			free_jobs(void)
