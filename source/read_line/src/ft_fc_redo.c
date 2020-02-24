@@ -37,12 +37,11 @@ int				ft_fc_redo(t_fc *fc)
 	if (!(cmd = ft_fc_get_cmd(fc)))
 	{
 		ft_putstr_fd("42sh: fc: no command found\n", 2);
-		return (0);
+		return (1);
 	}
 	ft_putendl(cmd);
 	g_h = 1;
 	add_to_hist(ft_strdup(cmd), 0);
 	line_editing(cmd, 0);
-	g_h = 0;
-	return (1);
+	return (exit_status(0, 0));
 }
