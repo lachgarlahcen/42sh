@@ -6,7 +6,7 @@
 /*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 01:41:09 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/24 05:20:13 by llachgar         ###   ########.fr       */
+/*   Updated: 2020/02/24 05:22:29 by llachgar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,8 +117,8 @@ t_job			*add_jobs(t_proc *p, pid_t pgid, int bg)
 void			free_job(t_job *j)
 {
 	free_process(j->p);
-	ft_strdel(j->name);
-	ft_strdel(j->cmd);
+	ft_strdel(&j->name);
+	ft_strdel(&j->cmd);
 	ft_memdel((void**)&j);
 }
 
