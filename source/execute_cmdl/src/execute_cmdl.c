@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 03:40:43 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/24 20:52:55 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/24 21:03:05 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,15 @@ int			check_execute(t_proc *p, t_tok *t, int check)
 	if (check == 1 && exit_status(0, 0))
 	{
 		free_process(p);
+		if (t && t->id == 7)
+			return (!ft_strcmp("&&", t->token) ? 1 : 2);
 		return (0);
 	}
 	if (check == 2 && !exit_status(0, 0))
 	{
 		free_process(p);
+		if (t && t->id == 7)
+			return (!ft_strcmp("&&", t->token) ? 1 : 2);
 		return (0);
 	}
 	if (t && t->id == 7)
