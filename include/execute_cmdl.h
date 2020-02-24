@@ -6,7 +6,7 @@
 /*   By: iel-bouh <iel-bouh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 03:40:10 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/24 01:56:42 by iel-bouh         ###   ########.fr       */
+/*   Updated: 2020/02/24 03:28:50 by iel-bouh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,6 @@ int		ft_check_fd(char *str, t_tok *p);
 void	ft_append_to_doc(char **join, char *buf);
 int		ft_herdoc(char *file);
 int		ft_run_herdoc(t_tok *tmp, char *file);
+int		ft_ampersand(t_tok *p, char *file);
 
 #endif
