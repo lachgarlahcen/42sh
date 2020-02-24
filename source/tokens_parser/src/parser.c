@@ -6,7 +6,7 @@
 /*   By: iel-bouh <iel-bouh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 00:46:23 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/24 00:16:14 by iel-bouh         ###   ########.fr       */
+/*   Updated: 2020/02/24 01:36:06 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,15 +72,6 @@ static int	parse_token(t_tok **t, char *line)
 		else
 			i++;
 	}
-	return (0);
-}
-
-static int	change_tokens(t_tok *tok)
-{
-	int	fd;
-
-	fd = ft_herdoc(tok->token);
-	tok->token = ft_itoa(fd);
 	return (0);
 }
 

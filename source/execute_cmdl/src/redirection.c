@@ -6,7 +6,7 @@
 /*   By: iel-bouh <iel-bouh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 03:59:51 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/24 00:16:10 by iel-bouh         ###   ########.fr       */
+/*   Updated: 2020/02/24 01:22:55 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,6 +149,7 @@ int		ft_redirection(t_proc *p)
 			else if (ft_close_fd(tmp, file) == -1)
 				return (1);
 		}
+		ft_memdel((void **)&file);
 		while (tmp->id != 3)
 			tmp = tmp->next;
 		tmp = tmp->next;

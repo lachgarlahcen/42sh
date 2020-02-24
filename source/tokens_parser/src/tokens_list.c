@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 01:20:36 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/23 19:19:30 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/24 01:35:55 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,14 @@ int				is_number(char *str)
 		if (!ft_isdigit(str[i]))
 			return (0);
 	return (1);
+}
+
+int				change_tokens(t_tok *tok)
+{
+	int	fd;
+
+	fd = ft_herdoc(tok->token);
+	ft_memdel((void **)&(tok->token));
+	tok->token = ft_itoa(fd);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 04:58:13 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/23 23:50:21 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/24 01:26:36 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,6 @@ char		*delet_quotes(char *str)
 	ft_bzero(buf, READ_SIZE);
 	while (str[i] && i < READ_SIZE)
 	{
-		if (str[i] == '\\')
-			i++;
 		if (str[i] == '\'' || str[i] == '\"')
 		{
 			be = i++;
@@ -93,11 +91,10 @@ char		*delet_quotes(char *str)
 					i++;
 				buf[j++] = str[i++];
 			}
-			i++;
 		}
-		buf[j++] = str[i];
-		if (str[i])
-			i++;
+		else if (str[i] != '\\')
+			buf[j++] = str[i];
+		i++;
 	}
 	return (ft_strdup(buf));
 }

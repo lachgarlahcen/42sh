@@ -6,7 +6,7 @@
 /*   By: iel-bouh <iel-bouh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 15:48:12 by iel-bouh          #+#    #+#             */
-/*   Updated: 2020/02/24 00:20:07 by iel-bouh         ###   ########.fr       */
+/*   Updated: 2020/02/24 01:33:26 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ int			ft_herdoc(char *file)
 
 	join = NULL;
 	pipe(fd);
+	file = delet_quotes(file);
 	while (1)
 	{
 		tmp = read_line(">");
