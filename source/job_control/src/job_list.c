@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   job_list.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+        */
+/*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 01:41:09 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/21 09:23:28 by nsaber           ###   ########.fr       */
+/*   Updated: 2020/02/24 02:57:12 by llachgar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static t_job	*add_job(t_proc *p, pid_t pgid, int bg)
 		return (0);
 	j->p = p;
 	j->pgid = pgid;
-	j->notified = 0;
+	j->notified = 1;
 	j->name = name_list_concate(p); // added here by noureddine
 	j->cmd = ft_strdup(p->as->token); // added by noureddine
 	if (bg)

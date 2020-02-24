@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   job_control.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+        */
+/*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 22:18:53 by llachgar          #+#    #+#             */
-/*   Updated: 2020/02/22 22:26:13 by nsaber           ###   ########.fr       */
+/*   Updated: 2020/02/24 02:40:09 by llachgar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void job_printing(char option)
   while (j)
   {
     j->notified = 1;
-    format_job_info(j, NULL, option);
+    format_job_info(j, option);
     j = j->next;
     if (!(option == 'l' || option == 'p' || option == 0)) // if not one of the fuctions break;
       break;
@@ -112,7 +112,7 @@ void execute_jobs(char **args)
       if (args[i] && (ft_strequ(args[i], j->cmd) || (ft_isdigits(args[i]) && ft_atoi(args[i] + percent) == j->id)))
       {
         i++;
-        format_job_info(j, NULL, option);
+        format_job_info(j, option);
         j = jj;
       }
       else

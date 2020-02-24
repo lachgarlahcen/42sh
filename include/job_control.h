@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   job_control.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+        */
+/*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 22:18:48 by llachgar          #+#    #+#             */
-/*   Updated: 2020/02/20 11:50:43 by nsaber           ###   ########.fr       */
+/*   Updated: 2020/02/24 02:40:09 by llachgar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void            put_job_in_background (t_job *j, int cont);
 t_job           *find_job(pid_t pgid);
 void            wait_for_job (t_job *j);
 void            do_job_notification (void);
-void            format_job_info (t_job *j, const char *status, char option);
+void            format_job_info (t_job *j, char option);
 void			free_job(t_job *j);
 void            delete_job(pid_t pgid);
 void            execute_jobs(char **args);
