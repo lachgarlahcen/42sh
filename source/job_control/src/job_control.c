@@ -6,7 +6,7 @@
 /*   By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 22:18:53 by llachgar          #+#    #+#             */
-/*   Updated: 2020/02/24 05:31:44 by nsaber           ###   ########.fr       */
+/*   Updated: 2020/02/24 05:45:13 by nsaber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,7 +182,45 @@ void execute_fg(char **args)
 
 void execute_bg(char **args)
 {
-	(void)args;
+	t_job   *j;
+	int percent;
+
+	j = g_jobs.f_job;
+	if (!j)
+		return ((void) printf("bg: current: no such job\n"));
+	if (args[1] && ft_isdigits(args[1])) // fg [job_id]
+	{
+		percent = args[1][0] == '%' ? 1 : 0;
+		while(j)
+		{
+			if (j->id == ft_atoi(args[1]+ percent))
+				break;
+			j = j->next;
+			if (!j)
+			{
+				printf("42sh : bg: %s no such job\n",args[1]);
+				return ;
+			}
+		}
+	}
+	else if (args[1]) // error msgs
+	{
+		printf("42sh : bg: %s no such job\n",args[1]);
+		return ;
+	}
+	else // fg to to  +
+	{
+		while(j)
+		{
+			if (j->sign == '+')
+				break;
+			if (!j->next) // if for any case '+' not found , we make bg
+				break;
+			j = j->next;
+		}
+	}
+	if (getpid() != g_shell_pgid)
+		ft_printf("fg: no job control\n");
 	put_job_in_background(g_jobs.f_job, 1);
 }
 
