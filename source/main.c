@@ -6,7 +6,7 @@
 /*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 21:16:34 by llachgar          #+#    #+#             */
-/*   Updated: 2020/02/23 21:16:40 by llachgar         ###   ########.fr       */
+/*   Updated: 2020/02/23 23:34:58 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ int main(int ac, char **av, char **env)
 		line_editing(line, 1);
 		ft_memdel((void **)&line);
 	}
+	if (g_exit)
+		ft_putendl("exit");
 	free_variables();
 	free_history();
 	return (g_stat);
