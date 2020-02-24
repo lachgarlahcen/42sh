@@ -6,11 +6,7 @@
 /*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 22:18:53 by llachgar          #+#    #+#             */
-<<<<<<< HEAD
 /*   Updated: 2020/02/24 04:30:45 by hastid           ###   ########.fr       */
-=======
-/*   Updated: 2020/02/24 02:40:09 by llachgar         ###   ########.fr       */
->>>>>>> b28c7ff872720b2a8d4a23eee3468796661d751e
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,18 +46,6 @@ char *name_list_concate(t_proc *p)
 
 void job_printing(char option)
 {
-<<<<<<< HEAD
-	t_job *j;
-	j = g_jobs.f_job;
-	while (j)
-	{
-		j->notified = 1;
-		format_job_info(j, NULL, option);
-		j = j->next;
-		if (!(option == 'l' || option == 'p' || option == 0)) // if not one of the fuctions break;
-		break;
-	}
-=======
   t_job *j;
   j = g_jobs.f_job;
   while (j)
@@ -72,7 +56,6 @@ void job_printing(char option)
     if (!(option == 'l' || option == 'p' || option == 0)) // if not one of the fuctions break;
       break;
   }
->>>>>>> b28c7ff872720b2a8d4a23eee3468796661d751e
 }
 
 int ft_isdigits(char *str)
@@ -127,30 +110,6 @@ void execute_jobs(char **args)
 		jj = j;
 		int percent;
 
-<<<<<<< HEAD
-		args[1][0] == '%' ? percent = 1 : 0;
-		int i = 1;
-		while (j)
-		{
-			if (args[i] && (ft_strequ(args[i], j->cmd) || (ft_isdigits(args[i]) && ft_atoi(args[i] + percent) == j->id)))
-			{
-				i++;
-				format_job_info(j, NULL, option);
-				j = jj;
-			}
-			else
-				j = j->next;
-			if (!j && args[i])
-			{
-				fprintf(stderr, "jobs: job not found: %s\n", args[i]);
-				break;
-			}
-		}
-	}
-	else // cmd  : |$>jobs|
-		job_printing(option);
-	option = 0; // restore value for the other cmd $>jobs -[...]
-=======
     args[1][0] == '%' ? percent = 1 : 0;
     int i = 1;
     while (j)
@@ -173,7 +132,6 @@ void execute_jobs(char **args)
   else // cmd  : |$>jobs|
     job_printing(option);
   option = 0; // restore value for the other cmd $>jobs -[...]
->>>>>>> b28c7ff872720b2a8d4a23eee3468796661d751e
 }
 
 void execute_fg(char **args)
