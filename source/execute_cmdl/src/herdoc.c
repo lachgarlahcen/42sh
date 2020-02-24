@@ -6,7 +6,7 @@
 /*   By: iel-bouh <iel-bouh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 15:48:12 by iel-bouh          #+#    #+#             */
-/*   Updated: 2020/02/23 15:53:12 by iel-bouh         ###   ########.fr       */
+/*   Updated: 2020/02/24 02:27:31 by iel-bouh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,22 +61,31 @@ int			ft_herdoc(char *file)
 
 	join = NULL;
 	pipe(fd);
+	file = delet_quotes(file);
 	while (1)
 	{
 		tmp = read_line(">");
 		if (!tmp || ft_strequ(tmp, file))
 		{
 			free(tmp);
-			if (dup2(ft_stop_append_return(&join,
-					file, fd), 0) == -1)
-			{
-				ft_putendl_fd("42sh: bad file descriptor", 2);
-				return (-1);
-			}
-			return (0);
+			return (ft_stop_append_return(&join, file, fd));
 		}
 		else
 			ft_append_to_doc(&join, tmp);
+	}
+	return (0);
+}
+
+int			ft_run_herdoc(t_tok *tmp, char *file)
+{
+	if (ft_strequ(ft_get_id(tmp, 2), "<<") == 1)
+	{
+		if (dup2(ft_atoi(file), 0) == -1)
+		{
+			ft_putendl_fd("42sh: bad file descriptor", 2);
+			return (-1);
+		}
+		close(ft_atoi(file));
 	}
 	return (0);
 }

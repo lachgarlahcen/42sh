@@ -6,7 +6,7 @@
 /*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 01:41:09 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/24 02:57:12 by llachgar         ###   ########.fr       */
+/*   Updated: 2020/02/24 04:38:02 by llachgar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ static t_job	*add_job(t_proc *p, pid_t pgid, int bg)
 	j->notified = 1;
 	j->name = name_list_concate(p); // added here by noureddine
 	j->cmd = ft_strdup(p->as->token); // added by noureddine
+	j->sign = 0; // important for later verifications
 	if (bg)
 		j->id = g_jobs.id++;
 	else

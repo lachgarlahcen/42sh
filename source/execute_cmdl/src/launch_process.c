@@ -3,32 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   launch_process.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iel-bouh <iel-bouh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 12:16:28 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/23 21:20:02 by llachgar         ###   ########.fr       */
+/*   Updated: 2020/02/24 03:28:04 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute_cmdl.h"
 
-int			ft_perror_pipe(char *error, int ret)
+int		ft_perror_pipe(char *error, int ret)
 {
 	ft_putstr_fd("42sh: ", 2);
 	ft_putendl_fd(error, 2);
 	return (ret);
 }
 
-int			is_dir(char *di)
+int		is_dir(char *di)
 {
 	DIR	*d;
+
 	if (!(d = opendir(di)))
 		return (0);
 	closedir(d);
 	return (1);
 }
 
-int			ft_perror_execu(char *cmdl, char *err)
+int		ft_perror_execu(char *cmdl, char *err)
 {
 	ft_putstr_fd("42sh : ", 2);
 	ft_putstr_fd(cmdl, 2);
@@ -36,7 +37,7 @@ int			ft_perror_execu(char *cmdl, char *err)
 	return (1);
 }
 
-char		*search_executable(char *cmdl)
+char	*search_executable(char *cmdl)
 {
 	char	*excu;
 
@@ -48,15 +49,6 @@ char		*search_executable(char *cmdl)
 	if (!is_dir(cmdl))
 	{
 		excu = is_binary(cmdl);
-		/*		excu = ft_strjoin("/bin/", cmdl);
-				if (!access(excu, F_OK))
-				return (excu);
-				ft_memdel((void **)&excu);
-				excu = ft_strjoin("/usr/bin/", cmdl);
-				if (!access(excu, F_OK))
-				return (excu);
-				ft_memdel((void **)&excu);
-				*/
 		if (excu)
 			return (excu);
 		else if ((excu = get_bin_path(cmdl)))
@@ -68,11 +60,10 @@ char		*search_executable(char *cmdl)
 	return (0);
 }
 
-int			execute_args(t_tok *as, char **args)
+int		execute_args(t_tok *as, char **args)
 {
 	char	*exec;
 	char	**env;
-
 
 	while (as && as->id)
 	{
@@ -82,39 +73,39 @@ int			execute_args(t_tok *as, char **args)
 	if (is_builtin(args[0]))
 		exit(execute_builtin(args));
 	if (!(exec = search_executable(as->token)))
-		exit (1);
+		exit(1);
 	env = get_env_variables();
 	if (execve(exec, args, env) == -1)
 		ft_perror_pipe("EXECVE ERROR !!", 1);
-	exit (1);
+	exit(1);
 	return (0);
 }
 
-int			launch_process(t_proc *p, char **args, int in, int out)
+int		launch_process(t_proc *p, char **args, int in, int out)
 {
 	signals(0);
 	if (in != 0)
 	{
 		if (dup2(in, 0) == -1)
-			exit (1);
-		close (in);
+			exit(1);
+		close(in);
 	}
 	if (out != 1)
 	{
-		if (dup2 (out, 1) == -1)
-			exit (1);
-		close (out);
+		if (dup2(out, 1) == -1)
+			exit(1);
+		close(out);
 	}
 	if (p->red)
 		if (ft_redirection(p) == 1)
-			exit (1);
+			exit(1);
 	if (!p->as)
-		exit (0);
+		exit(0);
 	execute_args(p->as, args);
 	return (0);
 }
 
-int			execute_pipe(t_proc *p, int *in, int *pgid)
+int		execute_pipe(t_proc *p, int *in, int *pgid)
 {
 	int		out;
 	int		pi[2];
@@ -142,15 +133,15 @@ int			execute_pipe(t_proc *p, int *in, int *pgid)
 		*pgid = p->pid;
 	setpgid(p->pid, *pgid);
 	if (*in != 0)
-		close (*in);
+		close(*in);
 	if (out != 1)
-		close (out);
+		close(out);
 	*in = pi[0];
 	free_tab(args);
 	return (0);
 }
 
-int			execute_pipes_line(t_proc *p, int bg)
+int		execute_pipes_line(t_proc *p, int bg)
 {
 	int		in;
 	int		pgid;
@@ -178,6 +169,16 @@ int			execute_pipes_line(t_proc *p, int bg)
 	return (0);
 }
 
+int		set_intern_variables(t_tok *as)
+{
+	while (as)
+	{
+		set_variable(as->token, 0, 0);
+		as = as->next;
+	}
+	return (exit_status(0, 1));
+}
+
 int		execute_without_fork(t_proc *p, int iv)
 {
 	t_tok	*as;
@@ -186,17 +187,9 @@ int		execute_without_fork(t_proc *p, int iv)
 	if (p->red)
 		if (change_expansion(p->red) || ft_redirection(p))
 			return (exit_status(1, 1));
-	if (!(as = p->as))
-		return (0);
+	as = p->as;
 	if (iv)
-	{
-		while (as)
-		{
-			set_variable(as->token, 0, 0);
-			as = as->next;
-		}
-		return (exit_status(0, 1));
-	}
+		return (set_intern_variables(as));
 	while (as && as->id)
 	{
 		set_variable(as->token, 1, 1);
@@ -212,13 +205,12 @@ int		execute_without_fork(t_proc *p, int iv)
 	return (0);
 }
 
-int			check_fork(t_proc *p, int bg)
+int		check_fork(t_proc *p, int bg)
 {
 	int		iv;
 	t_tok	*as;
 
 	iv = 0;
-
 	check_all_arguments(p);
 	if (!p->next && !bg)
 	{
@@ -229,8 +221,9 @@ int			check_fork(t_proc *p, int bg)
 			as = as->next;
 		if (as)
 			iv = 0;
-		if (!as || is_builtin(as->token))
-			return (execute_without_fork(p, iv));
+		if (p->as)
+			if (iv || is_builtin(as->token))
+				return (execute_without_fork(p, iv));
 	}
 	return (execute_pipes_line(p, bg));
 }
