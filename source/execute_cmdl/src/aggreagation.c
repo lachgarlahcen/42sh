@@ -57,7 +57,8 @@ int		ft_aggregation(t_tok *p, char *file)
 					ft_putendl_fd("42sh: bad file descriptor", 2);
 					return (-1);
 				}
-				close(ft_atoi(file));
+				if (ft_atoi(file) > 2)
+					close(ft_atoi(file));
 			}
 			else if (!ft_strequ(file, "-"))
 			{
