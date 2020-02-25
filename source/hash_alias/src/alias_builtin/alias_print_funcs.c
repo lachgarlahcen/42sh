@@ -6,7 +6,7 @@
 /*   By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/17 19:38:15 by aihya             #+#    #+#             */
-/*   Updated: 2020/02/25 03:23:01 by aihya            ###   ########.fr       */
+/*   Updated: 2020/02/25 19:50:44 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ void			print_alias(char *name, int prefix)
 
 	value = is_alias(name);
 	if (prefix == FALSE)
-		ft_printf("%s='%s'\n", name, value == NULL ? "" : value);
+		ft_printf("%s='%s'\n", name, value == NULL ? "\0" : value);
 	else
-		ft_printf("alias %s='%s'\n", name, value == NULL ? "" : value);
+		ft_printf("alias %s='%s'\n", name, value == NULL ? "\0" : value);
 }
 
 void			print_all_alias(void)
