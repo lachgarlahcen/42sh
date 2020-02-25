@@ -6,7 +6,7 @@
 #    By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/08 05:13:41 by hastid            #+#    #+#              #
-#    Updated: 2020/02/25 04:52:12 by hastid           ###   ########.fr        #
+#    Updated: 2020/02/25 06:03:43 by llachgar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,8 @@ SRC_NAME = read_line.c \
 		   ft_fc.c \
 		   ft_fc_list.c \
 		   ft_fc_redo.c \
-		   ft_addons.c
+		   ft_addons.c \
+		   bultins_compelation.c
 
 OBJ_NAME =	$(SRC_NAME:.c=.o)
 

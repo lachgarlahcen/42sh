@@ -6,7 +6,7 @@
 /*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 14:46:01 by llachgar          #+#    #+#             */
-/*   Updated: 2020/02/23 19:00:34 by llachgar         ###   ########.fr       */
+/*   Updated: 2020/02/25 06:03:09 by llachgar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -267,6 +267,7 @@ void				print_matches(t_data *matches, t_cmd *l,
 		int count, char *match);
 void				complete_or_print(t_data *matches, t_cmd *l,
 		int count, char *match);
+int         		fill_bultins(char *match, t_data **matches);
 /*
 ** END FT_SELECT
 */
