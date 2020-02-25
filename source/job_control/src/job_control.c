@@ -24,7 +24,7 @@ int			job_arg_option(char *option, char **args)
 		if (!(args[1][i] == 'l' || args[1][i] == 'p'))
 		{
 			*option = args[1][i];
-			ft_putendl_fd("jobs: -%c: invalid option : jobs [-lp]", 2);
+			ft_putendl_fd("jobs: invalid option : jobs [-lp]", 2);
 			return (1);
 		}
 	}
@@ -60,7 +60,7 @@ int			job_arg(char **args, char *option, int i)
 			j = j->next;
 		if (!j && args[i])
 		{
-			ft_putendl_fd("jobs: job not found: %s", 2);
+			ft_putendl_fd("jobs: job not found", 2);
 			return (1);
 		}
 	}
