@@ -6,7 +6,7 @@
 /*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 04:19:31 by llachgar          #+#    #+#             */
-/*   Updated: 2020/02/23 18:11:24 by llachgar         ###   ########.fr       */
+/*   Updated: 2020/02/25 01:03:02 by llachgar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ int				ft_fc_execute_file(t_fc *fc)
 
 int				get_real_index(int v, int count)
 {
+	count < ABS(v) ? v = 0 : 1 == 1;
 	if (v > 0)
 		return (count - v);
 	else if (v < 0)
@@ -105,8 +106,6 @@ int				ft_fc_editor(t_fc *fc)
 		}
 	hist = NULL;
 	hist = save_hist(&hist);
-	hist->count < ABS(f) ? f = 0 : 1 == 1;
-	hist->count < ABS(l) ? l = 0 : 1 == 1;
 	f = get_real_index(f, hist->count);
 	l = get_real_index(l, hist->count);
 	if (l >= hist->count || f >= hist->count ||
