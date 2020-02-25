@@ -6,7 +6,7 @@
 /*   By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 22:18:53 by llachgar          #+#    #+#             */
-/*   Updated: 2020/02/25 06:46:00 by nsaber           ###   ########.fr       */
+/*   Updated: 2020/02/25 06:57:57 by nsaber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,58 @@ int		ft_isdigits(char *str)
 	return (0);
 }
 
+void	job_arg_option(char *option, char **args)
+{
+	int i;
+
+	i = 0;
+	while (args[1][++i])
+	{
+		*option = args[1][i];
+		if (!(args[1][i] == 'l' || args[1][i] == 'p'))
+		{
+			*option = args[1][i];
+			break ;
+		}
+	}
+	if (args[2])
+	{
+		execute_jobs(args + 1);
+		*option = 0;
+		return ;
+	}
+	job_printing(*option);
+}
+
+void	job_arg(char **args, char *option)
+{
+	t_job *jj;
+	t_job *j;
+
+	j = g_jobs.f_job;
+	jj = j;
+	int percent;
+
+	args[1][0] == '%' ? percent = 1 : 0;
+	int i = 1;
+	while (j)
+	{
+		if (args[i] && (ft_strequ(args[i], j->cmd) ||
+		(ft_isdigits(args[i]) && ft_atoi(args[i] + percent) == j->id)))
+		{
+			i++;
+			format_job_info(j, *option);
+			j = jj;
+		}
+		else
+			j = j->next;
+		if (!j && args[i])
+		{
+			fprintf(stderr, "jobs: job not found: %s\n", args[i]);
+			break ;
+		}
+	}
+}
 void execute_jobs(char **args)
 {
 	t_job *j;
@@ -83,49 +135,9 @@ void execute_jobs(char **args)
 	i = 0;
 	j = g_jobs.f_job;
 	if (args[1] && args[1][0] == '-')
-	{
-		while (args[1][++i])
-		{
-			option = args[1][i];
-			if (!(args[1][i] == 'l' || args[1][i] == 'p'))
-			{
-				option = args[1][i];
-				break ;
-			}
-		}
-		if (args[2])
-		{
-			execute_jobs(args + 1);
-			option = 0;
-			return ;
-		}
-		job_printing(option);
-	}
+		job_arg_option(&option, args);
 	else if (args[1])
-	{
-		t_job *jj;
-		jj = j;
-		int percent;
-
-		args[1][0] == '%' ? percent = 1 : 0;
-		int i = 1;
-		while (j)
-		{
-			if (args[i] && (ft_strequ(args[i], j->cmd) || (ft_isdigits(args[i]) && ft_atoi(args[i] + percent) == j->id)))
-			{
-				i++;
-				format_job_info(j, option);
-				j = jj;
-			}
-			else
-				j = j->next;
-			if (!j && args[i])
-			{
-				fprintf(stderr, "jobs: job not found: %s\n", args[i]);
-				break ;
-			}
-		}
-	}
+		job_arg(args, &option);
 	else
 		job_printing(option);
 	option = 0;
