@@ -6,7 +6,7 @@
 /*   By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/17 15:34:19 by aihya             #+#    #+#             */
-/*   Updated: 2020/02/25 03:25:02 by aihya            ###   ########.fr       */
+/*   Updated: 2020/02/25 19:34:02 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ static int		a_option(char **args, int *status, int *last_index)
 
 static void		set_individual_aliases(char **args, int *status)
 {
-	int	remove_all;
-	int	index;
+	int			remove_all;
+	int			index;
 
 	index = 0;
 	remove_all = a_option(args, status, &index);
@@ -74,7 +74,7 @@ static void		set_individual_aliases(char **args, int *status)
 	{
 		while (args[index])
 		{
-			if (is_alias(args[index]) == NULL)
+			if (find_htnode(aliases(FALSE), args[index]) == NULL)
 				*status = err_msg("unalias", args[index], "Not found");
 			else
 				remove_alias(args[index]);
