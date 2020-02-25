@@ -6,37 +6,37 @@
 /*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 05:48:48 by llachgar          #+#    #+#             */
-/*   Updated: 2020/02/25 06:02:47 by llachgar         ###   ########.fr       */
+/*   Updated: 2020/02/25 06:10:01 by llachgar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "read_line.h"
 
-char       **get_bultins_tab()
+char		**get_bultins_tab(void)
 {
-    char **tab;
+	char **tab;
 
-    if ((tab = (char **)malloc(sizeof(char *) * 15)))
-        return (NULL);
-    tab[0] = "fg";
-    tab[0] = "bg";
-    tab[0] = "test";
-    tab[0] = "fc";
-    tab[0] = "set";
-    tab[0] = "echo";
-    tab[0] = "type";
-    tab[0] = "jobs";
-    tab[0] = "hash";
-    tab[0] = "exit";
-    tab[0] = "unset";
-    tab[0] = "alias";
-    tab[0] = "export";
-    tab[0] = "unalias";
-    tab[0] = "cd";
-    return (tab);
+	if ((tab = (char **)malloc(sizeof(char *) * 15)))
+		return (NULL);
+	tab[0] = "fg";
+	tab[0] = "bg";
+	tab[0] = "test";
+	tab[0] = "fc";
+	tab[0] = "set";
+	tab[0] = "echo";
+	tab[0] = "type";
+	tab[0] = "jobs";
+	tab[0] = "hash";
+	tab[0] = "exit";
+	tab[0] = "unset";
+	tab[0] = "alias";
+	tab[0] = "export";
+	tab[0] = "unalias";
+	tab[0] = "cd";
+	return (tab);
 }
 
-int         fill_bultins(char *match, t_data **matches)
+int			fill_bultins(char *match, t_data **matches)
 {
 	char		**tab;
 	int			res;
