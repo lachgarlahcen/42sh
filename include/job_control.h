@@ -38,9 +38,9 @@ void			do_job_notification (void);
 void			format_job_info (t_job *j, char option);
 void			free_job(t_job *j);
 void			delete_job(pid_t pgid);
-void			execute_jobs(char **args);
-void			execute_fg(char **args);
-void			execute_bg(char **args);
+int				execute_jobs(char **args);
+int				execute_fg(char **args);
+int				execute_bg(char **args);
 char			*name_list_concate(t_proc *p, char *name_args,
 				char *tmp, t_tok *ptr);
 void			job_sign(t_job *j);

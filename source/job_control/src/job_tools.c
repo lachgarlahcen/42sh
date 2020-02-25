@@ -63,9 +63,6 @@ void		printf_job_info(t_job *j, char *status, char opt)
 				j->sign, (long)j->pgid, status, j->name);
 	else if (opt == 'p')
 		ft_printf("%d\n", j->pgid);
-	else
-		ft_printf("jobs: -%c: invalid option\nusage: jobs [-lp] [jobspec ...]\n"
-				, opt);
 	ft_strdel(&status);
 	if (job_is_completed(j))
 		delete_job(j->pgid);

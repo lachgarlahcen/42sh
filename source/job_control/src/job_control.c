@@ -72,7 +72,7 @@ int		ft_isdigits(char *str)
 	return (0);
 }
 
-void	job_arg_option(char *option, char **args)
+int	job_arg_option(char *option, char **args)
 {
 	int i;
 
@@ -83,19 +83,21 @@ void	job_arg_option(char *option, char **args)
 		if (!(args[1][i] == 'l' || args[1][i] == 'p'))
 		{
 			*option = args[1][i];
-			break ;
+			ft_printf("jobs: -%c: invalid option : jobs [-lp]\n", args[1][i]);
+			return (1);
 		}
 	}
 	if (args[2])
 	{
 		execute_jobs(args + 1);
 		*option = 0;
-		return ;
+		return (0);
 	}
 	job_printing(*option);
+	return (0);
 }
 
-void	job_arg(char **args, char *option, int i)
+int	job_arg(char **args, char *option, int i)
 {
 	t_job	*jj;
 	t_job	*j;
@@ -118,12 +120,13 @@ void	job_arg(char **args, char *option, int i)
 		if (!j && args[i])
 		{
 			fprintf(stderr, "jobs: job not found: %s\n", args[i]);
-			break ;
+			return (1);
 		}
 	}
+	return (0);
 }
 
-void		execute_jobs(char **args)
+int			execute_jobs(char **args)
 {
 	t_job		*j;
 	int			i;
@@ -139,9 +142,10 @@ void		execute_jobs(char **args)
 	else
 		job_printing(option);
 	option = 0;
+	return(0);
 }
 
-void		execute_fg(char **args)
+int			execute_fg(char **args)
 {
 	t_job	*j;
 	int		percent;
@@ -149,11 +153,14 @@ void		execute_fg(char **args)
 	if (getpid() != g_shell_pgid)
 	{
 		ft_putendl_fd("fg: no job control", 2);
-		return ;
+		return (1);
 	}
 	j = g_jobs.f_job;
 	if (!j)
-		return ((void)ft_putstr("fg: current: no such job\n"));
+	{
+		ft_putstr("fg: current: no such job\n");
+		return(1);
+	}
 	if (args[1] && ft_isdigits(args[1]))
 	{
 		percent = args[1][0] == '%' ? 1 : 0;
@@ -165,14 +172,14 @@ void		execute_fg(char **args)
 			if (!j)
 			{
 				ft_printf("42sh : fg: %s no such job\n", args[1]);
-				return ;
+				return (1);
 			}
 		}
 	}
 	else if (args[1])
 	{
 		ft_printf("42sh : fg: %s no such job\n", args[1]);
-		return ;
+		return (1);
 	}
 	else
 	{
@@ -186,9 +193,10 @@ void		execute_fg(char **args)
 		}
 	}
 	put_job_in_foreground(j, 1);
+	return(0);
 }
 
-void		execute_bg(char **args)
+int			execute_bg(char **args)
 {
 	t_job		*j;
 	int			percent;
@@ -196,11 +204,14 @@ void		execute_bg(char **args)
 	if (getpid() != g_shell_pgid)
 	{
 		ft_putendl_fd("bg: no job control", 2);
-		return ;
+		return (1);
 	}
 	j = g_jobs.f_job;
 	if (!j)
-		return ((void)ft_printf("bg: current: no such job\n"));
+	{
+		ft_printf("bg: current: no such job\n");
+		return(1);
+	}
 	if (args[1] && ft_isdigits(args[1]))
 	{
 		percent = args[1][0] == '%' ? 1 : 0;
@@ -212,14 +223,14 @@ void		execute_bg(char **args)
 			if (!j)
 			{
 				ft_printf("42sh : bg: %s no such job\n", args[1]);
-				return ;
+				return (1);
 			}
 		}
 	}
 	else if (args[1])
 	{
 		ft_printf("42sh : bg: %s no such job\n", args[1]);
-		return ;
+		return (1);
 	}
 	else
 	{
@@ -233,6 +244,7 @@ void		execute_bg(char **args)
 		}
 	}
 	put_job_in_background(j, 1);
+	return(0);
 }
 
 t_job		*job_sign_finder(char sign)
