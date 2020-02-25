@@ -6,7 +6,7 @@
 /*   By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 06:59:13 by nsaber            #+#    #+#             */
-/*   Updated: 2020/02/25 19:07:44 by nsaber           ###   ########.fr       */
+/*   Updated: 2020/02/25 19:15:32 by nsaber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 t_job		*jobs_plus_ret(t_job *j)
 {
 	while (j)
-		{
-			if (j->sign == '+')
-				break ;
-			if (!j->next)
-				break ;
-			j = j->next;
-		}
-		return (j);
+	{
+		if (j->sign == '+')
+			break ;
+		if (!j->next)
+			break ;
+		j = j->next;
+	}
+	return (j);
 }
 
 t_job		*job_sign_finder(char sign)
@@ -67,8 +67,8 @@ void		job_node_manpl_signs(t_job *tmp, t_job *j)
 
 void		job_node_trait(t_job *j, int mines)
 {
-	t_job *tmp;
-	int len;
+	t_job	*tmp;
+	int		len;
 
 	len = 0;
 	if (!(j->sign) || j->sign == ' ')
@@ -84,7 +84,7 @@ void		job_node_trait(t_job *j, int mines)
 	job_node_manpl_signs(tmp, j);
 }
 
-int			check_ctr_jobs_args(char **args, t_job **j,char *str, int percent)
+int			check_ctr_jobs_args(char **args, t_job **j, char *str, int percent)
 {
 	if (args[1] && ft_isdigits(args[1]))
 	{

@@ -6,7 +6,7 @@
 /*   By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 06:59:13 by nsaber            #+#    #+#             */
-/*   Updated: 2020/02/25 07:03:20 by nsaber           ###   ########.fr       */
+/*   Updated: 2020/02/25 19:14:22 by nsaber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,20 @@
 
 void		job_sign(t_job *j)
 {
-	t_job *tmp;
-	int len;
+	t_job	*tmp;
+	int		len;
 
 	tmp = g_jobs.f_job;
 	len = 0;
 	while (tmp)
-    {
-		if (tmp->sign == '-' && (j->sign != '+' ))
-    		tmp->sign = ' ';
-        if (tmp->sign == '+')
-    		tmp->sign = '-';
-            len++;
-        tmp = tmp->next;
-    }
+	{
+		if (tmp->sign == '-' && (j->sign != '+'))
+			tmp->sign = ' ';
+		if (tmp->sign == '+')
+			tmp->sign = '-';
+		len++;
+		tmp = tmp->next;
+	}
 	j->sign = '+';
 }
 
@@ -49,31 +49,31 @@ int			ft_isdigits(char *str)
 	return (0);
 }
 
-char		*name_list_concate(t_proc *p, char *name_args, char *tmp, t_tok *ptr)
+char		*name_list_concate(t_proc *p, char *nm_args, char *tmp, t_tok *ptr)
 {
-	name_args = 0;
+	nm_args = 0;
 	if ((ptr = p->as))
-		name_args = ft_strdup(ptr->token);
+		nm_args = ft_strdup(ptr->token);
 	while (ptr && ptr->next)
 	{
-		tmp = strjoin_free(name_args, " ", 1, 0);
+		tmp = strjoin_free(nm_args, " ", 1, 0);
 		ptr = ptr->next;
-		name_args = strjoin_free(tmp, ptr->token, 1, 0);
+		nm_args = strjoin_free(tmp, ptr->token, 1, 0);
 	}
 	if ((ptr = p->red))
 	{
-		if (!name_args)
-			name_args = ft_strdup(ptr->token);
+		if (!nm_args)
+			nm_args = ft_strdup(ptr->token);
 		else
-			name_args = strjoin_free(name_args, ptr->token, 1, 0);
+			nm_args = strjoin_free(nm_args, ptr->token, 1, 0);
 		while (ptr && ptr->next)
 		{
-			tmp = strjoin_free(name_args, " ", 1, 0);
+			tmp = strjoin_free(nm_args, " ", 1, 0);
 			ptr = ptr->next;
-			name_args = strjoin_free(tmp, ptr->token, 1, 0);
+			nm_args = strjoin_free(tmp, ptr->token, 1, 0);
 		}
 	}
-	return (name_args);
+	return (nm_args);
 }
 
 void		put_job_in_foreground(t_job *j, int cont)

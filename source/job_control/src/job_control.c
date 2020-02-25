@@ -6,12 +6,11 @@
 /*   By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 22:18:53 by llachgar          #+#    #+#             */
-/*   Updated: 2020/02/25 19:04:51 by nsaber           ###   ########.fr       */
+/*   Updated: 2020/02/25 19:17:07 by nsaber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "job_control.h"
-
 
 int			job_arg_option(char *option, char **args)
 {
@@ -51,7 +50,7 @@ int			job_arg(char **args, char *option, int i)
 	{
 		if (args[i] && (ft_strequ(args[i], j->cmd) ||
 		(ft_isdigits(args[i]) && ft_atoi(args[i] + percent) == j->id)))
-		{			
+		{
 			i++;
 			format_job_info(j, *option);
 			j = jj;
@@ -84,12 +83,12 @@ int			execute_jobs(char **args)
 	else if (args[1])
 	{
 		if (job_arg(args, &option, 1))
-			return(1);
+			return (1);
 	}
 	else
 		job_printing(option);
 	option = 0;
-	return(0);
+	return (0);
 }
 
 int			execute_fg(char **args)
@@ -102,25 +101,25 @@ int			execute_fg(char **args)
 		return (1);
 	}
 	j = g_jobs.f_job;
-	if (args [1] && args[1][0] == '-' && args[1][1])
+	if (args[1] && args[1][0] == '-' && args[1][1])
 	{
 		ft_putendl_fd("fg: invalid option fg [job_spec]", 2);
-		return(1);
+		return (1);
 	}
 	if (!j)
 	{
 		ft_putendl_fd("fg: current: no such job", 2);
-		return(1);
+		return (1);
 	}
 	if (check_ctr_jobs_args(args, &j, "42sh : fg", 0))
-		return(1);
+		return (1);
 	put_job_in_foreground(j, 1);
-	return(0);
+	return (0);
 }
 
 int			execute_bg(char **args)
 {
-		t_job	*j;
+	t_job	*j;
 
 	if (getpid() != g_shell_pgid)
 	{
@@ -128,19 +127,18 @@ int			execute_bg(char **args)
 		return (1);
 	}
 	j = g_jobs.f_job;
-	if (args [1] && args[1][0] == '-' && args[1][1])
+	if (args[1] && args[1][0] == '-' && args[1][1])
 	{
 		ft_putendl_fd("bg: invalid option bg [job_spec]", 2);
-		return(1);
+		return (1);
 	}
 	if (!j)
 	{
 		ft_putendl_fd("bg: current: no such job", 2);
-		return(1);
+		return (1);
 	}
 	if (check_ctr_jobs_args(args, &j, "42sh : bg", 0))
-		return(1);
+		return (1);
 	put_job_in_background(j, 1);
-	return(0);
+	return (0);
 }
-
