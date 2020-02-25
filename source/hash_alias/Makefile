@@ -6,7 +6,7 @@
 #    By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/30 10:17:50 by aihya             #+#    #+#              #
-#    Updated: 2020/02/23 21:48:16 by aihya            ###   ########.fr        #
+#    Updated: 2020/02/25 05:06:47 by aihya            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,8 @@ binaries_OBJ_PATH = $(addprefix $(OBJ_PATH)/,hash_builtin)
 
 alias_SRC_NAME =	alias.c				\
 					alias_utils.c		\
-					alias_print_funcs.c
+					alias_print_funcs.c	\
+					alias_free.c
 alias_OBJ_NAME =	$(alias_SRC_NAME:.c=.o)
 alias_SRC_PATH =	$(addprefix $(SRC_PATH)/,alias_builtin)
 alias_OBJ_PATH =	$(addprefix $(OBJ_PATH)/,alias_builtin)
