@@ -6,7 +6,7 @@
 /*   By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 06:59:13 by nsaber            #+#    #+#             */
-/*   Updated: 2020/02/25 07:03:20 by nsaber           ###   ########.fr       */
+/*   Updated: 2020/02/25 19:07:44 by nsaber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int			check_ctr_jobs_args(char **args, t_job **j,char *str, int percent)
 			if (!(*j))
 			{
 				ft_putstr_fd(str, 2);
-				ft_putendl_fd(": %s no such job", 2);
+				ft_putendl_fd(":  no such job", 2);
 				return (1);
 			}
 		}
@@ -105,7 +105,7 @@ int			check_ctr_jobs_args(char **args, t_job **j,char *str, int percent)
 	else if (args[1])
 	{
 		ft_putstr_fd(str, 2);
-		ft_putendl_fd(": %s no such job", 2);
+		ft_putendl_fd(":  no such job", 2);
 		return (1);
 	}
 	else
