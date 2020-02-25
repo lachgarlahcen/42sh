@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/22 22:42:08 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/25 19:06:51 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/25 19:17:22 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,15 @@ int			usage_export(char *str)
 	return (0);
 }
 
+int			check_option(char *str)
+{
+	if (!str)
+		return (0);
+	if (str[0] == '-' && str[1] == 'p')
+		return (1);
+	return (0);
+}
+
 int			execute_export(char **args)
 {
 	int	i;
@@ -83,7 +92,7 @@ int			execute_export(char **args)
 	if (args[1] && args[1][0] == '-')
 		if (usage_export(args[1]))
 			return (1);
-	if (args[1] && !ft_strstr(args[1], "-p"))
+	if (args[1] && !check_option(args[1]))
 	{
 		i = 0;
 		while (args[++i])
