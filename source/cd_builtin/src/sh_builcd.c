@@ -6,7 +6,7 @@
 /*   By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/13 02:26:55 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/25 04:36:58 by nsaber           ###   ########.fr       */
+/*   Updated: 2020/02/25 04:41:34 by nsaber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,8 @@ static char	*del_point(char *str,char	*tmp, int i, int p)
 	while (str[i] && p < READ_SIZE - 1)
 	{
 		(str[0] == '.' && (str[i + 2] == '/')) ? i += 1 : 0;
-		if(str[i] == '.' && str[i + 1] == 0 && str[i - 1] != '.')
-		{
-			i += 1;
+		if(str[i] == '.' && str[i + 1] == 0 && str[i - 1] != '.' && i++)
 			break;
-		} 
 		if (str[i] == '/' && str[i + 1] == '.' && !str[i + 2])
 		{
 			i += 2;
