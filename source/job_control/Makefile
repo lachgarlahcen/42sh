@@ -17,7 +17,8 @@ SRC_NAME = job_list.c \
 			job_notification.c \
 			utilit.c \
 			job_tools.c \
-			tools.c 
+			tools.c \
+			job_control_nodes.c
 
 
 OBJ_NAME =	$(SRC_NAME:.c=.o)

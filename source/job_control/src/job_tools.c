@@ -82,3 +82,18 @@ void		update_status(void)
 			break ;
 	}
 }
+
+void		job_printing(char option)
+{
+	t_job *j;
+
+	j = g_jobs.f_job;
+	while (j)
+	{
+		j->notified = 1;
+		format_job_info(j, option);
+		j = j->next;
+		if (!(option == 'l' || option == 'p' || option == 0))
+			break ;
+	}
+}
