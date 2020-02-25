@@ -145,10 +145,51 @@ int			execute_jobs(char **args)
 	return(0);
 }
 
+t_job		*jobs_plus_ret(t_job *j)
+{
+	while (j)
+		{
+			if (j->sign == '+')
+				break ;
+			if (!j->next)
+				break ;
+			j = j->next;
+		}
+		return (j);
+}
+
+int			check_ctr_jobs_args(char **args, t_job **j,char *str, int percent)
+{
+	if (args[1] && ft_isdigits(args[1]))
+	{
+		percent = args[1][0] == '%' ? 1 : 0;
+		while (*j)
+		{
+			if ((*j)->id == ft_atoi(args[1] + percent))
+				break ;
+			*j = (*j)->next;
+			if (!(*j))
+			{
+				ft_putstr_fd(str, 2);
+				ft_putendl_fd(": %s no such job", 2);
+				return (1);
+			}
+		}
+	}
+	else if (args[1])
+	{
+		ft_putstr_fd(str, 2);
+		ft_putendl_fd(": %s no such job", 2);
+		return (1);
+	}
+	else
+		*j = jobs_plus_ret(*j);
+	return (0);
+}
+
 int			execute_fg(char **args)
 {
 	t_job	*j;
-	int		percent;
 
 	if (getpid() != g_shell_pgid)
 	{
@@ -161,37 +202,8 @@ int			execute_fg(char **args)
 		ft_putendl_fd("fg: current: no such job", 2);
 		return(1);
 	}
-	if (args[1] && ft_isdigits(args[1]))
-	{
-		percent = args[1][0] == '%' ? 1 : 0;
-		while (j)
-		{
-			if (j->id == ft_atoi(args[1] + percent))
-				break ;
-			j = j->next;
-			if (!j)
-			{
-				ft_putendl_fd("42sh : fg: %s no such job", 2);
-				return (1);
-			}
-		}
-	}
-	else if (args[1])
-	{
-		ft_putendl_fd("42sh : fg: %s no such job", 2);
-		return (1);
-	}
-	else
-	{
-		while (j)
-		{
-			if (j->sign == '+')
-				break ;
-			if (!j->next)
-				break ;
-			j = j->next;
-		}
-	}
+	if (check_ctr_jobs_args(args, &j, "42sh : fg", 0))
+		return(1);
 	put_job_in_foreground(j, 1);
 	return(0);
 }
@@ -222,27 +234,18 @@ int			execute_bg(char **args)
 			j = j->next;
 			if (!j)
 			{
-				ft_putendl_fd("42sh : bg: %s no such job\n", 2);
+				ft_putendl_fd("42sh : bg: %s no such job", 2);
 				return (1);
 			}
 		}
 	}
 	else if (args[1])
 	{
-		ft_putendl_fd("42sh : bg: %s no such job\n", 2);
+		ft_putendl_fd("42sh : bg: %s no such job", 2);
 		return (1);
 	}
 	else
-	{
-		while (j)
-		{
-			if (j->sign == '+')
-				break ;
-			if (!j->next)
-				break ;
-			j = j->next;
-		}
-	}
+		j = jobs_plus_ret(j);
 	put_job_in_background(j, 1);
 	return(0);
 }
