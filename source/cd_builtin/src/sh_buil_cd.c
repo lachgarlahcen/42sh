@@ -50,24 +50,31 @@ int			cd_link_dir(char *dir, char *mybuf, char **args, struct stat *buf)
 	return (0);
 }
 
-int			built_cd_p(char **args, char *dir)
+int			built_cd_p(char **args, char *dir, char *tp)
 {
 	struct stat	buf;
 
 	if (args[2] && lstat(args[2], &buf) == -1)
 	{
-		if (!access(dir, F_OK) && access(dir, X_OK))
-			return (ft_perror_cd(ft_strdup(dir), ": Permission Denied", 1));
-		else if (!access(dir, F_OK))
-			return (ft_perror_cd(ft_strdup(dir), ": Not a directory", 1));
+		if (!access(args[2], F_OK) && access(args[2], X_OK))
+			return (ft_perror_cd(ft_strdup(args[2]), ": Permission Denied", 1));
+		else if (!access(args[2], F_OK))
+			return (ft_perror_cd(ft_strdup(args[2]), ": Not a directory", 1));
 		else
-			return (ft_perror_cd(ft_strdup(dir),
+			return (ft_perror_cd(ft_strdup(args[2]),
 			": No such file or directory", 1));
 	}
 	if ((buf.st_mode & S_IFMT) == S_IFLNK && isdir(args[2]))
 		return (cd_link_dir(dir, NULL, args, &buf));
 	else
+	{
+		if(!(dir = getcwd(0,0)))
+			return (1);
+		tp = strjoin_free("PWD=", dir, 0, 1);
+		set_variable(tp, 1, 0);
+		ft_memdel((void **)&tp);
 		return (built_cd(args + 1));
+	}
 }
 
 int			cd_arg(char **args, char *dir)
@@ -98,7 +105,7 @@ int			built_cd(char **args)
 
 	dir = NULL;
 	if (args[1] && ft_strequ(args[1], "-P"))
-		return (built_cd_p(args, NULL));
+		return (built_cd_p(args, NULL, NULL));
 	else if (args[1] && ft_strequ(args[1], "-L"))
 		built_cd(args + 1);
 	else if (args[1])
