@@ -6,7 +6,7 @@
 /*   By: iel-bouh <iel-bouh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 03:40:10 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/25 04:57:54 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/25 05:19:58 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ void	ft_check_close_fd(int i);
 
 int		ft_perror_pipe(char *error, int ret);
 int		is_dir(char *di);
-int		ft_perror_execu(char *cmdl, char *err);
 char	*search_executable(char *cmdl);
 int		set_intern_variables(t_tok *as);
 

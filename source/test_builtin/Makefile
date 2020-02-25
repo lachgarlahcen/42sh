@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hastid <marvin@42.fr>                      +#+  +:+       +#+         #
+#    By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/08 05:06:04 by hastid            #+#    #+#              #
-#    Updated: 2020/02/25 04:52:45 by hastid           ###   ########.fr        #
+#    Updated: 2020/02/25 05:32:59 by nsaber           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,11 @@ NAME = test_builtin.a
 SRC_NAME = test_builtin.c \
 		   tools.c \
 		   arg_cmp.c \
-		   options.c
+		   arg_cmp_options.c \
+		   options.c \
+		   options2.c \
+		   options3.c \
+		   options4.c
 
 OBJ_NAME =	$(SRC_NAME:.c=.o)
 

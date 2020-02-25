@@ -6,7 +6,7 @@
 /*   By: aihya <aihya@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 00:09:47 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/25 03:17:10 by aihya            ###   ########.fr       */
+/*   Updated: 2020/02/25 05:41:39 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ static int	check_change(char *str, int al)
 
 static int	check_is_alias(int be, int *end, char **str)
 {
+	int		i;
 	char	*tp;
 	char	*tmp;
 
@@ -44,13 +45,14 @@ static int	check_is_alias(int be, int *end, char **str)
 	if (!(tmp = is_alias(tp)))
 		return (free_return(tp, 1));
 	tmp = ft_strdup(tmp);
-	*end = *end + ft_strlen(tmp);
+	i = *end + ft_strlen(tmp);
 	ft_memdel((void **)&tp);
 	if ((tp = ft_strsub(*str, 0, be)))
 		tmp = strjoin_free(tp, tmp, 1, 1);
 	if ((tp = ft_strsub(*str, *end, ft_strlen(*str) - *end)))
 		tmp = strjoin_free(tmp, tp, 1, 1);
 	ft_memdel((void **)&(*str));
+	*end = i;
 	*str = tmp;
 	return (0);
 }
