@@ -6,7 +6,7 @@
 /*   By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 21:50:06 by nsaber            #+#    #+#             */
-/*   Updated: 2020/02/23 21:52:53 by nsaber           ###   ########.fr       */
+/*   Updated: 2020/02/25 03:24:45 by nsaber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ int	change_dir(char *dir)
 {
 	if (!change_dir_a(dir))
 		change_dir_b(dir);
+	ft_memdel((void **)&dir);
 	return (0);
 }
 
@@ -86,7 +87,10 @@ int			ft_perror_cd(char *s, char *str, int ret)
 {
 	ft_putstr_fd("42sh: ", 2);
 	if (s)
+	{
 		ft_putstr_fd(s, 2);
+		ft_memdel((void **)&s);		
+	}
 	ft_putendl_fd(str, 2);
 	return (ret);
 }

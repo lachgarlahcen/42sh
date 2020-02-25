@@ -6,7 +6,7 @@
 /*   By: iel-bouh <iel-bouh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/16 19:26:51 by aihya             #+#    #+#             */
-/*   Updated: 2020/02/23 22:02:02 by iel-bouh         ###   ########.fr       */
+/*   Updated: 2020/02/25 02:48:45 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int		save_binary(char *bin_name, char *bin_value)
 		ft_strdel(&(bin->value));
 		bin->value = ft_strdup(bin_value);
 	}
-	binaries_names(TRUE);
 	return (1);
 }
 
@@ -39,7 +38,6 @@ void	remove_binary(char *name)
 	pop_htnode(binaries(FALSE), name);
 	if (binaries_counter(0) > 0)
 		binaries_counter(DEC);
-	binaries_names(TRUE);
 }
 
 void	remove_binaries(void)
@@ -49,13 +47,14 @@ void	remove_binaries(void)
 
 	if (binaries_counter(0) > 0)
 	{
-		names = binaries_names(FALSE);
+		names = binaries_names();
 		index = 0;
-		while (names[index] != NULL)
+		while (names && names[index] != NULL)
 		{
 			remove_binary(names[index]);
 			index++;
 		}
+		ft_chain_free(&names);
 	}
 }
 

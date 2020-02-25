@@ -6,7 +6,7 @@
 /*   By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/16 18:53:16 by aihya             #+#    #+#             */
-/*   Updated: 2020/02/23 21:30:24 by aihya            ###   ########.fr       */
+/*   Updated: 2020/02/25 02:54:34 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,10 @@ static int	path_basenames_cmp(char *base_name)
 	char	*path_var;
 
 	path_var = get_variable("PATH");
-	if (path_var == NULL)
-		return (0);
 	match = 0;
 	index = 0;
 	table = ft_strsplit(path_var, ':');
-	while (table[index])
+	while (table && table[index])
 	{
 		if (ft_strequ(table[index], base_name))
 		{
@@ -57,30 +55,30 @@ static int	path_basenames_cmp(char *base_name)
 		}
 		index++;
 	}
-	ft_strdel(&path_var);
-	ft_chain_free(&table);
+	if (path_var)
+		ft_strdel(&path_var);
+	if (table)
+		ft_chain_free(&table);
 	return (match);
 }
 
 void		update_binaries(void)
 {
-	t_htnode	**hashtable;
 	char		**names;
 	char		*base_name;
 	int			index;
 
-	hashtable = binaries(FALSE);
-	names = binaries_names(FALSE);
+	names = binaries_names();
 	index = 0;
 	while (names && names[index])
 	{
 		base_name = get_base_name(is_binary(names[index]));
-		if (path_basenames_cmp(base_name) == FALSE)
+		if (base_name && path_basenames_cmp(base_name) == FALSE)
 			remove_binary(names[index]);
 		ft_strdel(&base_name);
 		index++;
 	}
-	binaries_names(TRUE);
+	ft_chain_free(&names);
 }
 
 int			update_binary(char *name, char *new_value)

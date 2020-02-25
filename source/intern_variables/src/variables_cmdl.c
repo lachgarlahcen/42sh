@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   variables_cmdl.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: aihya <aihya@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 01:02:55 by hastid            #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2020/02/25 03:33:51 by hastid           ###   ########.fr       */
+=======
+/*   Updated: 2020/02/25 03:33:20 by aihya            ###   ########.fr       */
+>>>>>>> e8d16f7cb1a604afae806957e0ccad5eed074547
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,14 +94,22 @@ char	*get_variable(char *name)
 	while (var)
 	{
 		if (!ft_strcmp(name, var->name))
+		{
+			if (var->value[0] == '\0')
+				return (0);
 			return (ft_strdup(var->value));
+		}
 		var = var->next;
 	}
 	var = get_intern_variables(0, 0);
 	while (var)
 	{
 		if (!ft_strcmp(name, var->name))
+		{
+			if (var->value[0] == '\0')
+				return (0);
 			return (ft_strdup(var->value));
+		}
 		var = var->next;
 	}
 	return (0);
