@@ -6,7 +6,7 @@
 /*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/06 12:23:05 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/23 00:45:34 by llachgar         ###   ########.fr       */
+/*   Updated: 2020/02/25 05:51:11 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ typedef struct	s_list
 	struct s_list	*next;
 }				t_list;
 
-char            *ft_strojoin(char **s1, char *s2, int overwrite);
+char			*ft_strojoin(char **s1, char *s2, int overwrite);
 char			*ft_strappend(char **a_s1, char c, int overwrite);
 void			ft_chain_free(char ***a_chain);
 size_t			ft_chain_size(char **chain);
