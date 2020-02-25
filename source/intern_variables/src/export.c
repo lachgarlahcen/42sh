@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/22 22:42:08 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/25 03:33:49 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/25 19:17:22 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,45 @@ static void	put_export(void)
 	}
 }
 
+int			usage_export(char *str)
+{
+	int	i;
+
+	i = 0;
+	if (!str)
+		return (0);
+	if (str[i] == '-')
+		while (str[++i])
+			if (str[i] != 'p')
+			{
+				ft_putstr_fd("42sh: bad option: -", 2);
+				ft_putchar_fd(str[i], 2);
+				ft_putchar_fd('\n', 2);
+				ft_putendl_fd("export [-p] name[=word]...", 2);
+				return (1);
+			}
+	return (0);
+}
+
+int			check_option(char *str)
+{
+	if (!str)
+		return (0);
+	if (str[0] == '-' && str[1] == 'p')
+		return (1);
+	return (0);
+}
+
 int			execute_export(char **args)
 {
 	int	i;
 	int	ret;
 
 	ret = 0;
-	if (args[1] && ft_strcmp(args[1], "-p"))
+	if (args[1] && args[1][0] == '-')
+		if (usage_export(args[1]))
+			return (1);
+	if (args[1] && !check_option(args[1]))
 	{
 		i = 0;
 		while (args[++i])
