@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 04:27:40 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/25 04:28:40 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/25 05:22:27 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,12 @@ int		is_dir(char *di)
 	return (1);
 }
 
-int		ft_perror_execu(char *cmdl, char *err)
+void	ft_perror_execu(char *cmdl, char *err, int ex)
 {
 	ft_putstr_fd("42sh : ", 2);
 	ft_putstr_fd(cmdl, 2);
 	ft_putendl_fd(err, 2);
-	return (1);
+	exit(ex);
 }
 
 char	*search_executable(char *cmdl)
@@ -62,9 +62,9 @@ char	*search_executable(char *cmdl)
 			return (excu);
 		else if ((excu = get_bin_path(cmdl)))
 			return (excu);
-		ft_perror_execu(cmdl, ": command not found");
+		ft_perror_execu(cmdl, ": command not found", 127);
 	}
 	else
-		ft_perror_execu(cmdl, ": is a directory");
+		ft_perror_execu(cmdl, ": is a directory", 126);
 	return (0);
 }
