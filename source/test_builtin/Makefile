@@ -6,7 +6,7 @@
 #    By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/08 05:06:04 by hastid            #+#    #+#              #
-#    Updated: 2020/02/25 05:23:53 by nsaber           ###   ########.fr        #
+#    Updated: 2020/02/25 05:32:59 by nsaber           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,7 +47,7 @@ $(OBJ_PATH)/%.o : $(SRC_PATH)/%.c $(DEPS)
 	@mkdir $(OBJ_PATH) 2>/dev/null || true
 	@clear
 	@echo "Compiling \033[1;33m[$<]\033[0m to \033[1;32m[$@]\033[0m"
-	@gcc  $(CFLAGS) -g $(Include) -o $@ -c $<
+	@gcc  $(CFLAGS) $(Include) -o $@ -c $<
 
 clean:
 	@echo "\033[1;34mRemoving test_builtin's objects directory\033[0m"

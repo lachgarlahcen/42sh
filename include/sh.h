@@ -6,7 +6,7 @@
 /*   By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 18:23:41 by aihya             #+#    #+#             */
-/*   Updated: 2020/02/25 03:20:59 by aihya            ###   ########.fr       */
+/*   Updated: 2020/02/25 05:02:06 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ t_htnode	*find_htnode(t_htnode **hashtable, char *name);
 void		free_htnode(t_htnode **a_htnode);
 int			hash_function(char *str);
 char		**get_names(t_htnode **hashtable, size_t size);
+void		free_hashtable(t_htnode **hashtable, char **names);
 
 // Aliases functions
 int			alias(char **args);
@@ -53,6 +54,7 @@ char		*is_alias(char *name);
 int			save_alias(char *name, char *value);
 void		print_alias(char *name, int prefix);
 void		print_all_alias(void);
+void		free_aliases(void);
 
 // Unalias functions
 int			unalias(char **args);
@@ -76,6 +78,7 @@ void		hit_binary(char *name);
 void		print_binaries(void);
 int			is_path_like(char *str);
 int			r_option(char **args, int *status, int* last_index);
+void		free_binaries(void);
 
 // Error functions
 int			err_msg(char *caller, char *target, char *msg);
