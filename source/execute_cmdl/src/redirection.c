@@ -6,7 +6,7 @@
 /*   By: iel-bouh <iel-bouh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 03:59:51 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/24 19:38:07 by iel-bouh         ###   ########.fr       */
+/*   Updated: 2020/02/24 22:28:12 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,13 +119,12 @@ int		ft_redirection(t_proc *p)
 	tmp = p->red;
 	while (tmp)
 	{
-		file = delet_quotes(ft_get_id(tmp, 3));
+		file = ft_get_id(tmp, 3);
 		if (ft_get_id(tmp, 2))
 		{
 			if (ft_duplication(tmp, file) == 1)
 				return (1);
 		}
-		ft_memdel((void **)&file);
 		while (tmp->id != 3)
 			tmp = tmp->next;
 		tmp = tmp->next;

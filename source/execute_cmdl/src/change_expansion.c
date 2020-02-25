@@ -6,7 +6,7 @@
 /*   By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 05:15:41 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/24 04:34:05 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/25 02:00:30 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,68 @@ int		check_dollar(char *str)
 	return (0);
 }
 
+void	change_string(char **str, int be)
+{
+	int		i;
+	char	*tp1;
+	char	*tp2;
+	char	*tmp;
+
+	i = be;
+	tp2 = 0;
+	tmp = *str;
+	while (tmp[i] && tmp[i] != '}')
+		i++;
+	if (!(tp1 = ft_strsub(tmp, be, i - be)))
+		return ;
+	if (!ft_strcmp("?", tp1))
+		tp2 = ft_itoa(exit_status(0, 0));
+	else if (!ft_strcmp("$", tp1))
+		tp2 =  ft_itoa(getpid());
+	else
+		tp2 = get_variable(tp1);
+	ft_memdel((void **)&tp1);
+	if (!tp2)
+		tp2 = ft_strdup("\0");
+	tp1 = ft_strsub(tmp, 0, be - 2);
+	tp2 = strjoin_free(tp1, tp2, 1, 1);
+	tp1 = ft_strsub(tmp, i + 1, ft_strlen(tmp) - i - 1);
+	tp2 = strjoin_free(tp2, tp1, 1, 1);
+	ft_memdel((void **)&tmp);
+	*str = tp2;
+}
+
+char		*change_dollar(char *str)
+{
+	int		i;
+	int		be;
+	char	*tmp;
+
+	i = 0;
+	tmp = ft_strdup(str);
+	while (tmp[i])
+	{
+		if (tmp[i] == '\"' || tmp[i] == '\'')
+		{
+			be = i++;
+			while (tmp[i] && tmp[i] != tmp[be])
+			{
+				if (tmp[i] == '\\' && tmp[be] == '\"')
+					i++;
+				else if (tmp[i] == '$' && tmp[i + 1] == '{' && tmp[be] == '\"')
+					change_string(&tmp, i + 2);
+				i++;
+			}
+		}
+		if (tmp[i] == '\\')
+			i++;
+		else if (tmp[i] == '$'  && tmp[i + 1] == '{')
+			change_string(&tmp, i + 2);
+		i = (tmp[i] != '\0') ? i + 1 : i;
+	}
+	return (tmp);
+}
+
 char	*change_tilda(char *str)
 {
 	char	*tp;
@@ -50,9 +112,8 @@ char	*change_tilda(char *str)
 	if (str[1] == '\0' || str[1] == '/')
 	{
 		if (!(tp = get_variable("HOME")))
-			return (0);
-		tmp = ft_strjoin(tp, str + 1);
-		ft_memdel((void **)&tp);
+			return (str);
+		tmp = strjoin_free(tp, str + 1, 1, 0);
 		ft_memdel((void **)&str);
 	}
 	else
@@ -69,77 +130,22 @@ char	*change_tilda(char *str)
 	return (tmp);
 }
 
-char	*change_string(char *str, int be)
+char		*check_token_expan(char *str, char id)
 {
-	int		i;
 	char	*tp;
-	char	*tmp;
 
-	i = be;
 	tp = 0;
-	while (str[i] && str[i] != '}')
-		i++;
-	tp = ft_strsub(str, be, i - be);
-	if (!ft_strcmp("?", tp))
-		tmp = ft_itoa(exit_status(0, 0));
-	else if (!ft_strcmp("$", tp))
-		tmp = ft_itoa(getpid());
+	str = ft_strdup(str);
+	if (str[0] == '~')
+		return (change_tilda(str));
+	if (check_dollar(str))
+		tp = change_dollar(str);
 	else
-		tmp = get_variable(tp);
-	ft_memdel((void **)&tp);
-	tp = ft_strsub(str, 0, be - 2);
-	if (tmp)
-		tp = strjoin_free(tp, tmp, 1, 1);
-	tmp = ft_strsub(str, i + 1, ft_strlen(str) - i - 1);
-	tp = strjoin_free(tp, tmp, 1, 1);
-	if (!*tp)
+		return (str);
+	if (!(*tp))
 		ft_memdel((void **)&tp);
-	return (tp);
-}
-
-char		*change_dollar(char *str, int id)
-{
-	int		i;
-	int		be;
-	char	*tmp;
-
-	i = 0;
-	tmp = 0;
-	while (str[i])
-	{
-		if (str[i] == '\"' || str[i] == '\'')
-		{
-			be = i++;
-			while (str[i] && str[i] != str[be])
-			{
-				if (str[i] == '\\' && str[be] == '\"')
-					i++;
-				else if (str[i] == '$' && str[i + 1] == '{' && str[be] == '\"')
-					return (tmp = change_string(str, i + 2));
-				i++;
-			}
-		}
-		if (str[i] == '\\')
-			i++;
-		else if (str[i] == '$'  && str[i + 1] == '{')
-			tmp = change_string(str, i + 2);
-		i++;
-	}
-	if (!tmp && id != 0)
+	if (!tp && id)
 		return (str);
 	ft_memdel((void **)&str);
-	return (tmp);
-}
-int			change_expansion(t_tok *t)
-{
-	while (t)
-	{
-		if (t->token && t->token[0] == '~')
-			if (!(t->token = change_tilda(t->token)))
-				return (1);
-		if (check_dollar(t->token))
-			t->token = change_dollar(t->token, t->id);
-		t = t->next;
-	}
-	return (0);
+	return (tp);
 }

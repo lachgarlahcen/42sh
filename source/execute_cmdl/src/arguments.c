@@ -6,7 +6,7 @@
 /*   By: aihya <aihya@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 04:58:13 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/24 21:49:24 by aihya            ###   ########.fr       */
+/*   Updated: 2020/02/24 22:56:38 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,40 @@ void		manage_hashtable(char *bin_name)
 	}
 }
 
+void		delet_quotes_arg(t_proc *p)
+{
+	t_tok	*as;
+	t_proc	*tp;
+	char	*tmp;
+
+	tp = p;
+	while (tp)
+	{
+		as = tp->as;
+		while (as)
+		{
+			tmp = as->token;
+			as->token = delet_quotes(tmp);
+			ft_memdel((void **)&tmp);
+			as = as->next;
+		}
+		as = tp->red;
+		while (as)
+		{
+			tmp = as->token;
+			as->token = delet_quotes(tmp);
+			ft_memdel((void **)&tmp);
+			as = as->next;
+		}
+		as = tp->as;
+		while (as && as->id)
+			as = as->next;
+		if (as)
+			manage_hashtable(as->token);
+		tp = tp->next;
+	}
+}
+
 int			check_all_arguments(t_proc *p)
 {
 	t_tok	*as;
@@ -63,10 +97,9 @@ int			check_all_arguments(t_proc *p)
 				break ;
 			as = as->next;
 		}
-		if (as)
-			manage_hashtable(as->token);
 		tp = tp->next;
 	}
+	delet_quotes_arg(p);
 	return (0);
 }
 
@@ -121,7 +154,7 @@ char		**get_args(t_tok *as)
 	while (tmp)
 	{
 		if (!tmp->id && tmp->token)
-			args[l++] = delet_quotes(tmp->token);
+			args[l++] = ft_strdup(tmp->token);
 		tmp = tmp->next;
 	}
 	args[l] = 0;

@@ -6,7 +6,7 @@
 #    By: iel-bouh <iel-bouh@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/05 05:16:42 by hastid            #+#    #+#              #
-#    Updated: 2020/02/23 15:49:17 by iel-bouh         ###   ########.fr        #
+#    Updated: 2020/02/25 01:57:39 by hastid           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,8 +20,8 @@ SRC_NAME = arguments.c \
 		   change_expansion.c \
 		   redirection.c  \
 		   aggreagation.c \
-			helpers.c \
-			herdoc.c
+		   helpers.c \
+		   herdoc.c
 
 OBJ_NAME =	$(SRC_NAME:.c=.o)
 

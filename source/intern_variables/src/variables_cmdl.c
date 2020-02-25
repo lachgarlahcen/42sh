@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   variables_cmdl.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: aihya <aihya@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 01:02:55 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/25 01:28:42 by aihya            ###   ########.fr       */
+/*   Updated: 2020/02/25 03:33:20 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ int		set_variable(char *arg, int id, int temp)
 		if (check_name_variables(arg, 1))
 			return (1);
 		co = 0;
-		arg = delet_quotes(arg);
 		while (arg[co] != '=')
 			co++;
 		if (!(name = ft_strsub(arg, 0, co)))
@@ -64,7 +63,6 @@ int		set_variable(char *arg, int id, int temp)
 			get_temp_variables(&var, 1);
 		else
 			get_intern_variables(&var, 1);
-		ft_memdel((void **)&arg);
 		update_binaries();
 	}
 	return (0);

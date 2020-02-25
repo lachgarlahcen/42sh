@@ -115,6 +115,8 @@ int				ft_fc(char **av)
 		res = ft_fc_list(&fc);
 	else
 		res = ft_fc_editor(&fc);
+	if (!fc.l)
+		g_h = 0;
 	ft_free_fc(&fc);
 	return (res);
 }

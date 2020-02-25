@@ -6,7 +6,7 @@
 /*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/31 22:26:33 by llachgar          #+#    #+#             */
-/*   Updated: 2020/02/23 00:49:43 by llachgar         ###   ########.fr       */
+/*   Updated: 2020/02/25 00:59:46 by llachgar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static void		ft_fc_print_list(t_hist *h, t_fc *fc, int f, int l)
 	}
 }
 
-void			ft_fc_list_history(t_fc *fc, int f, int l)
+int				ft_fc_list_history(t_fc *fc, int f, int l)
 {
 	t_hist *hist;
 
@@ -78,7 +78,10 @@ void			ft_fc_list_history(t_fc *fc, int f, int l)
 		l = (hist->count - l);
 	else if (l < 0)
 		l = ABS(l) - 1;
+	if (l >= hist->count || f >= hist->count)
+		return (0);
 	ft_fc_print_list(hist, fc, f, l);
+	return (1);
 }
 
 int				ft_fc_list(t_fc *fc)
@@ -92,8 +95,12 @@ int				ft_fc_list(t_fc *fc)
 		if (!ft_fc_get_pos(fc->first, &f) || !ft_fc_get_pos(fc->last, &l))
 		{
 			ft_putstr_fd("42sh: fc: history specification out of range\n", 2);
-			return (0);
+			return (1);
 		}
-	ft_fc_list_history(fc, f, l);
-	return (1);
+	if (!ft_fc_list_history(fc, f, l))
+	{
+		ft_putstr_fd("42sh: fc: history specification out of range\n", 2);
+		return (1);
+	}
+	return (0);
 }

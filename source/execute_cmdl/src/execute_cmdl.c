@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 03:40:43 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/24 21:03:05 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/25 02:00:32 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,33 +16,12 @@ void		check_save_tokens(t_proc *p, char *token, int id)
 {
 	while (p && p->next)
 		p = p->next;
+	token = check_token_expan(token, id);
 	if (id == 0)
 		save_tokens(&(p->as), token, id);
 	else
 		save_tokens(&(p->red), token, id);
-}
-
-void		wait_for_process(t_proc *p)
-{
-	int	status;
-
-	while (p)
-	{
-		waitpid(p->pid, &status, WUNTRACED | WCONTINUED);
-		p->stat = status;
-		if (WIFSTOPPED(status))
-			p->s = 1;
-		else
-			p->c = 1;
-		printf("pid == %i\n", p->pid);
-		if (WIFEXITED(p->stat))
-			exit_status(WEXITSTATUS(p->stat), 1);
-		else if (WIFSIGNALED(p->stat))
-			exit_status(WTERMSIG(p->stat) + 128, 1);
-		else if (WIFSTOPPED(p->stat))
-			exit_status(WSTOPSIG(p->stat) + 128, 1);
-		p = p->next;
-	}
+	ft_memdel((void **)&token);
 }
 
 int			check_execute(t_proc *p, t_tok *t, int check)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   launch_process.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aihya <aihya@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 12:16:28 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/24 21:49:20 by aihya            ###   ########.fr       */
+/*   Updated: 2020/02/25 00:29:51 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ char	*search_executable(char *cmdl)
 {
 	char	*excu;
 
-	cmdl = delet_quotes(cmdl);
 	if (!access(cmdl, F_OK))
 		if (!access(cmdl, X_OK))
 			if (!is_dir(cmdl))
@@ -121,8 +120,6 @@ int		execute_pipe(t_proc *p, int *in, int *pgid)
 	}
 	if ((p->pid = fork()) == -1)
 		return (ft_perror_pipe("PIPE ERROR !!", 1));
-	if (change_expansion(p->as) || change_expansion(p->red))
-		return (exit_status(1, 0));
 	args = get_args(p->as);
 	if (p->pid == 0)
 	{
@@ -162,8 +159,7 @@ int		execute_pipes_line(t_proc *p, int bg)
 	j = add_jobs(p, pgid, bg);
 	if (bg)
 	{
-		printf("job_sign called for bg\n");
-		job_sign(j); // added by noureddine
+		job_sign(j);
 		put_job_in_background(j, 0);
 	}
 	else
@@ -187,7 +183,7 @@ int		execute_without_fork(t_proc *p, int iv)
 	char	**args;
 
 	if (p->red)
-		if (change_expansion(p->red) || ft_redirection(p))
+		if (ft_redirection(p))
 			return (exit_status(1, 1));
 	as = p->as;
 	if (iv)
@@ -197,8 +193,6 @@ int		execute_without_fork(t_proc *p, int iv)
 		set_variable(as->token, 1, 1);
 		as = as->next;
 	}
-	if (change_expansion(as))
-		return (exit_status(1, 1));
 	args = get_args(as);
 	exit_status(execute_builtin(args), 1);
 	if (init_fd(0))
@@ -226,7 +220,11 @@ int		check_fork(t_proc *p, int bg)
 			iv = 0;
 		if (p->as)
 			if (iv || is_builtin(as->token))
-				return (execute_without_fork(p, iv));
+			{
+				iv = execute_without_fork(p, iv);
+				free_process(p);
+				return (iv);
+			}
 	}
 	return (execute_pipes_line(p, bg));
 }

@@ -6,7 +6,7 @@
 /*   By: iel-bouh <iel-bouh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 03:40:10 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/24 19:36:09 by iel-bouh         ###   ########.fr       */
+/*   Updated: 2020/02/25 01:57:03 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@
 # include "shell.h"
 # include "struct_shell.h"
 
-int		change_expansion(t_tok *t);
 int		check_fork(t_proc *p, int bg);
 
 char	**get_args(t_tok *as);
+char	*check_token_expan(char *str, char id);
 int		check_all_arguments(t_proc *p);
 void	free_tab(char **tab);
 
