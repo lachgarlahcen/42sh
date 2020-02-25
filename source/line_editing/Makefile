@@ -6,7 +6,7 @@
 #    By: hastid <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/03 03:07:16 by hastid            #+#    #+#              #
-#    Updated: 2020/02/22 22:18:38 by hastid           ###   ########.fr        #
+#    Updated: 2020/02/25 04:51:57 by hastid           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,7 @@ $(OBJ_PATH)/%.o : $(SRC_PATH)/%.c $(DEPS)
 	@mkdir $(OBJ_PATH) 2>/dev/null || true
 	@clear
 	@echo "Compiling \033[1;33m[$<]\033[0m to \033[1;32m[$@]\033[0m"
-	@gcc  $(CFLAGS) -g $(Include) -o $@ -c $<
+	@gcc  $(CFLAGS) $(Include) -o $@ -c $<
 
 clean:
 	@echo "\033[1;34mRemoving line_editing's objects directory\033[0m"

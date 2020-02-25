@@ -6,7 +6,7 @@
 #    By: iel-bouh <iel-bouh@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/05 05:16:42 by hastid            #+#    #+#              #
-#    Updated: 2020/02/25 04:39:29 by hastid           ###   ########.fr        #
+#    Updated: 2020/02/25 04:50:37 by hastid           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,7 +51,7 @@ $(OBJ_PATH)/%.o : $(SRC_PATH)/%.c $(DEPS)
 	@mkdir $(OBJ_PATH) 2>/dev/null || true
 	@clear
 	@echo "Compiling \033[1;33m[$<]\033[0m to \033[1;32m[$@]\033[0m"
-	@gcc  $(CFLAGS) -g $(Include) -o $@ -c $<
+	@gcc  $(CFLAGS) $(Include) -o $@ -c $<
 
 clean:
 	@echo "\033[1;34mRemoving execute_cmdl's objects directory\033[0m"
