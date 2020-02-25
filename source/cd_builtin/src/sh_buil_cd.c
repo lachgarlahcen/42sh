@@ -6,7 +6,7 @@
 /*   By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 16:29:59 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/25 04:47:06 by nsaber           ###   ########.fr       */
+/*   Updated: 2020/02/25 05:47:45 by nsaber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int			cd_link_dir(char *dir, char *mybuf, char **args, struct stat *buf)
 		ft_memdel((void **)&mybuf);
 		if (!(mybuf = getcwd(NULL, 0)))
 			return (1);
+		ft_memdel((void **)&mybuf);
 	}
 	else
 	{
