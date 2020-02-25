@@ -6,7 +6,7 @@
 /*   By: iel-bouh <iel-bouh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 03:59:51 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/24 22:28:12 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/25 19:20:41 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,12 +75,12 @@ int		ft_in_redirection(t_tok *p, char *file)
 	{
 		if (access(file, R_OK) == -1 && access(file, F_OK) == -1)
 		{
-			ft_putstr_fd("42sh: no such file or directory: ", 2);
+			ft_putendl_fd("42sh: no such file or directory: ", 2);
 			return (-1);
 		}
 		else if (access(file, R_OK) == -1)
 		{
-			ft_putstr_fd("42sh: permission denied: ", 2);
+			ft_putendl_fd("42sh: permission denied: ", 2);
 			return (-1);
 		}
 		if ((i = open(file, O_RDONLY)) == -1)
