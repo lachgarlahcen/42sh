@@ -87,11 +87,11 @@ int			execute_builtin_next(char **args)
 	else if (!ft_strcmp("test", *args))
 		return (execute_test(args));
 	else if (!ft_strcmp("jobs", *args))
-		execute_jobs(args);
+		return (execute_jobs(args));
 	else if (!ft_strcmp("fg", *args))
-		execute_fg(args);
+		return (execute_fg(args));
 	else if (!ft_strcmp("bg", *args))
-		execute_bg(args);
+		return (execute_bg(args));
 	else if (!ft_strcmp("unset", *args))
 		return (unset_variables(args));
 	else if (!ft_strcmp("export", *args))
