@@ -6,7 +6,7 @@
 /*   By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 23:04:02 by aihya             #+#    #+#             */
-/*   Updated: 2020/02/23 15:19:59 by aihya            ###   ########.fr       */
+/*   Updated: 2020/02/25 02:49:50 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	print_binaries(void)
 
 	if (binaries_counter(0) == 0)
 		return ;
-	names = binaries_names(FALSE);
+	names = binaries_names();
 	index = 0;
 	ft_printf("%-8s%s\n", "hits", "command");
 	while (names[index])
@@ -29,6 +29,7 @@ void	print_binaries(void)
 		ft_printf("%4d    %s\n", node->hits, node->value);
 		index++;
 	}
+	ft_chain_free(&names);
 }
 
 int		is_path_like(char *str)

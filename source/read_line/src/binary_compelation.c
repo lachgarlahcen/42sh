@@ -6,7 +6,7 @@
 /*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/21 06:21:33 by llachgar          #+#    #+#             */
-/*   Updated: 2020/02/22 23:36:05 by llachgar         ###   ########.fr       */
+/*   Updated: 2020/02/25 03:27:51 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int			fill_aliases(char *match, t_data **matches)
 	int			i;
 	t_data		*new_match;
 
-	tab = aliases_names(0);
+	tab = aliases_names();
 	res = 0;
 	if (!tab)
 		return (res);
@@ -91,6 +91,7 @@ int			fill_aliases(char *match, t_data **matches)
 		}
 		i++;
 	}
+	ft_chain_free(&tab);
 	return (res);
 }
 

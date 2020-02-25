@@ -6,7 +6,7 @@
 /*   By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 18:23:41 by aihya             #+#    #+#             */
-/*   Updated: 2020/02/23 21:01:38 by aihya            ###   ########.fr       */
+/*   Updated: 2020/02/25 03:20:59 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char		**get_names(t_htnode **hashtable, size_t size);
 // Aliases functions
 int			alias(char **args);
 t_htnode	**aliases(int init);
-char		**aliases_names(int reset);
+char		**aliases_names(void);
 size_t		aliases_counter(int action);
 char		*is_alias(char *name);
 int			save_alias(char *name, char *value);
@@ -61,7 +61,7 @@ int			unalias_usage(void);
 // Binaries functions
 int			hash(char **args);
 t_htnode	**binaries(int init);
-char		**binaries_names(int reset);
+char		**binaries_names(void);
 size_t		binaries_counter(int action);
 char		*is_binary(char *name);
 int			save_binary(char *bin_name, char *bin_value);

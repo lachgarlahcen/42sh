@@ -6,7 +6,7 @@
 /*   By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/16 18:41:02 by aihya             #+#    #+#             */
-/*   Updated: 2020/02/18 12:36:48 by aihya            ###   ########.fr       */
+/*   Updated: 2020/02/25 03:19:11 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,9 @@ size_t		binaries_counter(int action)
 	return (counter);
 }
 
-char		**binaries_names(int reset)
+char		**binaries_names(void)
 {
-	static char	**names = NULL;
-
-	if (reset == TRUE)
-	{
-		if (names != NULL)
-			ft_chain_free(&names);
-		names = get_names(binaries(FALSE), binaries_counter(0));
-	}
-	return (names);
+	return (get_names(binaries(FALSE), binaries_counter(0)));
 }
 
 char		*is_binary(char *name)
