@@ -6,7 +6,7 @@
 /*   By: iel-bouh <iel-bouh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 00:46:23 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/25 01:12:17 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/25 03:20:47 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static int	parse_token(t_tok **t, char *line)
 		if (i > be)
 			parser(ft_strsub(line, be, i - be), t, check);
 		else
-			i++;
+			i = (line[i] != '\0') ? i + 1 : i;
 	}
 	return (0);
 }
