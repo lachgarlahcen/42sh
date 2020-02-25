@@ -197,6 +197,11 @@ int			execute_fg(char **args)
 		return (1);
 	}
 	j = g_jobs.f_job;
+	if (args [1] && args[1][0] == '-' && args[1][1])
+	{
+		ft_putendl_fd("fg: invalid option fg [job_spec]", 2);
+		return(1);
+	}
 	if (!j)
 	{
 		ft_putendl_fd("fg: current: no such job", 2);
@@ -210,8 +215,7 @@ int			execute_fg(char **args)
 
 int			execute_bg(char **args)
 {
-	t_job		*j;
-	int			percent;
+		t_job	*j;
 
 	if (getpid() != g_shell_pgid)
 	{
@@ -219,33 +223,18 @@ int			execute_bg(char **args)
 		return (1);
 	}
 	j = g_jobs.f_job;
+	if (args [1] && args[1][0] == '-' && args[1][1])
+	{
+		ft_putendl_fd("bg: invalid option bg [job_spec]", 2);
+		return(1);
+	}
 	if (!j)
 	{
 		ft_putendl_fd("bg: current: no such job", 2);
 		return(1);
 	}
-	if (args[1] && ft_isdigits(args[1]))
-	{
-		percent = args[1][0] == '%' ? 1 : 0;
-		while (j)
-		{
-			if (j->id == ft_atoi(args[1] + percent))
-				break ;
-			j = j->next;
-			if (!j)
-			{
-				ft_putendl_fd("42sh : bg: %s no such job", 2);
-				return (1);
-			}
-		}
-	}
-	else if (args[1])
-	{
-		ft_putendl_fd("42sh : bg: %s no such job", 2);
-		return (1);
-	}
-	else
-		j = jobs_plus_ret(j);
+	if (check_ctr_jobs_args(args, &j, "42sh : bg", 0))
+		return(1);
 	put_job_in_background(j, 1);
 	return(0);
 }
