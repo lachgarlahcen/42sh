@@ -72,7 +72,7 @@ int		ft_isdigits(char *str)
 	return (0);
 }
 
-int	job_arg_option(char *option, char **args)
+int			job_arg_option(char *option, char **args)
 {
 	int i;
 
@@ -97,7 +97,7 @@ int	job_arg_option(char *option, char **args)
 	return (0);
 }
 
-int	job_arg(char **args, char *option, int i)
+int			job_arg(char **args, char *option, int i)
 {
 	t_job	*jj;
 	t_job	*j;
@@ -253,22 +253,8 @@ t_job		*job_sign_finder(char sign)
 	return (0);
 }
 
-void		job_node_trait(t_job *j, int mines)
+void		job_node_manpl_signs(t_job *tmp)
 {
-	t_job *tmp;
-	int len;
-
-	len = 0;
-	if (!(j->sign) || j->sign == ' ')
-		return ;
-	tmp = g_jobs.f_job;
-	while (tmp)
-	{
-		len = tmp->id;
-		tmp = tmp->next;
-	}
-	if ((len == j->id && mines) || (len == 0 && mines))
-		g_jobs.id--;
 	tmp = g_jobs.f_job;
 	while (tmp)
 	{
@@ -291,6 +277,25 @@ void		job_node_trait(t_job *j, int mines)
 		}
 		tmp = tmp->next;
 	}
+}
+
+void		job_node_trait(t_job *j, int mines)
+{
+	t_job *tmp;
+	int len;
+
+	len = 0;
+	if (!(j->sign) || j->sign == ' ')
+		return ;
+	tmp = g_jobs.f_job;
+	while (tmp)
+	{
+		len = tmp->id;
+		tmp = tmp->next;
+	}
+	if ((len == j->id && mines) || (len == 0 && mines))
+		g_jobs.id--;
+	job_node_manpl_signs(tmp);
 }
 
 void		put_job_in_foreground(t_job *j, int cont)
