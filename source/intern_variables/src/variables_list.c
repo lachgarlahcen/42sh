@@ -6,7 +6,7 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 01:00:49 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/24 23:11:45 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/25 03:40:44 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ int				add_elem(t_var **var, char *name, char *value, int id)
 			{
 				if (!(tmp->value = ft_strdup(value)))
 					return (1);
+				tmp->id = id ? id : tmp->id;
 			}
 			else if (!(tmp->value = ft_strdup("\0")))
 				return (1);

@@ -6,7 +6,7 @@
 /*   By: iel-bouh <iel-bouh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 03:40:10 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/25 01:57:03 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/25 04:57:54 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 
 # include "shell.h"
 # include "struct_shell.h"
-
-int		check_fork(t_proc *p, int bg);
 
 char	**get_args(t_tok *as);
 char	*check_token_expan(char *str, char id);
@@ -43,5 +41,14 @@ int		ft_herdoc(char *file);
 int		ft_run_herdoc(t_tok *tmp, char *file);
 int		ft_ampersand(t_tok *p, char *file);
 void	ft_check_close_fd(int i);
+
+int		ft_perror_pipe(char *error, int ret);
+int		is_dir(char *di);
+int		ft_perror_execu(char *cmdl, char *err);
+char	*search_executable(char *cmdl);
+int		set_intern_variables(t_tok *as);
+
+int		execute_without_fork(t_proc *p, int iv);
+int		execute_pipes_line(t_proc *p, int bg);
 
 #endif

@@ -6,7 +6,11 @@
 /*   By: aihya <aihya@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 21:16:34 by llachgar          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2020/02/25 05:08:29 by aihya            ###   ########.fr       */
+=======
+/*   Updated: 2020/02/25 04:56:40 by hastid           ###   ########.fr       */
+>>>>>>> 8cf381a11d3267448614e9c9e72673ac6fab714c
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +24,6 @@ int	init_shell(void)
 	if (!isatty(0) || !isatty(1))
 		return (1);
 	g_shell_pgid = getpid();
-	/*
-	**Grab control of the terminal.
-	*/
 	g_h = 1;
 	g_stat = 0;
 	g_exit = 0;
@@ -45,7 +46,7 @@ int	exit_status(int status, int check)
 	return (e_status);
 }
 
-int	init_fd(int	my_fd)
+int	init_fd(int my_fd)
 {
 	static int	fd;
 
@@ -62,7 +63,7 @@ int	init_fd(int	my_fd)
 	return (0);
 }
 
-int main(int ac, char **av, char **env)
+int	main(int ac, char **av, char **env)
 {
 	char *line;
 

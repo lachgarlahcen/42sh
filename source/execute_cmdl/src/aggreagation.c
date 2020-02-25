@@ -6,13 +6,13 @@
 /*   By: iel-bouh <iel-bouh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 15:42:27 by iel-bouh          #+#    #+#             */
-/*   Updated: 2020/02/24 19:39:26 by iel-bouh         ###   ########.fr       */
+/*   Updated: 2020/02/25 04:19:17 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute_cmdl.h"
 
-void		ft_check_close_fd(int i)
+void	ft_check_close_fd(int i)
 {
 	if (i > 2)
 	{

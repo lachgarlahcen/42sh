@@ -118,7 +118,7 @@ $(OBJ_PATH)/%.o : $(SRC_PATH)/%.c $(DEPS)
 	@mkdir $(OBJ_PATH) 2> /dev/null || true
 	@clear;
 	@echo "Compiling \033[1;36m[$<]\033[0m to \033[1;32m[$@]\033[0m"
-	@gcc $(CFLAGS) -g $(INCLUDE) -o $@ -c $<
+	@gcc $(CFLAGS) $(INCLUDE) -o $@ -c $<
 
 clean:
 	@make clean -C libft
