@@ -6,7 +6,7 @@
 /*   By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/17 19:35:28 by aihya             #+#    #+#             */
-/*   Updated: 2020/02/22 15:21:24 by aihya            ###   ########.fr       */
+/*   Updated: 2020/02/25 03:22:01 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ int				save_alias(char *name, char *value)
 		ft_strdel(&(alias->value));
 		alias->value = ft_strdup(value);
 	}
-	aliases_names(TRUE);
 	return (1);
 }
 
@@ -63,15 +62,7 @@ char			*is_alias(char *name)
 	return (alias->value);
 }
 
-char			**aliases_names(int reset)
+char			**aliases_names(void)
 {
-	static char	**names = NULL;
-
-	if (reset == TRUE)
-	{
-		if (names != NULL)
-			ft_chain_free(&names);
-		names = get_names(aliases(FALSE), aliases_counter(0));
-	}
-	return (names);
+	return (get_names(aliases(FALSE), aliases_counter(0)));
 }

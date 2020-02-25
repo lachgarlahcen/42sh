@@ -6,60 +6,13 @@
 /*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 12:16:28 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/25 00:29:51 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/25 04:36:11 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute_cmdl.h"
 
-int		ft_perror_pipe(char *error, int ret)
-{
-	ft_putstr_fd("42sh: ", 2);
-	ft_putendl_fd(error, 2);
-	return (ret);
-}
-
-int		is_dir(char *di)
-{
-	DIR	*d;
-
-	if (!(d = opendir(di)))
-		return (0);
-	closedir(d);
-	return (1);
-}
-
-int		ft_perror_execu(char *cmdl, char *err)
-{
-	ft_putstr_fd("42sh : ", 2);
-	ft_putstr_fd(cmdl, 2);
-	ft_putendl_fd(err, 2);
-	return (1);
-}
-
-char	*search_executable(char *cmdl)
-{
-	char	*excu;
-
-	if (!access(cmdl, F_OK))
-		if (!access(cmdl, X_OK))
-			if (!is_dir(cmdl))
-				return (cmdl);
-	if (!is_dir(cmdl))
-	{
-		excu = is_binary(cmdl);
-		if (excu)
-			return (excu);
-		else if ((excu = get_bin_path(cmdl)))
-			return (excu);
-		ft_perror_execu(cmdl, ": command not found");
-	}
-	else
-		ft_perror_execu(cmdl, ": is a directory");
-	return (0);
-}
-
-int		execute_args(t_tok *as, char **args)
+static int	execute_args(t_tok *as, char **args)
 {
 	char	*exec;
 	char	**env;
@@ -81,7 +34,7 @@ int		execute_args(t_tok *as, char **args)
 	return (0);
 }
 
-int		launch_process(t_proc *p, char **args, int in, int out)
+static int	launch_process(t_proc *p, char **args, int in, int out)
 {
 	signals(0);
 	if (in != 0)
@@ -105,7 +58,7 @@ int		launch_process(t_proc *p, char **args, int in, int out)
 	return (0);
 }
 
-int		execute_pipe(t_proc *p, int *in, int *pgid)
+static int	execute_pipe(t_proc *p, int *in)
 {
 	int		out;
 	int		pi[2];
@@ -127,20 +80,14 @@ int		execute_pipe(t_proc *p, int *in, int *pgid)
 			close(pi[0]);
 		launch_process(p, args, *in, out);
 	}
-	if (!*pgid)
-		*pgid = p->pid;
-	setpgid(p->pid, *pgid);
-	if (*in != 0)
-		close(*in);
-	if (out != 1)
-		close(out);
+	(*in != 0) ? close(*in) : 0;
+	(out != 1) ? close(out) : 0;
 	*in = pi[0];
-
 	free_tab(args);
 	return (0);
 }
 
-int		execute_pipes_line(t_proc *p, int bg)
+int			execute_pipes_line(t_proc *p, int bg)
 {
 	int		in;
 	int		pgid;
@@ -152,32 +99,21 @@ int		execute_pipes_line(t_proc *p, int bg)
 	pgid = 0;
 	while (tp)
 	{
-		if (execute_pipe(tp, &in, &pgid))
+		if (execute_pipe(tp, &in))
 			break ;
+		if (!pgid)
+			pgid = p->pid;
+		setpgid(p->pid, pgid);
 		tp = tp->next;
 	}
 	j = add_jobs(p, pgid, bg);
 	if (bg)
-	{
 		job_sign(j);
-		put_job_in_background(j, 0);
-	}
-	else
-		put_job_in_foreground(j, 0);
+	bg ? put_job_in_background(j, 0) : put_job_in_foreground(j, 0);
 	return (0);
 }
 
-int		set_intern_variables(t_tok *as)
-{
-	while (as)
-	{
-		set_variable(as->token, 0, 0);
-		as = as->next;
-	}
-	return (exit_status(0, 1));
-}
-
-int		execute_without_fork(t_proc *p, int iv)
+int			execute_without_fork(t_proc *p, int iv)
 {
 	t_tok	*as;
 	char	**args;
@@ -200,31 +136,4 @@ int		execute_without_fork(t_proc *p, int iv)
 	free_temp_variables();
 	free_tab(args);
 	return (0);
-}
-
-int		check_fork(t_proc *p, int bg)
-{
-	int		iv;
-	t_tok	*as;
-
-	iv = 0;
-	check_all_arguments(p);
-	if (!p->next && !bg)
-	{
-		as = p->as;
-		if (as && as->id)
-			iv = 1;
-		while (as && as->id)
-			as = as->next;
-		if (as)
-			iv = 0;
-		if (p->as)
-			if (iv || is_builtin(as->token))
-			{
-				iv = execute_without_fork(p, iv);
-				free_process(p);
-				return (iv);
-			}
-	}
-	return (execute_pipes_line(p, bg));
 }

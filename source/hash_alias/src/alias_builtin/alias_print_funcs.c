@@ -6,7 +6,7 @@
 /*   By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/17 19:38:15 by aihya             #+#    #+#             */
-/*   Updated: 2020/02/21 20:16:07 by aihya            ###   ########.fr       */
+/*   Updated: 2020/02/25 03:23:01 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,12 @@ void			print_all_alias(void)
 	char	**names;
 	int		index;
 
-	names = aliases_names(FALSE);
+	names = aliases_names();
 	index = 0;
 	while (names && names[index])
 	{
 		print_alias(names[index], TRUE);
 		index++;
 	}
+	ft_chain_free(&names);
 }

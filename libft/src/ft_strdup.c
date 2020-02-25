@@ -6,7 +6,7 @@
 /*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/04 13:45:30 by hastid            #+#    #+#             */
-/*   Updated: 2019/12/06 03:47:20 by llachgar         ###   ########.fr       */
+/*   Updated: 2020/02/25 01:12:18 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ char	*ft_strdup(const char *src)
 	size_t	l;
 	char	*us;
 
+	if (src == NULL)
+		return (NULL);
 	i = 0;
 	l = ft_strlen(src);
 	us = (char *)malloc(l + 1);
@@ -28,7 +30,7 @@ char	*ft_strdup(const char *src)
 			us[i] = src[i];
 			i++;
 		}
-		us[l] = '\0';
+		us[i] = '\0';
 		return (us);
 	}
 	return (NULL);

@@ -6,7 +6,7 @@
 /*   By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 18:37:49 by aihya             #+#    #+#             */
-/*   Updated: 2020/02/21 19:50:29 by aihya            ###   ########.fr       */
+/*   Updated: 2020/02/25 02:42:19 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,11 @@ char		**get_names(t_htnode **hashtable, size_t size)
 	while (index < HT_LIMIT)
 	{
 		node = hashtable[index];
-		while (node)
+		while (node != NULL)
 		{
-			names[ti++] = ft_strdup(node->name);
+			names[ti] = ft_strdup(node->name);
 			node = node->next;
+			ti++;
 		}
 		index++;
 	}
