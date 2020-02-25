@@ -6,7 +6,7 @@
 /*   By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 16:29:59 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/25 03:28:19 by nsaber           ###   ########.fr       */
+/*   Updated: 2020/02/25 04:47:06 by nsaber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,7 @@ int			cd_link_dir(char *dir, char *mybuf, char **args, struct stat *buf)
 		ft_memdel((void **)&dir);
 	}
 	else
-	{
 		mybuf = read_link(args[2]);
-	}
 	if (args[2][0] == '/' && S_ISLNK(buf->st_mode) && mybuf[0] != '/')
 	{
 		chdir(args[2]);
@@ -62,7 +60,8 @@ int			built_cd_p(char **args, char *dir)
 		else if (!access(dir, F_OK))
 			return (ft_perror_cd(ft_strdup(dir), ": Not a directory", 1));
 		else
-			return (ft_perror_cd(ft_strdup(dir), ": No such file or directory", 1));
+			return (ft_perror_cd(ft_strdup(dir),
+			": No such file or directory", 1));
 	}
 	if ((buf.st_mode & S_IFMT) == S_IFLNK && isdir(args[2]))
 		return (cd_link_dir(dir, NULL, args, &buf));
@@ -105,9 +104,8 @@ int			built_cd(char **args)
 		return (cd_arg(args, dir));
 	else if ((dir = get_variable("HOME"))
 			&& !access(dir, F_OK) && !access(dir, X_OK))
-				change_dir(dir);
+		change_dir(dir);
 	else
 		return (ft_perror_cd(ft_strdup("env"), ": Home not exists", 1));
 	return (0);
 }
-

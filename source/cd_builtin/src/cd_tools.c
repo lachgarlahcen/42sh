@@ -6,13 +6,13 @@
 /*   By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 21:50:06 by nsaber            #+#    #+#             */
-/*   Updated: 2020/02/25 03:24:45 by nsaber           ###   ########.fr       */
+/*   Updated: 2020/02/25 04:43:56 by nsaber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cd_builtin.h"
 
-int	change_dir_b(char *dir)
+int		change_dir_b(char *dir)
 {
 	char	*pwd;
 
@@ -28,7 +28,7 @@ int	change_dir_b(char *dir)
 	return (0);
 }
 
-int	change_dir_a(char *dir)
+int		change_dir_a(char *dir)
 {
 	char	*tp;
 	char	*pwd;
@@ -57,7 +57,7 @@ int	change_dir_a(char *dir)
 	return (1);
 }
 
-int	change_dir(char *dir)
+int		change_dir(char *dir)
 {
 	if (!change_dir_a(dir))
 		change_dir_b(dir);
@@ -65,7 +65,7 @@ int	change_dir(char *dir)
 	return (0);
 }
 
-int			isdir(char *path)
+int		isdir(char *path)
 {
 	DIR			*dir;
 	struct stat	buf;
@@ -83,13 +83,13 @@ int			isdir(char *path)
 	return (0);
 }
 
-int			ft_perror_cd(char *s, char *str, int ret)
+int		ft_perror_cd(char *s, char *str, int ret)
 {
 	ft_putstr_fd("42sh: ", 2);
 	if (s)
 	{
 		ft_putstr_fd(s, 2);
-		ft_memdel((void **)&s);		
+		ft_memdel((void **)&s);
 	}
 	ft_putendl_fd(str, 2);
 	return (ret);
