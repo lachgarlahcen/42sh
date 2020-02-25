@@ -253,7 +253,7 @@ t_job		*job_sign_finder(char sign)
 	return (0);
 }
 
-void		job_node_manpl_signs(t_job *tmp)
+void		job_node_manpl_signs(t_job *tmp, t_job *j)
 {
 	tmp = g_jobs.f_job;
 	while (tmp)
@@ -295,7 +295,7 @@ void		job_node_trait(t_job *j, int mines)
 	}
 	if ((len == j->id && mines) || (len == 0 && mines))
 		g_jobs.id--;
-	job_node_manpl_signs(tmp);
+	job_node_manpl_signs(tmp, j);
 }
 
 void		put_job_in_foreground(t_job *j, int cont)
