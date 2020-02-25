@@ -6,7 +6,7 @@
 /*   By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/16 18:41:02 by aihya             #+#    #+#             */
-/*   Updated: 2020/02/25 03:19:11 by aihya            ###   ########.fr       */
+/*   Updated: 2020/02/25 04:57:54 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,20 @@ char		*is_binary(char *name)
 	if ((path = find_htnode(binaries(FALSE), name)) == NULL)
 		return (NULL);
 	return (path->value);
+}
+
+void		free_binaries(void)
+{
+	char	**names;
+	int		index;
+
+	names = binaries_names();
+	index = 0;
+	while (names[index])
+	{
+		pop_htnode(binaries(FALSE), names[index]);
+		index++;
+	}
+	ft_chain_free(&names);
+	free(binaries(FALSE));
 }

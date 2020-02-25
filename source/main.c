@@ -6,7 +6,7 @@
 /*   By: aihya <aihya@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 21:16:34 by llachgar          #+#    #+#             */
-/*   Updated: 2020/02/25 04:56:40 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/25 05:27:16 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,5 +82,7 @@ int	main(int ac, char **av, char **env)
 	free_jobs();
 	free_variables();
 	free_history();
+	free_aliases();
+	free_binaries();
 	return (g_stat);
 }
