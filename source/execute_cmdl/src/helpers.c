@@ -6,7 +6,7 @@
 /*   By: iel-bouh <iel-bouh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 15:45:16 by iel-bouh          #+#    #+#             */
-/*   Updated: 2020/02/24 01:56:05 by iel-bouh         ###   ########.fr       */
+/*   Updated: 2020/02/25 19:11:22 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ int		ft_get_file_fd(char *file, char append)
 
 	if (file[0] == '$')
 	{
-		ft_putstr_fd(file, 2);
 		ft_putendl_fd("42sh: ambiguous redirect", 2);
 		return (-1);
 	}
@@ -63,7 +62,6 @@ int		ft_get_file_fd(char *file, char append)
 	{
 		if (access(file, W_OK) == -1)
 		{
-			ft_putstr_fd(file, 2);
 			ft_putendl_fd("42sh: Permission denied", 2);
 			return (-1);
 		}

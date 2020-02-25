@@ -6,7 +6,7 @@
 /*   By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 22:18:48 by llachgar          #+#    #+#             */
-/*   Updated: 2020/02/25 06:16:24 by nsaber           ###   ########.fr       */
+/*   Updated: 2020/02/25 19:18:20 by nsaber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,11 @@ t_job			*jobs_plus_ret(t_job *j);
 t_job			*job_sign_finder(char sign);
 void			job_node_manpl_signs(t_job *tmp, t_job *j);
 void			job_node_trait(t_job *j, int mines);
-int				check_ctr_jobs_args(char **args, t_job **j,char *str, int percent);
+int				check_ctr_jobs_args(char **arg, t_job **j, char *str, int pe);
 int				execute_bg(char **args);
 int				execute_fg(char **args);
 int				execute_jobs(char **args);
 int				job_arg(char **args, char *option, int i);
 int				job_arg_option(char *option, char **args);
-
 
 #endif

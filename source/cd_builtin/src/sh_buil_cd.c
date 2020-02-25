@@ -6,7 +6,7 @@
 /*   By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 16:29:59 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/25 05:47:45 by nsaber           ###   ########.fr       */
+/*   Updated: 2020/02/25 19:19:05 by nsaber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int			built_cd_p(char **args, char *dir, char *tp)
 		return (cd_link_dir(dir, NULL, args, &buf));
 	else
 	{
-		if(!(dir = getcwd(0,0)))
+		if (!(dir = getcwd(0, 0)))
 			return (1);
 		tp = strjoin_free("PWD=", dir, 0, 1);
 		set_variable(tp, 1, 0);
