@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+         #
+#    By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/08 01:54:05 by hastid            #+#    #+#              #
-#    Updated: 2020/02/25 04:51:40 by hastid           ###   ########.fr        #
+#    Updated: 2020/02/25 06:16:33 by nsaber           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,8 @@ SRC_NAME = job_list.c \
 			job_control.c \
 			job_notification.c \
 			utilit.c \
-			job_tools.c
+			job_tools.c \
+			tools.c 
 
 
 OBJ_NAME =	$(SRC_NAME:.c=.o)

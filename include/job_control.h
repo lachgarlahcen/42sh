@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   job_control.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 22:18:48 by llachgar          #+#    #+#             */
-/*   Updated: 2020/02/24 22:37:01 by llachgar         ###   ########.fr       */
+/*   Updated: 2020/02/25 06:16:24 by nsaber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ void			delete_job(pid_t pgid);
 void			execute_jobs(char **args);
 void			execute_fg(char **args);
 void			execute_bg(char **args);
-char			*name_list_concate(t_proc			*p);
+char			*name_list_concate(t_proc *p, char *name_args,
+				char *tmp, t_tok *ptr);
 void			job_sign(t_job *j);
 void			mark_process(t_proc *p, int status);
 int				mark_process_status(pid_t pid, int status);
