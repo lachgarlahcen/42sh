@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   launch_process.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aihya <aihya@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 12:16:28 by hastid            #+#    #+#             */
 /*   Updated: 2020/02/25 00:29:51 by hastid           ###   ########.fr       */
@@ -159,8 +159,7 @@ int		execute_pipes_line(t_proc *p, int bg)
 	j = add_jobs(p, pgid, bg);
 	if (bg)
 	{
-		printf("job_sign called for bg\n");
-		job_sign(j); // added by noureddine
+		job_sign(j);
 		put_job_in_background(j, 0);
 	}
 	else

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   job_control.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+        */
+/*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 22:18:53 by llachgar          #+#    #+#             */
-/*   Updated: 2020/02/24 05:45:13 by nsaber           ###   ########.fr       */
+/*   Updated: 2020/02/25 01:30:41 by llachgar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,11 @@ void execute_fg(char **args)
 	t_job   *j;
 	int percent;
 
+	if (getpid() != g_shell_pgid)
+	{
+		ft_putendl_fd("fg: no job control", 2);
+		return ;
+	}
 	j = g_jobs.f_job;
 	if (!j)
 		return ((void) printf("fg: current: no such job\n"));
@@ -175,8 +180,6 @@ void execute_fg(char **args)
 		}
 	}
 	// job_sign(j);
-	if (getpid() != g_shell_pgid)
-		ft_printf("fg: no job control\n");
 	put_job_in_foreground(j, 1);
 }
 
@@ -185,6 +188,11 @@ void execute_bg(char **args)
 	t_job   *j;
 	int percent;
 
+	if (getpid() != g_shell_pgid)
+	{
+		ft_putendl_fd("fg: no job control", 2);
+		return ;
+	}
 	j = g_jobs.f_job;
 	if (!j)
 		return ((void) printf("bg: current: no such job\n"));
@@ -219,9 +227,7 @@ void execute_bg(char **args)
 			j = j->next;
 		}
 	}
-	if (getpid() != g_shell_pgid)
-		ft_printf("fg: no job control\n");
-	put_job_in_background(g_jobs.f_job, 1);
+	put_job_in_background(j, 1);
 }
 
 t_job   *job_sign_finder(char sign)

@@ -6,7 +6,7 @@
 /*   By: llachgar <llachgar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 05:33:04 by llachgar          #+#    #+#             */
-/*   Updated: 2020/02/23 01:05:45 by llachgar         ###   ########.fr       */
+/*   Updated: 2020/02/24 23:55:56 by llachgar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void			print_search_prompt(t_cmd *l, char *buff, char *res)
 	promt = ft_strjoin_f(ft_strjoin("(reverse-i-search)`", buff),
 			ft_strjoin("':", res ? res : ""), 1, 1);
 	ft_putstr_fd(promt, 1);
+	ft_strdel(&promt);
 }
 
 void			show_history(t_cmd *l)
