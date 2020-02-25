@@ -83,7 +83,7 @@ int	job_arg_option(char *option, char **args)
 		if (!(args[1][i] == 'l' || args[1][i] == 'p'))
 		{
 			*option = args[1][i];
-			ft_printf("jobs: -%c: invalid option : jobs [-lp]\n", args[1][i]);
+			ft_putendl_fd("jobs: -%c: invalid option : jobs [-lp]", 2);
 			return (1);
 		}
 	}
@@ -119,7 +119,7 @@ int	job_arg(char **args, char *option, int i)
 			j = j->next;
 		if (!j && args[i])
 		{
-			fprintf(stderr, "jobs: job not found: %s\n", args[i]);
+			ft_putendl_fd("jobs: job not found: %s", 2);
 			return (1);
 		}
 	}
@@ -158,7 +158,7 @@ int			execute_fg(char **args)
 	j = g_jobs.f_job;
 	if (!j)
 	{
-		ft_putstr("fg: current: no such job\n");
+		ft_putendl_fd("fg: current: no such job", 2);
 		return(1);
 	}
 	if (args[1] && ft_isdigits(args[1]))
@@ -171,14 +171,14 @@ int			execute_fg(char **args)
 			j = j->next;
 			if (!j)
 			{
-				ft_printf("42sh : fg: %s no such job\n", args[1]);
+				ft_putendl_fd("42sh : fg: %s no such job", 2);
 				return (1);
 			}
 		}
 	}
 	else if (args[1])
 	{
-		ft_printf("42sh : fg: %s no such job\n", args[1]);
+		ft_putendl_fd("42sh : fg: %s no such job", 2);
 		return (1);
 	}
 	else
@@ -209,7 +209,7 @@ int			execute_bg(char **args)
 	j = g_jobs.f_job;
 	if (!j)
 	{
-		ft_printf("bg: current: no such job\n");
+		ft_putendl_fd("bg: current: no such job", 2);
 		return(1);
 	}
 	if (args[1] && ft_isdigits(args[1]))
@@ -222,14 +222,14 @@ int			execute_bg(char **args)
 			j = j->next;
 			if (!j)
 			{
-				ft_printf("42sh : bg: %s no such job\n", args[1]);
+				ft_putendl_fd("42sh : bg: %s no such job\n", 2);
 				return (1);
 			}
 		}
 	}
 	else if (args[1])
 	{
-		ft_printf("42sh : bg: %s no such job\n", args[1]);
+		ft_putendl_fd("42sh : bg: %s no such job\n", 2);
 		return (1);
 	}
 	else
