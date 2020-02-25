@@ -6,7 +6,7 @@
 /*   By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 22:18:53 by llachgar          #+#    #+#             */
-/*   Updated: 2020/02/25 06:57:57 by nsaber           ###   ########.fr       */
+/*   Updated: 2020/02/25 07:09:50 by nsaber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,17 +95,15 @@ void	job_arg_option(char *option, char **args)
 	job_printing(*option);
 }
 
-void	job_arg(char **args, char *option)
+void	job_arg(char **args, char *option, int i)
 {
-	t_job *jj;
-	t_job *j;
+	t_job	*jj;
+	t_job	*j;
+	int		percent;
 
 	j = g_jobs.f_job;
 	jj = j;
-	int percent;
-
 	args[1][0] == '%' ? percent = 1 : 0;
-	int i = 1;
 	while (j)
 	{
 		if (args[i] && (ft_strequ(args[i], j->cmd) ||
@@ -124,12 +122,12 @@ void	job_arg(char **args, char *option)
 		}
 	}
 }
-void execute_jobs(char **args)
+
+void		execute_jobs(char **args)
 {
-	t_job *j;
-	(void)args;
-	int i;
-	static char option = 0;
+	t_job		*j;
+	int			i;
+	static char	option = 0;
 
 	update_status();
 	i = 0;
@@ -137,13 +135,13 @@ void execute_jobs(char **args)
 	if (args[1] && args[1][0] == '-')
 		job_arg_option(&option, args);
 	else if (args[1])
-		job_arg(args, &option);
+		job_arg(args, &option, 1);
 	else
 		job_printing(option);
 	option = 0;
 }
 
-void execute_fg(char **args)
+void		execute_fg(char **args)
 {
 	t_job	*j;
 	int		percent;

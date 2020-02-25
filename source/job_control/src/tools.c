@@ -6,7 +6,7 @@
 /*   By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 06:59:13 by nsaber            #+#    #+#             */
-/*   Updated: 2020/02/25 07:01:06 by nsaber           ###   ########.fr       */
+/*   Updated: 2020/02/25 07:03:20 by nsaber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ void		job_sign(t_job *j)
 	len = 0;
 	while (tmp)
     {
-        if (tmp->sign == '-' && (j->sign != '+' ))
-            tmp->sign = ' ';
+		if (tmp->sign == '-' && (j->sign != '+' ))
+    		tmp->sign = ' ';
         if (tmp->sign == '+')
-            tmp->sign = '-';
-        len++;
+    		tmp->sign = '-';
+            len++;
         tmp = tmp->next;
     }
 	j->sign = '+';
