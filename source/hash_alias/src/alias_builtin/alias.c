@@ -6,7 +6,7 @@
 /*   By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 16:23:31 by aihya             #+#    #+#             */
-/*   Updated: 2020/02/25 03:24:04 by aihya            ###   ########.fr       */
+/*   Updated: 2020/02/25 19:21:26 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void		set_name_value(char *arg, char **name, char **value)
 		ft_strappend(name, arg[index], TRUE);
 		index++;
 	}
-	if (name != NULL && arg[index] == '=')
+	if (arg[index] && arg[index] == '=' && *name != NULL)
 		index++;
 	while (arg[index])
 	{
