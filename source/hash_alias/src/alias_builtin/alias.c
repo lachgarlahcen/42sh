@@ -6,7 +6,7 @@
 /*   By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 16:23:31 by aihya             #+#    #+#             */
-/*   Updated: 2020/02/25 19:21:26 by aihya            ###   ########.fr       */
+/*   Updated: 2020/02/25 19:42:59 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ static void	set_individual_aliases(char **args, int *status)
 	{
 		if (ft_strchr(args[index], '='))
 			set_alias(args[index], status);
-		else if (is_alias(args[index]) == NULL)
+		else if (find_htnode(aliases(FALSE), args[index]) == NULL)
 			*status = err_msg("alias", args[index], "Not found");
 		else
 			print_alias(args[index], FALSE);
