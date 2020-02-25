@@ -6,7 +6,7 @@
 /*   By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 22:18:53 by llachgar          #+#    #+#             */
-/*   Updated: 2020/02/25 07:09:50 by nsaber           ###   ########.fr       */
+/*   Updated: 2020/02/25 19:04:51 by nsaber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,12 @@ int			job_arg(char **args, char *option, int i)
 
 	j = g_jobs.f_job;
 	jj = j;
-	args[1][0] == '%' ? percent = 1 : 0;
+	percent = args[1][0] == '%' ? 1 : 0;
 	while (j)
 	{
 		if (args[i] && (ft_strequ(args[i], j->cmd) ||
 		(ft_isdigits(args[i]) && ft_atoi(args[i] + percent) == j->id)))
-		{
+		{			
 			i++;
 			format_job_info(j, *option);
 			j = jj;
@@ -76,10 +76,16 @@ int			execute_jobs(char **args)
 	update_status();
 	i = 0;
 	j = g_jobs.f_job;
-	if (args[1] && args[1][0] == '-' && job_arg_option(&option, args))
-		return (1);
-	else if (args[1] && job_arg(args, &option, 1))
-		return(1);
+	if (args[1] && args[1][0] == '-')
+	{
+		if (job_arg_option(&option, args))
+			return (1);
+	}
+	else if (args[1])
+	{
+		if (job_arg(args, &option, 1))
+			return(1);
+	}
 	else
 		job_printing(option);
 	option = 0;
