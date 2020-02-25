@@ -6,7 +6,7 @@
 /*   By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 05:18:24 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/23 00:50:16 by nsaber           ###   ########.fr       */
+/*   Updated: 2020/02/25 05:29:07 by nsaber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,6 @@ int			builtin_test_2(char **argv)
 int			builtin_test_3(char **argv)
 {
 	return (test_cmp(argv));
-}
-
-int			builtin_test_4(void)
-{
-	ft_putendl_fd("test: too many arguments", 2);
-	return (2);
 }
 
 int			builtin_test(int len, char **argv)
@@ -56,19 +50,6 @@ int			builtin_test(int len, char **argv)
 		ret = builtin_test_4();
 	}
 	return (ret);
-}
-
-int			ft_arraylen(char **argv)
-{
-	int i;
-
-	i = 0;
-	while (*argv)
-	{
-		argv++;
-		i++;
-	}
-	return (i);
 }
 
 int			execute_test(char **argv)
