@@ -6,7 +6,7 @@
 /*   By: nsaber <nsaber@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 05:15:41 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/25 02:00:30 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/25 04:08:52 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,8 @@ void	change_string(char **str, int be)
 		i++;
 	if (!(tp1 = ft_strsub(tmp, be, i - be)))
 		return ;
-	if (!ft_strcmp("?", tp1))
-		tp2 = ft_itoa(exit_status(0, 0));
-	else if (!ft_strcmp("$", tp1))
-		tp2 =  ft_itoa(getpid());
+	if (!ft_strcmp("?", tp1) || !ft_strcmp("$", tp1))
+		tp2 = ft_itoa(ft_strcmp("$", tp1) ? exit_status(0, 0) : getpid());
 	else
 		tp2 = get_variable(tp1);
 	ft_memdel((void **)&tp1);
@@ -72,14 +70,12 @@ void	change_string(char **str, int be)
 	*str = tp2;
 }
 
-char		*change_dollar(char *str)
+char	*change_dollar(char *tmp)
 {
 	int		i;
 	int		be;
-	char	*tmp;
 
 	i = 0;
-	tmp = ft_strdup(str);
 	while (tmp[i])
 	{
 		if (tmp[i] == '\"' || tmp[i] == '\'')
@@ -96,7 +92,7 @@ char		*change_dollar(char *str)
 		}
 		if (tmp[i] == '\\')
 			i++;
-		else if (tmp[i] == '$'  && tmp[i + 1] == '{')
+		else if (tmp[i] == '$' && tmp[i + 1] == '{')
 			change_string(&tmp, i + 2);
 		i = (tmp[i] != '\0') ? i + 1 : i;
 	}
@@ -130,7 +126,7 @@ char	*change_tilda(char *str)
 	return (tmp);
 }
 
-char		*check_token_expan(char *str, char id)
+char	*check_token_expan(char *str, char id)
 {
 	char	*tp;
 
@@ -139,10 +135,10 @@ char		*check_token_expan(char *str, char id)
 	if (str[0] == '~')
 		return (change_tilda(str));
 	if (check_dollar(str))
-		tp = change_dollar(str);
+		tp = change_dollar(ft_strdup(str));
 	else
 		return (str);
-	if (!(*tp))
+	if (tp && !(*tp))
 		ft_memdel((void **)&tp);
 	if (!tp && id)
 		return (str);

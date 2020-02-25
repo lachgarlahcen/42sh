@@ -6,7 +6,7 @@
 #    By: iel-bouh <iel-bouh@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/05 05:16:42 by hastid            #+#    #+#              #
-#    Updated: 2020/02/25 01:57:39 by hastid           ###   ########.fr        #
+#    Updated: 2020/02/25 04:39:29 by hastid           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,7 @@
 NAME = execute_cmdl.a
 
 SRC_NAME = arguments.c \
+		   arguments_utils.c \
 		   execute_cmdl.c \
 		   process_list.c \
 		   launch_process.c \
@@ -21,6 +22,7 @@ SRC_NAME = arguments.c \
 		   redirection.c  \
 		   aggreagation.c \
 		   helpers.c \
+		   launch_utils.c \
 		   herdoc.c
 
 OBJ_NAME =	$(SRC_NAME:.c=.o)

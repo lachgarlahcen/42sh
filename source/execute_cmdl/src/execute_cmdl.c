@@ -6,13 +6,40 @@
 /*   By: hastid <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 03:40:43 by hastid            #+#    #+#             */
-/*   Updated: 2020/02/25 02:00:32 by hastid           ###   ########.fr       */
+/*   Updated: 2020/02/25 04:33:13 by hastid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute_cmdl.h"
 
-void		check_save_tokens(t_proc *p, char *token, int id)
+static int	check_fork(t_proc *p, int bg)
+{
+	int		iv;
+	t_tok	*as;
+
+	iv = 0;
+	check_all_arguments(p);
+	if (!p->next && !bg)
+	{
+		as = p->as;
+		if (as && as->id)
+			iv = 1;
+		while (as && as->id)
+			as = as->next;
+		if (as)
+			iv = 0;
+		if (p->as)
+			if (iv || is_builtin(as->token))
+			{
+				iv = execute_without_fork(p, iv);
+				free_process(p);
+				return (iv);
+			}
+	}
+	return (execute_pipes_line(p, bg));
+}
+
+static void	check_save_tokens(t_proc *p, char *token, int id)
 {
 	while (p && p->next)
 		p = p->next;
@@ -24,7 +51,7 @@ void		check_save_tokens(t_proc *p, char *token, int id)
 	ft_memdel((void **)&token);
 }
 
-int			check_execute(t_proc *p, t_tok *t, int check)
+static int	check_execute(t_proc *p, t_tok *t, int check)
 {
 	if (t && t->id == 5)
 		return (check_fork(p, 1));
@@ -50,7 +77,7 @@ int			check_execute(t_proc *p, t_tok *t, int check)
 	return (check);
 }
 
-void		separat_cmdl(t_tok *t)
+static void	separat_cmdl(t_tok *t)
 {
 	int		check;
 	t_proc	*p;
