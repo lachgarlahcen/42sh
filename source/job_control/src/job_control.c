@@ -135,10 +135,10 @@ int			execute_jobs(char **args)
 	update_status();
 	i = 0;
 	j = g_jobs.f_job;
-	if (args[1] && args[1][0] == '-')
-		job_arg_option(&option, args);
-	else if (args[1])
-		job_arg(args, &option, 1);
+	if (args[1] && args[1][0] == '-' && job_arg_option(&option, args))
+		return (1);
+	else if (args[1] && job_arg(args, &option, 1))
+		return(1);
 	else
 		job_printing(option);
 	option = 0;
